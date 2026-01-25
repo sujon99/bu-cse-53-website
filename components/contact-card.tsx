@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
+import useEmblaCarousel from 'embla-carousel-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone, Mail, Facebook, Linkedin, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
@@ -21,24 +22,39 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function ContactCard({ contact }: ContactCardProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = contact.imageUrls && contact.imageUrls.length > 0 ? contact.imageUrls : [contact.imageUrl];
 
-  const handleNextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (images.length > 1) {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }
-  };
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setCurrentImageIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
-  const handlePrevImage = (e: React.MouseEvent) => {
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const handleNextImage = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    if (images.length > 1) {
-      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-    }
-  };
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const handlePrevImage = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback((index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
 
   const handleCall = () => window.location.href = `tel:${contact.phone}`;
   const handleEmail = () => window.location.href = `mailto:${contact.email}`;
@@ -61,45 +77,58 @@ export function ContactCard({ contact }: ContactCardProps) {
 
           {/* Profile Image Section with Slider */}
           <div className="relative w-full sm:w-60 aspect-square sm:aspect-auto sm:h-full shrink-0 overflow-hidden bg-muted group/slider">
-            {images.length > 0 && images[0] ? (
-              <Image
-                src={images[currentImageIndex] || "/placeholder.svg"}
-                alt={contact.name}
-                fill
-                className="object-cover transition-all duration-500"
-                sizes="(max-width: 640px) 100vw, 200px"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
-                <span className="text-4xl font-bold text-primary/30 select-none">
-                  {contact.name.charAt(0)}
-                </span>
+            <div className="w-full h-full" ref={emblaRef}>
+              <div className="flex w-full h-full">
+                {images.length > 0 ? (
+                  images.map((imgSrc, idx) => (
+                    <div className="flex-[0_0_100%] min-w-0 relative w-full h-full" key={idx}>
+                      <Image
+                        src={imgSrc || "/placeholder.svg"}
+                        alt={`${contact.name} - ${idx + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, 240px"
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex-[0_0_100%] min-w-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+                    <span className="text-4xl font-bold text-primary/30 select-none">
+                      {contact.name.charAt(0)}
+                    </span>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
 
             {/* Slider Controls (Only if multiple images) */}
             {images.length > 1 && (
               <>
                 <button
                   onClick={handlePrevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors opacity-0 group-hover/slider:opacity-100"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={handleNextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors opacity-0 group-hover/slider:opacity-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
                   aria-label="Next image"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
                 {/* Dots Indicator */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
                   {images.map((_, idx) => (
-                    <div
+                    <button
                       key={idx}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        scrollTo(idx);
+                      }}
                       className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-white' : 'bg-white/40'}`}
+                      aria-label={`Go to image ${idx + 1}`}
                     />
                   ))}
                 </div>
@@ -107,7 +136,7 @@ export function ContactCard({ contact }: ContactCardProps) {
             )}
 
             {/* Gradient Overlay for Name (Mobile only) */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent sm:hidden pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent sm:hidden pointer-events-none z-0" />
             <div className="absolute bottom-3 left-3 sm:hidden text-white font-bold text-xl drop-shadow-md z-10">
               {contact.name}
             </div>
