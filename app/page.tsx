@@ -6,7 +6,7 @@ import { ContactDirectory } from '@/components/contact-directory';
 import type { Contact } from '@/components/contact-directory';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -16,136 +16,58 @@ import {
 import { Input } from "@/components/ui/input"
 import { BackToTop } from '@/components/back-to-top';
 
-// ... (keep lines 19-204 same roughly, just targeting imports and the specific render block)
-
-// Re-targeting the replace for the render part specifically
-// Imports line 9
-
-
-// Sample contact data - replace with actual data source
-const SAMPLE_CONTACTS: Contact[] = [
-  // First contact - Always Fixed
-  {
-    id: '1',
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@example.com',
-    phone: '+1-555-0101',
-    whatsapp: '+15550101',
-    linkedin: 'https://linkedin.com/in/sarahjohnson',
-    facebook: 'https://facebook.com/sarahjohnson',
-    imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop', // Self
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=400&fit=crop', // Friend 1
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop'  // Friend 2 (Group)
-    ],
-    bloodGroup: 'A+',
-  },
-  // Rest - Randomized
-  {
-    id: '2',
-    name: 'Michael Chen',
-    email: 'michael.chen@example.com',
-    phone: '+1-555-0102',
-    whatsapp: '+15550102',
-    linkedin: 'https://linkedin.com/in/michaelchen',
-    facebook: 'https://facebook.com/michaelchen',
-    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop',
-    ],
-    bloodGroup: 'O+',
-  },
-  {
-    id: '3',
-    name: 'Emily Rodriguez',
-    email: 'emily.rodriguez@example.com',
-    phone: '+1-555-0103',
-    facebook: 'https://facebook.com/emilyrodriguez',
-    imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
-    bloodGroup: 'B+',
-  },
-  {
-    id: '4',
-    name: 'James Morrison',
-    email: 'james.morrison@example.com',
-    phone: '+1-555-0104',
-    whatsapp: '+15550104',
-    linkedin: 'https://linkedin.com/in/jamesmorrison',
-    facebook: 'https://facebook.com/jamesmorrison',
-    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
-    ],
-    bloodGroup: 'AB-',
-  },
-  {
-    id: '5',
-    name: 'Jessica Taylor',
-    email: 'jessica.taylor@example.com',
-    phone: '+1-555-0105',
-    whatsapp: '+15550105',
-    facebook: 'https://facebook.com/jessicataylor',
-    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
-    bloodGroup: 'A-',
-  },
-  {
-    id: '6',
-    name: 'David Park',
-    email: 'david.park@example.com',
-    phone: '+1-555-0106',
-    facebook: 'https://facebook.com/davidpark',
-    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    bloodGroup: 'O-',
-  },
-  {
-    id: '7',
-    name: 'Amanda White',
-    email: 'amanda.white@example.com',
-    phone: '+1-555-0107',
-    whatsapp: '+15550107',
-    facebook: 'https://facebook.com/amandawhite',
-    imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-    bloodGroup: 'B-',
-  },
-  {
-    id: '8',
-    name: 'Chris Anderson',
-    email: 'chris.anderson@example.com',
-    phone: '+1-555-0108',
-    whatsapp: '+15550108',
-    facebook: 'https://facebook.com/chrisanderson',
-    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-    bloodGroup: 'AB+',
-  },
-];
-
 export default function Home() {
   const [activeTab, setActiveTab] = useState('photos');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
 
-  // State for contacts to handle shuffling
-  const [displayedContacts, setDisplayedContacts] = useState<Contact[]>(SAMPLE_CONTACTS);
+  // State for contacts with loading and error states
+  const [displayedContacts, setDisplayedContacts] = useState<Contact[]>([]);
+  const [isLoadingContacts, setIsLoadingContacts] = useState(true);
+  const [contactsError, setContactsError] = useState<string | null>(null);
 
-  // Randomize contacts on mount (except first one)
+  // Fetch contacts from API on mount
   useEffect(() => {
-    // Keep first contact
-    const firstContact = SAMPLE_CONTACTS[0];
-    // Copy the rest
-    const restContacts = [...SAMPLE_CONTACTS.slice(1)];
+    async function fetchContacts() {
+      try {
+        setIsLoadingContacts(true);
+        setContactsError(null);
 
-    // Fisher-Yates shuffle for the rest
-    for (let i = restContacts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [restContacts[i], restContacts[j]] = [restContacts[j], restContacts[i]];
+        const response = await fetch('/api/contacts');
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Failed to fetch contacts');
+        }
+
+        const contacts: Contact[] = data.contacts || [];
+
+        // Keep first contact, shuffle the rest
+        if (contacts.length > 1) {
+          const firstContact = contacts[0];
+          const restContacts = [...contacts.slice(1)];
+
+          // Fisher-Yates shuffle for the rest
+          for (let i = restContacts.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [restContacts[i], restContacts[j]] = [restContacts[j], restContacts[i]];
+          }
+
+          setDisplayedContacts([firstContact, ...restContacts]);
+        } else {
+          setDisplayedContacts(contacts);
+        }
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+        setContactsError(error instanceof Error ? error.message : 'Failed to load contacts');
+        setDisplayedContacts([]);
+      } finally {
+        setIsLoadingContacts(false);
+      }
     }
 
-    // Combine
-    setDisplayedContacts([firstContact, ...restContacts]);
+    fetchContacts();
   }, []);
 
   React.useEffect(() => {
@@ -283,7 +205,33 @@ export default function Home() {
                 <h2 className="text-2xl font-semibold tracking-tight">Friend Directory</h2>
                 <p className="text-muted-foreground">Stay connected with your university batchmates</p>
               </div>
-              <ContactDirectory contacts={filteredContacts} />
+
+              {/* Loading State */}
+              {isLoadingContacts && (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
+                  <p className="text-muted-foreground">Loading contacts...</p>
+                </div>
+              )}
+
+              {/* Error State */}
+              {!isLoadingContacts && contactsError && (
+                <div className="text-center py-12">
+                  <p className="text-destructive mb-2">Failed to load contacts</p>
+                  <p className="text-sm text-muted-foreground mb-4">{contactsError}</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => window.location.reload()}
+                  >
+                    Try Again
+                  </Button>
+                </div>
+              )}
+
+              {/* Contacts List */}
+              {!isLoadingContacts && !contactsError && (
+                <ContactDirectory contacts={filteredContacts} />
+              )}
             </div>
           </TabsContent>
         </main>
