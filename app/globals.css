@@ -119,7 +119,733 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Futuristic Home Page Animations */
+
+/* 3D Transform Support */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+/* Floating 3D shape animations */
+@keyframes float-3d-1 {
+
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: translateY(-20px) rotateX(10deg) rotateY(15deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotateX(-5deg) rotateY(-10deg);
+  }
+
+  75% {
+    transform: translateY(-25px) rotateX(15deg) rotateY(-5deg);
+  }
+}
+
+@keyframes float-3d-2 {
+
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+
+  33% {
+    transform: translateY(-30px) rotateX(-15deg) rotateY(20deg) scale(1.05);
+  }
+
+  66% {
+    transform: translateY(-15px) rotateX(10deg) rotateY(-15deg) scale(0.95);
+  }
+}
+
+@keyframes float-3d-3 {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(45deg) rotateX(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(45deg) rotateX(180deg);
+  }
+}
+
+@keyframes float-3d-4 {
+
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+
+  25% {
+    transform: translateX(15px) translateY(-15px) scale(1.02);
+  }
+
+  50% {
+    transform: translateX(-10px) translateY(-25px) scale(0.98);
+  }
+
+  75% {
+    transform: translateX(-15px) translateY(-10px) scale(1.01);
+  }
+}
+
+@keyframes float-3d-5 {
+
+  0%,
+  100% {
+    transform: translateY(0) rotateZ(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotateZ(45deg);
+  }
+}
+
+.animate-float-3d-1 {
+  animation: float-3d-1 8s ease-in-out infinite;
+}
+
+.animate-float-3d-2 {
+  animation: float-3d-2 10s ease-in-out infinite;
+}
+
+.animate-float-3d-3 {
+  animation: float-3d-3 7s ease-in-out infinite;
+}
+
+.animate-float-3d-4 {
+  animation: float-3d-4 12s ease-in-out infinite;
+}
+
+.animate-float-3d-5 {
+  animation: float-3d-5 6s ease-in-out infinite;
+}
+
+/* Gradient shift animation */
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Glow text animation */
+@keyframes glow-text {
+
+  0%,
+  100% {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+
+  50% {
+    text-shadow: 0 0 40px rgba(139, 92, 246, 0.5), 0 0 60px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.animate-glow-text {
+  animation: glow-text 3s ease-in-out infinite;
+}
+
+/* Pulse glow for particles */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Fade in up animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* Typewriter effect */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: currentColor;
+  }
+}
+
+.animate-typewriter {
+  animation:
+    typewriter 3s steps(50) 1s forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+/* Delay utilities */
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
+.delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Count up animation */
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-count-up {
+  animation: count-up 0.6s ease-out forwards;
+}
+
+/* Top position utilities */
+.top-1\/5 {
+  top: 20%;
+}
+
+.bottom-1\/5 {
+  bottom: 20%;
+}
+
+/* Enhanced Futuristic Animations */
+
+/* Floating particle animation */
+@keyframes float-particle {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+
+  25% {
+    transform: translateY(-30vh) translateX(20px);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateY(-60vh) translateX(-10px);
+    opacity: 0.5;
+  }
+
+  75% {
+    transform: translateY(-90vh) translateX(15px);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(-100vh) translateX(0);
+    opacity: 0;
+  }
+}
+
+.animate-float-particle {
+  animation: float-particle linear infinite;
+}
+
+/* Slow spin for holographic rings */
+@keyframes spin-slow {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+
+/* Reverse spin */
+@keyframes spin-reverse {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 25s linear infinite;
+}
+
+/* Pulse ring animation */
+@keyframes pulse-ring {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 4s ease-in-out infinite;
+}
+
+/* Gradient X animation for holographic borders */
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
+
+@keyframes gradient-x-reverse {
+
+  0%,
+  100% {
+    background-position: 100% 50%;
+  }
+
+  50% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x-reverse {
+  background-size: 200% 200%;
+  animation: gradient-x-reverse 3s ease infinite;
+}
+
+/* Scan line effect */
+@keyframes scan-line {
+  0% {
+    top: 0%;
+  }
+
+  100% {
+    top: 100%;
+  }
+}
+
+.animate-scan-line {
+  animation: scan-line 3s linear infinite;
+}
+
+/* Aurora/Northern lights animations */
+@keyframes aurora-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(50px, -30px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-30px, 20px) scale(0.95);
+  }
+}
+
+@keyframes aurora-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-80px, 40px) scale(1.15);
+  }
+}
+
+@keyframes aurora-3 {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.35;
+  }
+}
+
+.animate-aurora-1 {
+  animation: aurora-1 15s ease-in-out infinite;
+}
+
+.animate-aurora-2 {
+  animation: aurora-2 12s ease-in-out infinite;
+}
+
+.animate-aurora-3 {
+  animation: aurora-3 10s ease-in-out infinite;
+}
+
+/* Morphing blob animation */
+@keyframes morph {
+
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg);
+  }
+
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+
+  50% {
+    border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%;
+    transform: rotate(180deg);
+  }
+
+  75% {
+    border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%;
+  }
+}
+
+.animate-morph {
+  animation: morph 20s ease-in-out infinite;
+}
+
+/* Twinkling star animation */
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Text shimmer animation */
+@keyframes text-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-text-shimmer {
+  background-size: 200% auto;
+  animation: text-shimmer 4s linear infinite;
+}
+
+.animate-text-shimmer-reverse {
+  background-size: 200% auto;
+  animation: text-shimmer 4s linear infinite reverse;
+}
+
+/* Glitch effect */
+@keyframes glitch-1 {
+
+  0%,
+  90%,
+  100% {
+    transform: translate(0);
+    opacity: 0;
+  }
+
+  92% {
+    transform: translate(2px, 1px);
+    opacity: 0.5;
+  }
+
+  94% {
+    transform: translate(-2px, -1px);
+    opacity: 0.5;
+  }
+
+  96% {
+    transform: translate(1px, 2px);
+    opacity: 0;
+  }
+}
+
+.animate-glitch-1 {
+  animation: glitch-1 3s infinite;
+}
+
+/* Scroll indicator dot */
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(12px);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.5s ease-in-out infinite;
+}
+
+/* Floating animation for cards */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Neon flicker */
+@keyframes neon-flicker {
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    text-shadow:
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 40px currentColor;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+
+.animate-neon-flicker {
+  animation: neon-flicker 2s infinite;
+}
+
+/* ===== WARM NOSTALGIC ANIMATIONS ===== */
+
+/* Ken Burns effect for photo backgrounds */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+
+  50% {
+    transform: scale(1.1) translate(-2%, -1%);
+  }
+
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-in-out infinite;
+}
+
+/* Slow floating for bokeh lights */
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  33% {
+    transform: translateY(-20px) translateX(10px);
+  }
+
+  66% {
+    transform: translateY(10px) translateX(-15px);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 15s ease-in-out infinite;
+}
+
+@keyframes float-slow-reverse {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  33% {
+    transform: translateY(15px) translateX(-10px);
+  }
+
+  66% {
+    transform: translateY(-10px) translateX(20px);
+  }
+}
+
+.animate-float-slow-reverse {
+  animation: float-slow-reverse 18s ease-in-out infinite;
+}
+
+/* Slow floating particles for memories */
+@keyframes float-particle-slow {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.6;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(-10vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-float-particle-slow {
+  animation: float-particle-slow linear infinite;
+}
+
+/* Handwriting-style font utility */
+.font-handwriting {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-style: italic;
+}
+
+/* Sepia filter for vintage photos */
+.filter-sepia-warm {
+  filter: sepia(0.2) saturate(1.1) brightness(1.05);
+}
+
+/* Warm vignette effect */
+.vignette-warm::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+/* Fade in up animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
 }

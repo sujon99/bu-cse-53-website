@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { PhotoGallery } from '@/components/photo-gallery';
 import { ContactDirectory } from '@/components/contact-directory';
 import type { Contact } from '@/components/contact-directory';
+import { HeroSection } from '@/components/hero-section';
+import { MemoriesShowcase } from '@/components/memories-showcase';
+import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -16,136 +19,58 @@ import {
 import { Input } from "@/components/ui/input"
 import { BackToTop } from '@/components/back-to-top';
 
-// ... (keep lines 19-204 same roughly, just targeting imports and the specific render block)
-
-// Re-targeting the replace for the render part specifically
-// Imports line 9
-
-
-// Sample contact data - replace with actual data source
-const SAMPLE_CONTACTS: Contact[] = [
-  // First contact - Always Fixed
-  {
-    id: '1',
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@example.com',
-    phone: '+1-555-0101',
-    whatsapp: '+15550101',
-    linkedin: 'https://linkedin.com/in/sarahjohnson',
-    facebook: 'https://facebook.com/sarahjohnson',
-    imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop', // Self
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=400&fit=crop', // Friend 1
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop'  // Friend 2 (Group)
-    ],
-    bloodGroup: 'A+',
-  },
-  // Rest - Randomized
-  {
-    id: '2',
-    name: 'Michael Chen',
-    email: 'michael.chen@example.com',
-    phone: '+1-555-0102',
-    whatsapp: '+15550102',
-    linkedin: 'https://linkedin.com/in/michaelchen',
-    facebook: 'https://facebook.com/michaelchen',
-    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop',
-    ],
-    bloodGroup: 'O+',
-  },
-  {
-    id: '3',
-    name: 'Emily Rodriguez',
-    email: 'emily.rodriguez@example.com',
-    phone: '+1-555-0103',
-    facebook: 'https://facebook.com/emilyrodriguez',
-    imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
-    bloodGroup: 'B+',
-  },
-  {
-    id: '4',
-    name: 'James Morrison',
-    email: 'james.morrison@example.com',
-    phone: '+1-555-0104',
-    whatsapp: '+15550104',
-    linkedin: 'https://linkedin.com/in/jamesmorrison',
-    facebook: 'https://facebook.com/jamesmorrison',
-    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
-    ],
-    bloodGroup: 'AB-',
-  },
-  {
-    id: '5',
-    name: 'Jessica Taylor',
-    email: 'jessica.taylor@example.com',
-    phone: '+1-555-0105',
-    whatsapp: '+15550105',
-    facebook: 'https://facebook.com/jessicataylor',
-    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
-    bloodGroup: 'A-',
-  },
-  {
-    id: '6',
-    name: 'David Park',
-    email: 'david.park@example.com',
-    phone: '+1-555-0106',
-    facebook: 'https://facebook.com/davidpark',
-    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    bloodGroup: 'O-',
-  },
-  {
-    id: '7',
-    name: 'Amanda White',
-    email: 'amanda.white@example.com',
-    phone: '+1-555-0107',
-    whatsapp: '+15550107',
-    facebook: 'https://facebook.com/amandawhite',
-    imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-    bloodGroup: 'B-',
-  },
-  {
-    id: '8',
-    name: 'Chris Anderson',
-    email: 'chris.anderson@example.com',
-    phone: '+1-555-0108',
-    whatsapp: '+15550108',
-    facebook: 'https://facebook.com/chrisanderson',
-    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-    bloodGroup: 'AB+',
-  },
-];
-
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('photos');
+  const [activeTab, setActiveTab] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
 
-  // State for contacts to handle shuffling
-  const [displayedContacts, setDisplayedContacts] = useState<Contact[]>(SAMPLE_CONTACTS);
+  // State for contacts with loading and error states
+  const [displayedContacts, setDisplayedContacts] = useState<Contact[]>([]);
+  const [isLoadingContacts, setIsLoadingContacts] = useState(true);
+  const [contactsError, setContactsError] = useState<string | null>(null);
 
-  // Randomize contacts on mount (except first one)
+  // Fetch contacts from API on mount
   useEffect(() => {
-    // Keep first contact
-    const firstContact = SAMPLE_CONTACTS[0];
-    // Copy the rest
-    const restContacts = [...SAMPLE_CONTACTS.slice(1)];
+    async function fetchContacts() {
+      try {
+        setIsLoadingContacts(true);
+        setContactsError(null);
 
-    // Fisher-Yates shuffle for the rest
-    for (let i = restContacts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [restContacts[i], restContacts[j]] = [restContacts[j], restContacts[i]];
+        const response = await fetch('/api/contacts');
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Failed to fetch contacts');
+        }
+
+        const contacts: Contact[] = data.contacts || [];
+
+        // Keep first contact, shuffle the rest
+        if (contacts.length > 1) {
+          const firstContact = contacts[0];
+          const restContacts = [...contacts.slice(1)];
+
+          // Fisher-Yates shuffle for the rest
+          for (let i = restContacts.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [restContacts[i], restContacts[j]] = [restContacts[j], restContacts[i]];
+          }
+
+          setDisplayedContacts([firstContact, ...restContacts]);
+        } else {
+          setDisplayedContacts(contacts);
+        }
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+        setContactsError(error instanceof Error ? error.message : 'Failed to load contacts');
+        setDisplayedContacts([]);
+      } finally {
+        setIsLoadingContacts(false);
+      }
     }
 
-    // Combine
-    setDisplayedContacts([firstContact, ...restContacts]);
+    fetchContacts();
   }, []);
 
   React.useEffect(() => {
@@ -177,7 +102,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Tabs defaultValue="photos" value={activeTab} onValueChange={setActiveTab} className="w-full min-h-screen flex flex-col">
+      <Tabs defaultValue="home" value={activeTab} onValueChange={setActiveTab} className="w-full min-h-screen flex flex-col">
         {/* Search Dialog (Global) */}
         <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
           <DialogContent className="sm:max-w-md top-[20%] translate-y-0">
@@ -206,48 +131,80 @@ export default function Home() {
           </DialogContent>
         </Dialog>
 
-        {/* Header */}
-        <header className={`border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-transform duration-300 ${isScrollingDown ? '-translate-y-full' : 'translate-y-0'}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="flex-1 text-center sm:text-center">
-                <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-1 text-balance">
-                  Bangladesh University Memories
-                </h1>
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  Cherished moments and connections with friends
-                </p>
+        {/* Header - transparent on home, solid on other tabs */}
+        <header className={`sticky top-0 z-40 transition-all duration-300 ${isScrollingDown ? '-translate-y-full' : 'translate-y-0'
+          } ${activeTab === 'home'
+            ? 'bg-transparent border-none'
+            : 'border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
+          }`}>
+          {/* Only show title section on non-home tabs */}
+          {activeTab !== 'home' && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1 text-center sm:text-center">
+                  <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-1 text-balance">
+                    Bangladesh University Memories
+                  </h1>
+                  <p className="text-sm sm:text-base text-muted-foreground">
+                    Cherished moments and connections with friends
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </header>
 
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
-          {/* Mobile-hidden top tabs */}
-          <div className="flex items-center justify-center mb-8 hidden sm:flex">
-            <div className="inline-flex h-10 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1">
+        <main className="mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+          {/* Mobile-hidden top tabs - glass effect on home, normal on other tabs */}
+          <div className={`flex items-center justify-center mb-8 hidden sm:flex ${activeTab === 'home'
+            ? 'fixed top-4 left-1/2 -translate-x-1/2 z-50'
+            : ''
+            }`}>
+            <div className={`inline-flex h-10 items-center justify-center rounded-full p-1 gap-1 transition-all ${activeTab === 'home'
+              ? 'bg-white/60 backdrop-blur-xl text-neutral-900 border border-white/40 shadow-xl shadow-black/10'
+              : 'rounded-lg bg-muted text-muted-foreground'
+              }`}>
               <TabsList className="bg-transparent p-0 h-auto">
-                <TabsTrigger value="photos" className="flex items-center gap-2 px-4 shadow-none data-[state=active]:shadow-sm data-[state=active]:bg-background">
+                <TabsTrigger value="home" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
+                  <HomeIcon className="w-4 h-4" />
+                  Home
+                </TabsTrigger>
+                <TabsTrigger value="photos" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
                   <Images className="w-4 h-4" />
                   Photos
                 </TabsTrigger>
-                <TabsTrigger value="videos" className="flex items-center gap-2 px-4 shadow-none data-[state=active]:shadow-sm data-[state=active]:bg-background">
+                <TabsTrigger value="videos" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
                   <Video className="w-4 h-4" />
                   Videos
                 </TabsTrigger>
-                <TabsTrigger value="contacts" className="flex items-center gap-2 px-4 shadow-none data-[state=active]:shadow-sm data-[state=active]:bg-background">
+                <TabsTrigger value="contacts" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
                   <Users className="w-4 h-4" />
                   Contacts
                 </TabsTrigger>
               </TabsList>
 
-              <div className="w-px h-5 bg-border/20 mx-1" />
+              <div className={`w-px h-5 mx-1 ${activeTab === 'home' ? 'bg-neutral-300' : 'bg-border/20'}`} />
 
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className="h-8 px-3 text-sm hover:bg-background/50 hover:text-foreground rounded-md gap-2"
+                className={`h-8 px-3 text-sm rounded-full gap-2 ${activeTab === 'home'
+                  ? 'text-neutral-700 hover:bg-neutral-900/10 hover:text-neutral-900'
+                  : 'hover:bg-background/50 hover:text-foreground'
+                  }`}
                 title="Search"
               >
                 <Search className="w-4 h-4" />
@@ -256,6 +213,14 @@ export default function Home() {
             </div>
           </div>
 
+
+          <TabsContent value="home" className="outline-none">
+            <div className="-mx-4 sm:-mx-6 lg:-mx-8 -mt-8">
+              <HeroSection onExploreClick={() => setActiveTab('photos')} onContactsClick={() => setActiveTab('contacts')} />
+              <MemoriesShowcase onViewAllClick={() => setActiveTab('photos')} />
+              <FriendQuotes />
+            </div>
+          </TabsContent>
 
           <TabsContent value="photos" className="outline-none">
             <div className="space-y-6">
@@ -283,7 +248,33 @@ export default function Home() {
                 <h2 className="text-2xl font-semibold tracking-tight">Friend Directory</h2>
                 <p className="text-muted-foreground">Stay connected with your university batchmates</p>
               </div>
-              <ContactDirectory contacts={filteredContacts} />
+
+              {/* Loading State */}
+              {isLoadingContacts && (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
+                  <p className="text-muted-foreground">Loading contacts...</p>
+                </div>
+              )}
+
+              {/* Error State */}
+              {!isLoadingContacts && contactsError && (
+                <div className="text-center py-12">
+                  <p className="text-destructive mb-2">Failed to load contacts</p>
+                  <p className="text-sm text-muted-foreground mb-4">{contactsError}</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => window.location.reload()}
+                  >
+                    Try Again
+                  </Button>
+                </div>
+              )}
+
+              {/* Contacts List */}
+              {!isLoadingContacts && !contactsError && (
+                <ContactDirectory contacts={filteredContacts} />
+              )}
             </div>
           </TabsContent>
         </main>
@@ -306,6 +297,13 @@ export default function Home() {
               }`}
           >
             <TabsList className="bg-transparent h-auto p-0 flex-1 flex justify-around gap-1">
+              <TabsTrigger
+                value="home"
+                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+              >
+                <HomeIcon className="w-5 h-5" />
+                <span className="text-[10px] font-medium">Home</span>
+              </TabsTrigger>
               <TabsTrigger
                 value="photos"
                 className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"

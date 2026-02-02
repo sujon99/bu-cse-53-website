@@ -10,6 +10,7 @@ interface GoogleDriveFile {
   imageMediaMetadata?: {
     width?: number;
     height?: number;
+    rotation?: number;
   };
   videoMediaMetadata?: {
     width?: number;
@@ -29,6 +30,7 @@ interface Photo {
   size?: number;
   width?: number;
   height?: number;
+  rotation?: number;
   videoDuration?: string;
 }
 
@@ -97,7 +99,7 @@ export async function GET(request: NextRequest) {
     const imageQuery = `'${googleDriveFolderId}' in parents and mimeType contains 'image/' and trashed=false`;
     const videoQuery = `'${googleDriveFolderId}' in parents and (mimeType contains 'video/' or mimeType='application/vnd.google-apps.video') and trashed=false`;
 
-    const fields = 'files(id,name,mimeType,webContentLink,thumbnailLink,createdTime,size,imageMediaMetadata,videoMediaMetadata)';
+    const fields = 'files(id,name,mimeType,webContentLink,thumbnailLink,createdTime,size,imageMediaMetadata(width,height,rotation),videoMediaMetadata)';
     const imageUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(imageQuery)}&key=${apiKey}&fields=${fields}&pageSize=1000`;
     const videoUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(videoQuery)}&key=${apiKey}&fields=${fields}&pageSize=1000`;
 
@@ -144,8 +146,12 @@ export async function GET(request: NextRequest) {
         size: file.size ? parseInt(file.size, 10) : 0,
         width: file.imageMediaMetadata?.width,
         height: file.imageMediaMetadata?.height,
+        rotation: file.imageMediaMetadata?.rotation,
       }));
-      allFiles = allFiles.concat(fetchedPhotos);
+
+
+
+      allFiles = [...allFiles, ...fetchedPhotos];
     }
 
     if (videoResponse.ok) {
