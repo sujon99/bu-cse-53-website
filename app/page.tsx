@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { PhotoGallery } from '@/components/photo-gallery';
 import { ContactDirectory } from '@/components/contact-directory';
 import type { Contact } from '@/components/contact-directory';
+import { HeroSection } from '@/components/hero-section';
+import { MemoriesShowcase } from '@/components/memories-showcase';
+import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video, Loader2 } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -17,7 +20,7 @@ import { Input } from "@/components/ui/input"
 import { BackToTop } from '@/components/back-to-top';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('photos');
+  const [activeTab, setActiveTab] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
@@ -99,7 +102,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Tabs defaultValue="photos" value={activeTab} onValueChange={setActiveTab} className="w-full min-h-screen flex flex-col">
+      <Tabs defaultValue="home" value={activeTab} onValueChange={setActiveTab} className="w-full min-h-screen flex flex-col">
         {/* Search Dialog (Global) */}
         <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
           <DialogContent className="sm:max-w-md top-[20%] translate-y-0">
@@ -128,48 +131,80 @@ export default function Home() {
           </DialogContent>
         </Dialog>
 
-        {/* Header */}
-        <header className={`border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-transform duration-300 ${isScrollingDown ? '-translate-y-full' : 'translate-y-0'}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="flex-1 text-center sm:text-center">
-                <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-1 text-balance">
-                  Bangladesh University Memories
-                </h1>
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  Cherished moments and connections with friends
-                </p>
+        {/* Header - transparent on home, solid on other tabs */}
+        <header className={`sticky top-0 z-40 transition-all duration-300 ${isScrollingDown ? '-translate-y-full' : 'translate-y-0'
+          } ${activeTab === 'home'
+            ? 'bg-transparent border-none'
+            : 'border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
+          }`}>
+          {/* Only show title section on non-home tabs */}
+          {activeTab !== 'home' && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1 text-center sm:text-center">
+                  <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-1 text-balance">
+                    Bangladesh University Memories
+                  </h1>
+                  <p className="text-sm sm:text-base text-muted-foreground">
+                    Cherished moments and connections with friends
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </header>
 
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
-          {/* Mobile-hidden top tabs */}
-          <div className="flex items-center justify-center mb-8 hidden sm:flex">
-            <div className="inline-flex h-10 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1">
+        <main className="mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+          {/* Mobile-hidden top tabs - glass effect on home, normal on other tabs */}
+          <div className={`flex items-center justify-center mb-8 hidden sm:flex ${activeTab === 'home'
+            ? 'fixed top-4 left-1/2 -translate-x-1/2 z-50'
+            : ''
+            }`}>
+            <div className={`inline-flex h-10 items-center justify-center rounded-full p-1 gap-1 transition-all ${activeTab === 'home'
+              ? 'bg-white/60 backdrop-blur-xl text-neutral-900 border border-white/40 shadow-xl shadow-black/10'
+              : 'rounded-lg bg-muted text-muted-foreground'
+              }`}>
               <TabsList className="bg-transparent p-0 h-auto">
-                <TabsTrigger value="photos" className="flex items-center gap-2 px-4 shadow-none data-[state=active]:shadow-sm data-[state=active]:bg-background">
+                <TabsTrigger value="home" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
+                  <HomeIcon className="w-4 h-4" />
+                  Home
+                </TabsTrigger>
+                <TabsTrigger value="photos" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
                   <Images className="w-4 h-4" />
                   Photos
                 </TabsTrigger>
-                <TabsTrigger value="videos" className="flex items-center gap-2 px-4 shadow-none data-[state=active]:shadow-sm data-[state=active]:bg-background">
+                <TabsTrigger value="videos" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
                   <Video className="w-4 h-4" />
                   Videos
                 </TabsTrigger>
-                <TabsTrigger value="contacts" className="flex items-center gap-2 px-4 shadow-none data-[state=active]:shadow-sm data-[state=active]:bg-background">
+                <TabsTrigger value="contacts" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
                   <Users className="w-4 h-4" />
                   Contacts
                 </TabsTrigger>
               </TabsList>
 
-              <div className="w-px h-5 bg-border/20 mx-1" />
+              <div className={`w-px h-5 mx-1 ${activeTab === 'home' ? 'bg-neutral-300' : 'bg-border/20'}`} />
 
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className="h-8 px-3 text-sm hover:bg-background/50 hover:text-foreground rounded-md gap-2"
+                className={`h-8 px-3 text-sm rounded-full gap-2 ${activeTab === 'home'
+                  ? 'text-neutral-700 hover:bg-neutral-900/10 hover:text-neutral-900'
+                  : 'hover:bg-background/50 hover:text-foreground'
+                  }`}
                 title="Search"
               >
                 <Search className="w-4 h-4" />
@@ -178,6 +213,14 @@ export default function Home() {
             </div>
           </div>
 
+
+          <TabsContent value="home" className="outline-none">
+            <div className="-mx-4 sm:-mx-6 lg:-mx-8 -mt-8">
+              <HeroSection onExploreClick={() => setActiveTab('photos')} onContactsClick={() => setActiveTab('contacts')} />
+              <MemoriesShowcase onViewAllClick={() => setActiveTab('photos')} />
+              <FriendQuotes />
+            </div>
+          </TabsContent>
 
           <TabsContent value="photos" className="outline-none">
             <div className="space-y-6">
@@ -254,6 +297,13 @@ export default function Home() {
               }`}
           >
             <TabsList className="bg-transparent h-auto p-0 flex-1 flex justify-around gap-1">
+              <TabsTrigger
+                value="home"
+                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+              >
+                <HomeIcon className="w-5 h-5" />
+                <span className="text-[10px] font-medium">Home</span>
+              </TabsTrigger>
               <TabsTrigger
                 value="photos"
                 className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
