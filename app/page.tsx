@@ -22,6 +22,7 @@ import { FloatingDecorations } from '@/components/floating-decorations';
 import { PolaroidStack } from '@/components/polaroid-stack';
 import { YearsCounter } from '@/components/years-counter';
 import { MemoryTimeline } from '@/components/memory-timeline';
+import { BatchStatsFooter } from '@/components/batch-stats-footer';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -264,6 +265,7 @@ export default function Home() {
 
               <MemoryTimeline />
               <FriendQuotes />
+              <BatchStatsFooter />
             </div>
           </TabsContent>
 

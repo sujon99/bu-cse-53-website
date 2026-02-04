@@ -193,9 +193,12 @@ export function MemoryTimeline() {
                 }}
             />
 
+            {/* Top shadow overlay to blend with previous section */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background via-background/80 to-transparent pointer-events-none z-10" />
+
             <div className="max-w-6xl mx-auto relative z-10">
-                <div className="text-center mb-24 space-y-6">
-                    <span className="text-sm font-bold tracking-[0.4em] text-amber-600/80 dark:text-amber-500 uppercase font-sans border border-amber-200/50 px-4 py-1.5 rounded-full bg-amber-50/50 backdrop-blur-sm">Our Journey</span>
+                <div className="text-center mb-24 space-y-8">
+                    <span className="text-sm font-bold tracking-[0.4em] text-amber-600/80 dark:text-amber-500 uppercase font-sans border border-amber-200/50 px-4 py-1.5 rounded-full bg-amber-50/50 backdrop-blur-sm mb-4 inline-block">Our Journey</span>
                     <h2 className="text-5xl sm:text-6xl font-serif text-stone-800 dark:text-stone-100 drop-shadow-sm">
                         Timeline of <span className="italic text-amber-600 dark:text-amber-500">Memories</span>
                     </h2>

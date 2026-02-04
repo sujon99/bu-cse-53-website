@@ -159,18 +159,18 @@ export function HeroSection({ onExploreClick, onContactsClick }: HeroSectionProp
                 {/* Badge */}
                 <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <Camera className="w-4 h-4 text-amber-300" />
-                    <span className="text-sm text-white/80 tracking-wide">CSE 53 • Class Memories</span>
+                    <span className="text-sm text-white/80 tracking-wide">CSE 53 • Friends Memories</span>
                     <Heart className="w-4 h-4 text-rose-400" />
                 </div>
 
                 {/* Vintage Year Badge */}
-                <div className={`inline-flex items-center gap-3 mb-8 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                {/* <div className={`inline-flex items-center gap-3 mb-8 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <span className="text-amber-400/60 text-lg">✧</span>
                     <div className="px-4 py-1.5 border border-amber-400/30 rounded-full bg-amber-900/20 backdrop-blur-sm">
                         <span className="text-xs text-amber-200/80 font-serif tracking-[0.3em] uppercase">Est. 2019</span>
                     </div>
                     <span className="text-amber-400/60 text-lg">✧</span>
-                </div>
+                </div> */}
 
                 {/* Main title - elegant, warm typography */}
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-light mb-6 leading-tight tracking-tight text-white">
@@ -254,10 +254,9 @@ export function HeroSection({ onExploreClick, onContactsClick }: HeroSectionProp
                 )}
             </div>
 
-            {/* Bottom gradient fade - very smooth transition */}
-            <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-10">
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent" />
+            {/* Bottom gradient fade - smooth transition to page background */}
+            <div className="absolute bottom-0 left-0 right-0 h-44 pointer-events-none z-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#F8F7F3] via-[#F8F7F3]/70 to-transparent dark:from-background dark:via-background/70" />
             </div>
         </section>
     );
