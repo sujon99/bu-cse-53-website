@@ -157,10 +157,19 @@ export function HeroSection({ onExploreClick, onContactsClick }: HeroSectionProp
             {/* Main content */}
             <div className={`relative z-10 text-center px-4 max-w-4xl mx-auto transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 {/* Badge */}
-                <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-8 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <Camera className="w-4 h-4 text-amber-300" />
                     <span className="text-sm text-white/80 tracking-wide">CSE 53 • Class Memories</span>
                     <Heart className="w-4 h-4 text-rose-400" />
+                </div>
+
+                {/* Vintage Year Badge */}
+                <div className={`inline-flex items-center gap-3 mb-8 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                    <span className="text-amber-400/60 text-lg">✧</span>
+                    <div className="px-4 py-1.5 border border-amber-400/30 rounded-full bg-amber-900/20 backdrop-blur-sm">
+                        <span className="text-xs text-amber-200/80 font-serif tracking-[0.3em] uppercase">Est. 2019</span>
+                    </div>
+                    <span className="text-amber-400/60 text-lg">✧</span>
                 </div>
 
                 {/* Main title - elegant, warm typography */}

@@ -80,10 +80,20 @@ export function FriendQuotes() {
     return (
         <section
             ref={sectionRef}
-            className={`relative py-20 px-4 overflow-hidden transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+            className={`relative py-20 px-4 overflow-hidden transition-all duration-1000 paper-texture ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
         >
             {/* Warm gradient background */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-rose-950/5 to-background" />
+
+            {/* Vintage paper background tint */}
+            <div className="absolute inset-0 bg-gradient-to-br from-rose-50/25 via-amber-50/20 to-rose-50/25 dark:from-rose-950/15 dark:via-amber-950/10 dark:to-rose-950/15" />
+
+            {/* Paper grain texture overlay */}
+            <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                }}
+            />
 
             {/* Decorative elements */}
             <div className="absolute top-1/4 left-10 text-6xl opacity-10 rotate-[-15deg]">❝</div>
@@ -146,8 +156,8 @@ export function FriendQuotes() {
                                 }, 300);
                             }}
                             className={`h-1.5 rounded-full transition-all duration-300 ${index === currentQuoteIndex
-                                    ? 'w-6 bg-gradient-to-r from-amber-400 to-rose-400'
-                                    : 'w-1.5 bg-neutral-300 dark:bg-neutral-600 hover:bg-amber-300'
+                                ? 'w-6 bg-gradient-to-r from-amber-400 to-rose-400'
+                                : 'w-1.5 bg-neutral-300 dark:bg-neutral-600 hover:bg-amber-300'
                                 }`}
                             aria-label={`View quote ${index + 1}`}
                         />
