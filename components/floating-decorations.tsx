@@ -66,7 +66,7 @@ export function FloatingDecorations() {
     }, []);
 
     return (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-[5]" aria-hidden="true">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-[50]" aria-hidden="true">
             {items.map((item) => {
                 if (item.type === 'leaf') {
                     const leafEmoji = LEAF_EMOJIS[item.id % LEAF_EMOJIS.length];
