@@ -54,6 +54,7 @@ export async function fetchContactsFromSheet(): Promise<Contact[]> {
  * F - Facebook Profile
  * G - LinkedIn Profile
  * H - WhatsApp Number
+ * I - City (current location)
  */
 function parseSheetData(data: GoogleSheetsResponse): Contact[] {
     const rows = data.table?.rows || [];
@@ -76,6 +77,7 @@ function parseSheetData(data: GoogleSheetsResponse): Contact[] {
         const facebook = getValue(5);
         const linkedin = getValue(6);
         const whatsapp = getValue(7);
+        const city = getValue(8);
 
         // Skip rows without a name (likely empty or header row)
         if (!name) return;
@@ -96,6 +98,7 @@ function parseSheetData(data: GoogleSheetsResponse): Contact[] {
             facebook: facebook || undefined,
             linkedin: linkedin || undefined,
             whatsapp: whatsapp || undefined,
+            city: city || undefined,
         };
 
         contacts.push(contact);

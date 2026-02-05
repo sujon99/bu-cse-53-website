@@ -19,7 +19,7 @@ interface MemoriesShowcaseProps {
 }
 
 // Gallery style types
-type GalleryStyle = 'polaroid' | 'vintage' | 'modern' | 'filmstrip' | 'scrapbook';
+type GalleryStyle = 'polaroid' | 'vintage' | 'modern' | 'filmstrip' | 'scrapbook' | 'retro' | 'goldenHour' | 'blackAndWhite' | 'faded';
 
 interface StyleConfig {
     name: string;
@@ -102,6 +102,62 @@ const GALLERY_STYLES: Record<GalleryStyle, StyleConfig> = {
             { active: 'opacity-100 rotate-[-1deg] translate-x-0', inactive: 'opacity-0 translate-x-10 -rotate-3' },
         ],
     },
+    retro: {
+        name: 'Retro',
+        icon: '🎞️',
+        frameClass: 'bg-stone-900 p-3 pb-14 rounded-lg shadow-2xl border-4 border-stone-700 vignette-frame',
+        imageClass: 'rounded-sm sepia-[0.5] contrast-110 saturate-[0.9]',
+        captionClass: 'text-stone-400 font-mono text-xs tracking-wider uppercase',
+        caption: '· Vintage Memories ·',
+        transitions: [
+            { active: 'opacity-100 scale-100 brightness-100', inactive: 'opacity-0 scale-95 brightness-50' },
+            { active: 'opacity-100 blur-0 sepia-[0.5]', inactive: 'opacity-0 blur-sm sepia' },
+            { active: 'opacity-100 translate-y-0', inactive: 'opacity-0 -translate-y-8' },
+            { active: 'opacity-100 scale-100', inactive: 'opacity-0 scale-110 rotate-1' },
+        ],
+    },
+    goldenHour: {
+        name: 'Golden Hour',
+        icon: '🌅',
+        frameClass: 'bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-950/40 dark:to-orange-950/40 p-4 pb-16 rounded-2xl shadow-2xl shadow-amber-500/20 border border-amber-200/50 dark:border-amber-700/30',
+        imageClass: 'rounded-xl brightness-105 saturate-110 contrast-[0.95]',
+        captionClass: 'text-amber-700 dark:text-amber-300 font-serif italic',
+        caption: 'Golden days to remember ☀️',
+        transitions: [
+            { active: 'opacity-100 brightness-105 scale-100', inactive: 'opacity-0 brightness-75 scale-105' },
+            { active: 'opacity-100 saturate-110 translate-x-0', inactive: 'opacity-0 saturate-50 translate-x-4' },
+            { active: 'opacity-100 translate-y-0 rotate-0', inactive: 'opacity-0 translate-y-6 rotate-1' },
+            { active: 'opacity-100 blur-0', inactive: 'opacity-0 blur-[2px]' },
+        ],
+    },
+    blackAndWhite: {
+        name: 'B&W Classic',
+        icon: '📻',
+        frameClass: 'bg-neutral-100 dark:bg-neutral-950 p-2 pb-12 rounded-none shadow-2xl border-8 border-neutral-300 dark:border-neutral-700',
+        imageClass: 'rounded-none grayscale contrast-125',
+        captionClass: 'text-neutral-500 dark:text-neutral-400 font-serif text-sm italic',
+        caption: 'Timeless moments in monochrome',
+        transitions: [
+            { active: 'opacity-100 grayscale contrast-125 scale-100', inactive: 'opacity-0 grayscale-0 scale-95' },
+            { active: 'opacity-100 translate-x-0', inactive: 'opacity-0 -translate-x-full' },
+            { active: 'opacity-100 translate-y-0', inactive: 'opacity-0 translate-y-full' },
+            { active: 'opacity-100 blur-0', inactive: 'opacity-0 blur-md' },
+        ],
+    },
+    faded: {
+        name: 'Faded',
+        icon: '🎭',
+        frameClass: 'bg-slate-50 dark:bg-slate-900/50 p-5 pb-18 rounded-lg shadow-xl border border-slate-200/80 dark:border-slate-700/50',
+        imageClass: 'rounded-md saturate-[0.6] brightness-110 contrast-[0.85]',
+        captionClass: 'text-slate-500 dark:text-slate-400 font-light tracking-wide',
+        caption: 'Faded but never forgotten 🍂',
+        transitions: [
+            { active: 'opacity-100 saturate-[0.6] scale-100', inactive: 'opacity-0 saturate-100 scale-90' },
+            { active: 'opacity-100 brightness-110 translate-y-0', inactive: 'opacity-0 brightness-150 translate-y-4' },
+            { active: 'opacity-100 rotate-0', inactive: 'opacity-0 rotate-2' },
+            { active: 'opacity-100 blur-0 translate-x-0', inactive: 'opacity-0 blur-[1px] translate-x-2' },
+        ],
+    },
 };
 
 export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
@@ -111,6 +167,40 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedStyle, setSelectedStyle] = useState<GalleryStyle>('polaroid');
     const sectionRef = useRef<HTMLElement>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
+
+    // Touch swipe state
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    // Minimum swipe distance (in px)
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe && photos.length > 1) {
+            // Swipe left = next photo
+            setCurrentIndex((prev) => (prev + 1) % photos.length);
+        }
+        if (isRightSwipe && photos.length > 1) {
+            // Swipe right = previous photo
+            setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+        }
+    };
 
     // Fetch random photos from API
     useEffect(() => {
@@ -134,7 +224,10 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                                 [width, height] = [height, width];
                             }
 
-                            return width > height;
+                            // Filter checks:
+                            // 1. Must be high quality (width >= 1920)
+                            // 2. Must be landscape orientation (width > height)
+                            return width >= 1920 && width > height;
                         }
                     );
 
@@ -193,10 +286,20 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
     return (
         <section
             ref={sectionRef}
-            className={`relative py-20 px-4 overflow-hidden transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+            className={`relative py-20 px-4 overflow-hidden transition-all duration-1000 paper-texture ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
         >
             {/* Warm background gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-amber-950/5 to-background" />
+
+            {/* Vintage paper background tint */}
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-orange-50/20 to-amber-50/30 dark:from-amber-950/20 dark:via-orange-950/10 dark:to-amber-950/20" />
+
+            {/* Paper grain texture overlay */}
+            <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                }}
+            />
 
             <div className="relative max-w-6xl mx-auto">
                 {/* Section header with warm styling */}
@@ -216,7 +319,13 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                 {/* Carousel with dynamic style frame */}
                 <div className="relative group">
                     {/* Main image container - dynamic style */}
-                    <div className={`relative aspect-[4/3] max-w-4xl mx-auto overflow-hidden transition-all duration-500 ${GALLERY_STYLES[selectedStyle].frameClass}`}>
+                    <div
+                        ref={carouselRef}
+                        onTouchStart={onTouchStart}
+                        onTouchMove={onTouchMove}
+                        onTouchEnd={onTouchEnd}
+                        className={`relative aspect-[4/3] max-w-4xl mx-auto overflow-hidden transition-all duration-500 ${GALLERY_STYLES[selectedStyle].frameClass}`}
+                    >
                         {/* Photo area */}
                         <div className={`relative w-full h-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 transition-all duration-500 ${GALLERY_STYLES[selectedStyle].imageClass}`}>
                             {isLoading ? (

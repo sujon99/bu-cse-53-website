@@ -14,6 +14,7 @@ export interface Contact {
   whatsapp?: string;
   linkedin?: string;
   imageUrls?: string[];
+  city?: string;
 }
 
 interface ContactDirectoryProps {

@@ -9,7 +9,7 @@ import { MemoriesShowcase } from '@/components/memories-showcase';
 import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,13 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { BackToTop } from '@/components/back-to-top';
+import { FloatingDecorations } from '@/components/floating-decorations';
+import { PolaroidStack } from '@/components/polaroid-stack';
+import { YearsCounter } from '@/components/years-counter';
+import { MemoryTimeline } from '@/components/memory-timeline';
+import { BatchStatsFooter } from '@/components/batch-stats-footer';
+import { ScrollAnimation } from '@/components/scroll-animation';
+import { AuthorTab } from '@/components/author-tab';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -193,6 +200,13 @@ export default function Home() {
                   <Users className="w-4 h-4" />
                   Contacts
                 </TabsTrigger>
+                <TabsTrigger value="author" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
+                  <PenTool className="w-4 h-4" />
+                  Author
+                </TabsTrigger>
               </TabsList>
 
               <div className={`w-px h-5 mx-1 ${activeTab === 'home' ? 'bg-neutral-300' : 'bg-border/20'}`} />
@@ -215,10 +229,54 @@ export default function Home() {
 
 
           <TabsContent value="home" className="outline-none">
+            <FloatingDecorations />
             <div className="-mx-4 sm:-mx-6 lg:-mx-8 -mt-8">
               <HeroSection onExploreClick={() => setActiveTab('photos')} onContactsClick={() => setActiveTab('contacts')} />
               <MemoriesShowcase onViewAllClick={() => setActiveTab('photos')} />
+
+              {/* Photo Stack Interactive Section */}
+              <ScrollAnimation>
+                <section className="relative py-10 sm:py-16 px-4 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-b from-background via-stone-100/30 to-background dark:via-stone-900/20" />
+
+                  <div className="relative max-w-4xl mx-auto">
+                    <div className="text-center mb-8 sm:mb-10">
+                      <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium">✧ Interactive Memory ✧</span>
+                      <h3 className="text-xl sm:text-2xl font-serif text-foreground mt-2">
+                        <span className="hidden sm:inline">Hover</span>
+                        <span className="sm:hidden">Tap</span>
+                        {' '}to Explore
+                      </h3>
+                    </div>
+
+                    {/* Desktop: Two stacks with center quote */}
+                    <div className="hidden sm:flex justify-center items-center gap-16">
+                      <PolaroidStack className="transform -rotate-3 hover:rotate-0 transition-transform duration-500" />
+                      <div className="text-center px-6">
+                        <div className="text-6xl mb-3">📸</div>
+                        <p className="text-sm text-muted-foreground font-handwriting italic">
+                          &ldquo;Every photo tells<br />a story of friendship&rdquo;
+                        </p>
+                      </div>
+                      <PolaroidStack className="transform rotate-3 hover:rotate-0 transition-transform duration-500" />
+                    </div>
+
+                    {/* Mobile: Single centered stack */}
+                    <div className="flex sm:hidden flex-col items-center gap-6">
+                      <PolaroidStack />
+                      <p className="text-xs text-muted-foreground font-handwriting italic text-center">
+                        &ldquo;Every photo tells a story of friendship&rdquo;
+                      </p>
+                    </div>
+                  </div>
+                </section>
+              </ScrollAnimation>
+
+              <YearsCounter />
+
+              <MemoryTimeline />
               <FriendQuotes />
+              <BatchStatsFooter />
             </div>
           </TabsContent>
 
@@ -277,6 +335,10 @@ export default function Home() {
               )}
             </div>
           </TabsContent>
+
+          <TabsContent value="author" className="outline-none">
+            <AuthorTab />
+          </TabsContent>
         </main>
 
         <BackToTop />
@@ -324,6 +386,13 @@ export default function Home() {
               >
                 <Users className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Contacts</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="author"
+                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+              >
+                <PenTool className="w-5 h-5" />
+                <span className="text-[10px] font-medium">Author</span>
               </TabsTrigger>
             </TabsList>
 
