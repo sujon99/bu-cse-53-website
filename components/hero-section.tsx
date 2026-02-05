@@ -159,7 +159,7 @@ export function HeroSection({ onExploreClick, onContactsClick }: HeroSectionProp
                 {/* Badge */}
                 <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-4 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <Camera className="w-4 h-4 text-amber-300" />
-                    <span className="text-sm text-white/80 tracking-wide">CSE 53 • Friends Memories</span>
+                    <span className="text-sm text-white/80 tracking-wide">CSE 53 • Memories</span>
                     <Heart className="w-4 h-4 text-rose-400" />
                 </div>
 

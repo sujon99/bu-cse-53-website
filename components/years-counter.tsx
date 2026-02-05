@@ -85,11 +85,9 @@ export function YearsCounter() {
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                }
+                setIsVisible(entry.isIntersecting);
             },
-            { threshold: 0.2 }
+            { threshold: 0.15 }
         );
 
         if (sectionRef.current) {
@@ -187,7 +185,7 @@ export function YearsCounter() {
                     ].map((item, idx) => (
                         <div
                             key={idx}
-                            className={`group p-8 rounded-2xl bg-white/60 dark:bg-stone-800/60 border ${item.border} dark:border-stone-700/50 backdrop-blur-md shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                            className={`group p-8 rounded-2xl bg-white/60 dark:bg-stone-800/60 border ${item.border} dark:border-stone-700/50 backdrop-blur-md shadow-sm hover:shadow-xl transition-all duration-700 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                                 }`}
                             style={{ transitionDelay: `${item.delay}ms` }}
                         >

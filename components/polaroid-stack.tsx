@@ -98,8 +98,8 @@ export function PolaroidStack({ className = '' }: PolaroidStackProps) {
             const stackedY = index * 1;
 
             const fanRotation = -25 + (index * (50 / Math.max(total - 1, 1)));
-            const fanX = -60 + (index * (120 / Math.max(total - 1, 1)));
-            const fanY = Math.abs(index - Math.floor(total / 2)) * 8;
+            const fanX = -75 + (index * (150 / Math.max(total - 1, 1)));
+            const fanY = Math.abs(index - Math.floor(total / 2)) * 10;
 
             return {
                 stacked: {
@@ -132,7 +132,7 @@ export function PolaroidStack({ className = '' }: PolaroidStackProps) {
 
     if (isLoading) {
         return (
-            <div className={`relative w-32 h-40 sm:w-40 sm:h-48 ${className}`}>
+            <div className={`relative w-40 h-52 sm:w-52 sm:h-64 ${className}`}>
                 <div className="animate-pulse bg-stone-200 dark:bg-stone-700 rounded-lg w-full h-full" />
             </div>
         );
@@ -140,7 +140,7 @@ export function PolaroidStack({ className = '' }: PolaroidStackProps) {
 
     if (stackPhotos.length === 0) {
         return (
-            <div className={`relative w-32 h-40 sm:w-40 sm:h-48 ${className}`}>
+            <div className={`relative w-40 h-52 sm:w-52 sm:h-64 ${className}`}>
                 <div className="w-full h-full bg-white dark:bg-stone-100 p-2 pb-6 rounded-sm shadow-lg flex items-center justify-center">
                     <span className="text-4xl">📷</span>
                 </div>
@@ -151,7 +151,7 @@ export function PolaroidStack({ className = '' }: PolaroidStackProps) {
     return (
         <div
             ref={containerRef}
-            className={`relative w-32 h-40 sm:w-40 sm:h-48 cursor-pointer select-none ${className}`}
+            className={`relative w-40 h-52 sm:w-52 sm:h-64 cursor-pointer select-none ${className}`}
             onMouseEnter={() => !isMobile && setIsExpanded(true)}
             onMouseLeave={() => !isMobile && (setIsExpanded(false), setSelectedIndex(null))}
             onClick={handleStackTap}
@@ -198,7 +198,7 @@ export function PolaroidStack({ className = '' }: PolaroidStackProps) {
                                     alt={photo.alt}
                                     fill
                                     className="object-cover sepia-[0.15] saturate-[0.95]"
-                                    sizes="160px"
+                                    sizes="(max-width: 640px) 160px, 208px"
                                     loading="eager"
                                     draggable={false}
                                 />

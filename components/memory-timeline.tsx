@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { GraduationCap, Briefcase, BookOpen, Video, Users, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { ScrollAnimation } from '@/components/scroll-animation';
 
 interface TimelineEvent {
     year: string;
@@ -172,10 +173,14 @@ export function MemoryTimeline() {
                     if (entry.isIntersecting) {
                         const index = Number(entry.target.getAttribute('data-index'));
                         setVisibleItems((prev) => (prev.includes(index) ? prev : [...prev, index]));
+                    } else {
+                        // Remove item when it goes out of view for reverse animation
+                        const index = Number(entry.target.getAttribute('data-index'));
+                        setVisibleItems((prev) => prev.filter(i => i !== index));
                     }
                 });
             },
-            { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
         );
 
         const items = document.querySelectorAll('.timeline-item');
@@ -197,17 +202,19 @@ export function MemoryTimeline() {
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background via-background/80 to-transparent pointer-events-none z-10" />
 
             <div className="max-w-6xl mx-auto relative z-10">
-                <div className="text-center mb-24 space-y-8">
-                    <span className="text-sm font-bold tracking-[0.4em] text-amber-600/80 dark:text-amber-500 uppercase font-sans border border-amber-200/50 px-4 py-1.5 rounded-full bg-amber-50/50 backdrop-blur-sm mb-4 inline-block">Our Journey</span>
-                    <h2 className="text-5xl sm:text-6xl font-serif text-stone-800 dark:text-stone-100 drop-shadow-sm">
-                        Timeline of <span className="italic text-amber-600 dark:text-amber-500">Memories</span>
-                    </h2>
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="h-px w-16 bg-gradient-to-r from-transparent to-amber-300" />
-                        <span className="text-2xl">✨</span>
-                        <div className="h-px w-16 bg-gradient-to-l from-transparent to-amber-300" />
+                <ScrollAnimation>
+                    <div className="text-center mb-24 space-y-8">
+                        <span className="text-sm font-bold tracking-[0.4em] text-amber-600/80 dark:text-amber-500 uppercase font-sans border border-amber-200/50 px-4 py-1.5 rounded-full bg-amber-50/50 backdrop-blur-sm mb-4 inline-block">Our Journey</span>
+                        <h2 className="text-5xl sm:text-6xl font-serif text-stone-800 dark:text-stone-100 drop-shadow-sm">
+                            Timeline of <span className="italic text-amber-600 dark:text-amber-500">Memories</span>
+                        </h2>
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="h-px w-16 bg-gradient-to-r from-transparent to-amber-300" />
+                            <span className="text-2xl">✨</span>
+                            <div className="h-px w-16 bg-gradient-to-l from-transparent to-amber-300" />
+                        </div>
                     </div>
-                </div>
+                </ScrollAnimation>
 
                 <div className="relative">
                     {/* Elegant Long-Wave Line (Desktop & Mobile) */}

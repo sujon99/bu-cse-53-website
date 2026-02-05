@@ -23,6 +23,7 @@ import { PolaroidStack } from '@/components/polaroid-stack';
 import { YearsCounter } from '@/components/years-counter';
 import { MemoryTimeline } from '@/components/memory-timeline';
 import { BatchStatsFooter } from '@/components/batch-stats-footer';
+import { ScrollAnimation } from '@/components/scroll-animation';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -226,40 +227,42 @@ export default function Home() {
               <MemoriesShowcase onViewAllClick={() => setActiveTab('photos')} />
 
               {/* Photo Stack Interactive Section */}
-              <section className="relative py-10 sm:py-16 px-4 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-background via-stone-100/30 to-background dark:via-stone-900/20" />
+              <ScrollAnimation>
+                <section className="relative py-10 sm:py-16 px-4 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-b from-background via-stone-100/30 to-background dark:via-stone-900/20" />
 
-                <div className="relative max-w-4xl mx-auto">
-                  <div className="text-center mb-8 sm:mb-10">
-                    <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium">✧ Interactive Memory ✧</span>
-                    <h3 className="text-xl sm:text-2xl font-serif text-foreground mt-2">
-                      <span className="hidden sm:inline">Hover</span>
-                      <span className="sm:hidden">Tap</span>
-                      {' '}to Explore
-                    </h3>
-                  </div>
+                  <div className="relative max-w-4xl mx-auto">
+                    <div className="text-center mb-8 sm:mb-10">
+                      <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium">✧ Interactive Memory ✧</span>
+                      <h3 className="text-xl sm:text-2xl font-serif text-foreground mt-2">
+                        <span className="hidden sm:inline">Hover</span>
+                        <span className="sm:hidden">Tap</span>
+                        {' '}to Explore
+                      </h3>
+                    </div>
 
-                  {/* Desktop: Two stacks with center quote */}
-                  <div className="hidden sm:flex justify-center items-center gap-16">
-                    <PolaroidStack className="transform -rotate-3 hover:rotate-0 transition-transform duration-500" />
-                    <div className="text-center px-6">
-                      <div className="text-6xl mb-3">📸</div>
-                      <p className="text-sm text-muted-foreground font-handwriting italic">
-                        &ldquo;Every photo tells<br />a story of friendship&rdquo;
+                    {/* Desktop: Two stacks with center quote */}
+                    <div className="hidden sm:flex justify-center items-center gap-16">
+                      <PolaroidStack className="transform -rotate-3 hover:rotate-0 transition-transform duration-500" />
+                      <div className="text-center px-6">
+                        <div className="text-6xl mb-3">📸</div>
+                        <p className="text-sm text-muted-foreground font-handwriting italic">
+                          &ldquo;Every photo tells<br />a story of friendship&rdquo;
+                        </p>
+                      </div>
+                      <PolaroidStack className="transform rotate-3 hover:rotate-0 transition-transform duration-500" />
+                    </div>
+
+                    {/* Mobile: Single centered stack */}
+                    <div className="flex sm:hidden flex-col items-center gap-6">
+                      <PolaroidStack />
+                      <p className="text-xs text-muted-foreground font-handwriting italic text-center">
+                        &ldquo;Every photo tells a story of friendship&rdquo;
                       </p>
                     </div>
-                    <PolaroidStack className="transform rotate-3 hover:rotate-0 transition-transform duration-500" />
                   </div>
-
-                  {/* Mobile: Single centered stack */}
-                  <div className="flex sm:hidden flex-col items-center gap-6">
-                    <PolaroidStack />
-                    <p className="text-xs text-muted-foreground font-handwriting italic text-center">
-                      &ldquo;Every photo tells a story of friendship&rdquo;
-                    </p>
-                  </div>
-                </div>
-              </section>
+                </section>
+              </ScrollAnimation>
 
               <YearsCounter />
 
