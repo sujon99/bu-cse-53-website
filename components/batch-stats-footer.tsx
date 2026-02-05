@@ -221,9 +221,9 @@ export function BatchStatsFooter() {
                         Computer Science & Technology of Bangladesh University
                     </p>
                     <p className="text-sm text-stone-400 dark:text-stone-500">
-                        Made with <Heart className="inline w-3.5 h-3.5 text-rose-400 fill-rose-400 mx-1 -mt-0.5" /> by CSE 53 Batch
+                        Made with <Heart className="inline w-3.5 h-3.5 text-rose-400 fill-rose-400 mx-1 -mt-0.5" /> by CSE 53 Batch  • Version 1.0.0
                     </p>
-                    <p className="text-xs text-stone-300 dark:text-stone-600 pt-2">
+                    <p className="text-xs text-stone-500 dark:text-stone-600 pt-2">
                         © {new Date().getFullYear()} All memories treasured forever
                     </p>
                 </div>

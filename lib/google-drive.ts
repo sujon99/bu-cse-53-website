@@ -1,24 +1,33 @@
-import { NextResponse } from 'next/server';
 
-export async function GET() {
+export interface Photo {
+    id: string;
+    name: string;
+    webContentLink: string;
+    thumbnailLink: string;
+    type: 'photo' | 'video';
+    mimeType: string;
+    createdTime: string;
+    size: number;
+    width?: number;
+    height?: number;
+    videoDuration?: string;
+}
+
+export async function fetchPhotosFromDrive(): Promise<{ files: Photo[], error?: string }> {
     try {
         const API_KEY = process.env.GOOGLE_API_KEY;
         const FOLDER_ID = process.env.NEXT_PUBLIC_GOOGLE_DRIVE_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_ID;
 
         if (!API_KEY || !FOLDER_ID) {
             console.error('Missing Google Drive configuration');
-            return NextResponse.json(
-                { error: 'Server configuration error: Missing Google Drive credentials' },
-                { status: 500 }
-            );
+            return { error: 'Server configuration error: Missing Google Drive credentials', files: [] };
         }
 
-        // Prepare fields to fetch
         const fields = 'nextPageToken, files(id, name, mimeType, webContentLink, webViewLink, thumbnailLink, appProperties, createdTime, size, imageMediaMetadata, videoMediaMetadata)';
         const query = `'${FOLDER_ID}' in parents and trashed = false`;
         const baseUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&key=${API_KEY}&pageSize=100&orderBy=createdTime desc`;
 
-        console.log(`[API] Fetching photos from Drive folder: ${FOLDER_ID}`);
+        console.log(`[Lib] Fetching photos from Drive folder: ${FOLDER_ID}`);
 
         let allFiles: any[] = [];
         let pageToken = '';
@@ -29,11 +38,14 @@ export async function GET() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error('[API] Google Drive API Error:', errorData);
-                return NextResponse.json(
-                    { error: `Google Drive API Error: ${errorData.error?.message || response.statusText}` },
-                    { status: response.status }
-                );
+                console.error('[Lib] Google Drive API Error:', errorData);
+                // Continue but just return what we have or error? 
+                // Better to return error if the first page fails, but maybe partial if later pages fail?
+                // For simplicity, let's treat any failure as critical if we have no files.
+                if (allFiles.length === 0) {
+                    return { error: `Google Drive API Error: ${errorData.error?.message || response.statusText}`, files: [] };
+                }
+                break;
             }
 
             const data = await response.json();
@@ -44,31 +56,17 @@ export async function GET() {
             pageToken = data.nextPageToken || '';
         } while (pageToken);
 
-        console.log(`[API] Total files fetched: ${allFiles.length}`);
-
-        if (allFiles.length === 0) {
-            return NextResponse.json({ files: [] });
-        }
-
-        const data = { files: allFiles }; // Shim for compatibility with rest of the code
-
-        if (!data.files) {
-            return NextResponse.json({ files: [] });
-        }
+        console.log(`[Lib] Total files fetched: ${allFiles.length}`);
 
         // Transform to our Photo interface
-        const files = data.files
-            // Filter primarily for images and videos just in case
-            // (Though client side filtering also exists, good to be clean here)
+        const photos: Photo[] = allFiles
             .filter((file: any) => file.mimeType.startsWith('image/') || file.mimeType.startsWith('video/'))
             .map((file: any) => {
                 const isVideo = file.mimeType.startsWith('video/');
 
-                // High-res thumbnail hack: replace =s220 (default) with larger size if thumbnailLink exists
-                // Google Drive thumbnail links often end with something like "=s220"
+                // High-res thumbnail hack
                 let fullResThumbnail = file.thumbnailLink;
                 if (fullResThumbnail && fullResThumbnail.includes('=s')) {
-                    // Request a larger size, e.g., 1200px
                     fullResThumbnail = fullResThumbnail.replace(/=s\d+/, '=s1200');
                 }
 
@@ -89,13 +87,10 @@ export async function GET() {
                 };
             });
 
-        return NextResponse.json({ files });
+        return { files: photos };
 
     } catch (error) {
-        console.error('[API] Unexpected error fetching photos:', error);
-        return NextResponse.json(
-            { error: 'Internal Server Error' },
-            { status: 500 }
-        );
+        console.error('[Lib] Unexpected error fetching photos:', error);
+        return { error: 'Internal Server Error', files: [] };
     }
 }

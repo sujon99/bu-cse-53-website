@@ -9,7 +9,7 @@ import { MemoriesShowcase } from '@/components/memories-showcase';
 import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -24,6 +24,7 @@ import { YearsCounter } from '@/components/years-counter';
 import { MemoryTimeline } from '@/components/memory-timeline';
 import { BatchStatsFooter } from '@/components/batch-stats-footer';
 import { ScrollAnimation } from '@/components/scroll-animation';
+import { AuthorTab } from '@/components/author-tab';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -199,6 +200,13 @@ export default function Home() {
                   <Users className="w-4 h-4" />
                   Contacts
                 </TabsTrigger>
+                <TabsTrigger value="author" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
+                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
+                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
+                  }`}>
+                  <PenTool className="w-4 h-4" />
+                  Author
+                </TabsTrigger>
               </TabsList>
 
               <div className={`w-px h-5 mx-1 ${activeTab === 'home' ? 'bg-neutral-300' : 'bg-border/20'}`} />
@@ -327,6 +335,10 @@ export default function Home() {
               )}
             </div>
           </TabsContent>
+
+          <TabsContent value="author" className="outline-none">
+            <AuthorTab />
+          </TabsContent>
         </main>
 
         <BackToTop />
@@ -374,6 +386,13 @@ export default function Home() {
               >
                 <Users className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Contacts</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="author"
+                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+              >
+                <PenTool className="w-5 h-5" />
+                <span className="text-[10px] font-medium">Author</span>
               </TabsTrigger>
             </TabsList>
 

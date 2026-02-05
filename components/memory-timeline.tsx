@@ -23,8 +23,9 @@ const EVENTS: TimelineEvent[] = [
         icon: Users,
         date: 'Admission & Orientation',
         images: [
-            'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=800&auto=format&fit=crop'
+            'https://lh3.googleusercontent.com/d/1ogOj3ayQuU6Q3xqeSmkPsJkgS-k5STyE=w720',
+            'https://lh3.googleusercontent.com/d/1qMZ3xAnb1Ye_QH11Ex0HygovDKbgKHhV=w720',
+            'https://lh3.googleusercontent.com/d/1eg9bZdGzzOuoh2TPod3VgnCvwFJ-X5XH=w720'
         ],
         rotation: '-rotate-2'
     },
@@ -35,7 +36,10 @@ const EVENTS: TimelineEvent[] = [
         icon: Video,
         date: 'Covid & Online Classes',
         images: [
-            'https://images.unsplash.com/photo-1584697964405-8334442a3a02?q=80&w=800&auto=format&fit=crop'
+            'https://lh3.googleusercontent.com/d/15_TIdF6wFyRw6RkDScVx0MN5lGPIapcK=w720',
+            'https://lh3.googleusercontent.com/d/1D3W3MWTRm9XdwUB-qMmsfapvYru2eFn4=w720',
+            'https://lh3.googleusercontent.com/d/16OchtmqP-_WMyOgvECbQQoCw1HeELOWx=w720',
+            'https://lh3.googleusercontent.com/d/1QF1qZWXcV9QXyq1pRKNugFW5k9VjqexN=w720'
         ],
         rotation: 'rotate-1'
     },
@@ -46,8 +50,9 @@ const EVENTS: TimelineEvent[] = [
         icon: BookOpen,
         date: '10 Semesters Complete',
         images: [
-            'https://images.unsplash.com/photo-1524578271613-d550eacf6090?q=80&w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800&auto=format&fit=crop'
+            'https://lh3.googleusercontent.com/d/1PqvauwUIP01kFpwy6VPP1P3KoiR1py-I=w720',
+            'https://lh3.googleusercontent.com/d/1XkK09JtJPdKA4XwMJDvWs0BmtHCprm7L=w720',
+            'https://lh3.googleusercontent.com/d/1lhaMxnDGcN_bCfiAEBVLNRvQEbA7cbcn=w720'
         ],
         rotation: '-rotate-3'
     },
@@ -58,7 +63,9 @@ const EVENTS: TimelineEvent[] = [
         icon: Briefcase,
         date: 'Internship Period',
         images: [
-            'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop'
+            'https://lh3.googleusercontent.com/d/1FSIFSgxHfX-uy6ktuEacq3vCCCQLm1Hm=w720',
+            'https://lh3.googleusercontent.com/d/1B5MQ3LeYq-cpNDsYD1q6F-e2MHAUJi4u=w720',
+            'https://lh3.googleusercontent.com/d/1edo0pFRP3cdfPYl46g2lZnQL4SGNkAPh=w720'
         ],
         rotation: 'rotate-2'
     },
@@ -69,8 +76,10 @@ const EVENTS: TimelineEvent[] = [
         icon: GraduationCap,
         date: 'Jan 18, 2026',
         images: [
-            'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1627556947514-6937ee35bb65?q=80&w=800&auto=format&fit=crop'
+            'https://lh3.googleusercontent.com/d/13dwbOlfyKGW-l_WF4UftecojAQM91E6Q=w720',
+            'https://lh3.googleusercontent.com/d/1RSrPVMTpRTRfqA8yPlK1rLbJW2afXr9P=w720',
+            'https://lh3.googleusercontent.com/d/1FvJtnesL3QJkA5GYBpcWXSkvMqiF7Nmr=w720',
+            'https://lh3.googleusercontent.com/d/1avxLtn-TBLtzLju3u7mECXY3sxB844rf=w720'
         ],
         rotation: '-rotate-1'
     }
