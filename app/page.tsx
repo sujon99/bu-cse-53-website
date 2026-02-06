@@ -9,7 +9,8 @@ import { MemoriesShowcase } from '@/components/memories-showcase';
 import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool, Clapperboard, PlaySquare, Film, Settings2, Grid } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Dialog,
   DialogContent,
@@ -30,12 +31,23 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMediaExpanded, setIsMediaExpanded] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
 
   // State for contacts with loading and error states
   const [displayedContacts, setDisplayedContacts] = useState<Contact[]>([]);
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
   const [contactsError, setContactsError] = useState<string | null>(null);
+
+  // Auto-expand media menu if on photos/videos tab
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (activeTab === 'photos' || activeTab === 'videos') {
+      setIsMediaExpanded(true);
+    } else {
+      setIsMediaExpanded(false);
+    }
+  }, [activeTab]);
 
   // Fetch contacts from API on mount
   useEffect(() => {
@@ -144,14 +156,14 @@ export default function Home() {
                   autoFocus
                 />
               </div>
-              <Button onClick={handleSearch} size="icon">
+              <Button onClick={handleSearch} size="icon" className="bg-amber-500 hover:bg-amber-600 text-white">
                 <Search className="h-4 w-4" />
               </Button>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
               <span className="text-xs text-muted-foreground mr-1">Search by:</span>
               {['Name', 'Email', 'Phone', 'Whatsapp', 'Blood Group', 'City', 'Designation', 'Company'].map((tag) => (
-                <span key={tag} className="px-2 py-0.5 bg-muted text-muted-foreground text-[10px] rounded-full border border-border">
+                <span key={tag} className="px-2 py-0.5 bg-amber-100/50 text-amber-900/70 text-[10px] rounded-full border border-amber-200/50">
                   {tag}
                 </span>
               ))}
@@ -165,26 +177,112 @@ export default function Home() {
           {/* Mobile-hidden top tabs - Always fixed and glass effect */}
           <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center mb-8 hidden sm:flex transition-transform duration-300 ${isScrollingDown ? '-translate-y-24' : 'translate-y-0'}`}>
             <div className="inline-flex h-10 items-center justify-center rounded-full p-1 gap-1 transition-all bg-white/60 backdrop-blur-xl text-neutral-900 border border-white/40 shadow-xl shadow-black/10">
-              <TabsList className="bg-transparent p-0 h-auto">
-                <TabsTrigger value="home" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
-                  <HomeIcon className="w-4 h-4" />
-                  Home
+              <TabsList className="bg-transparent p-0 h-auto flex items-center gap-1">
+                <TabsTrigger
+                  value="home"
+                  onClick={() => setIsMediaExpanded(false)}
+                  className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                  asChild
+                >
+                  <motion.button
+                    layout
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                  >
+                    <HomeIcon className="w-4 h-4" />
+                    Home
+                  </motion.button>
                 </TabsTrigger>
-                <TabsTrigger value="photos" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
-                  <Images className="w-4 h-4" />
-                  Photos
+
+                {/* Desktop Dynamic Media Group */}
+                <AnimatePresence mode='popLayout' initial={false}>
+                  {!isMediaExpanded ? (
+                    <motion.button
+                      key="desktop-media-collapsed"
+                      layout
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      onClick={() => setIsMediaExpanded(true)}
+                      className="flex items-center gap-2 px-4 h-8 rounded-full text-sm font-medium text-stone-600 hover:bg-amber-100/40 transition-colors"
+                    >
+                      <motion.div layout className="flex items-center gap-2">
+                        <Grid className="w-4 h-4" />
+                        Media
+                      </motion.div>
+                    </motion.button>
+                  ) : (
+                    <motion.div
+                      key="desktop-media-expanded"
+                      layout
+                      className="flex items-center gap-1"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    >
+                      <TabsTrigger
+                        value="photos"
+                        className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                        asChild
+                      >
+                        <motion.button
+                          layout
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                        >
+                          <Images className="w-4 h-4" />
+                          Photos
+                        </motion.button>
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="videos"
+                        className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                        asChild
+                      >
+                        <motion.button
+                          layout
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                        >
+                          <Video className="w-4 h-4" />
+                          Videos
+                        </motion.button>
+                      </TabsTrigger>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <TabsTrigger
+                  value="contacts"
+                  onClick={() => setIsMediaExpanded(false)}
+                  className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                  asChild
+                >
+                  <motion.button
+                    layout
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                  >
+                    <Users className="w-4 h-4" />
+                    Contacts
+                  </motion.button>
                 </TabsTrigger>
-                <TabsTrigger value="videos" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
-                  <Video className="w-4 h-4" />
-                  Videos
-                </TabsTrigger>
-                <TabsTrigger value="contacts" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
-                  <Users className="w-4 h-4" />
-                  Contacts
-                </TabsTrigger>
-                <TabsTrigger value="author" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
-                  <PenTool className="w-4 h-4" />
-                  Author
+                <TabsTrigger
+                  value="author"
+                  onClick={() => setIsMediaExpanded(false)}
+                  className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                  asChild
+                >
+                  <motion.button
+                    layout
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                  >
+                    <PenTool className="w-4 h-4" />
+                    Author
+                  </motion.button>
                 </TabsTrigger>
                 {/* Hidden Search Tab Trigger for state management */}
                 <TabsTrigger value="search" className="hidden">Search</TabsTrigger>
@@ -199,7 +297,7 @@ export default function Home() {
                   setTempSearchQuery(''); // Clear input for fresh search
                   setIsSearchOpen(true);
                 }}
-                className="h-8 px-3 text-sm rounded-full gap-2 text-neutral-700 hover:bg-neutral-900/10 hover:text-neutral-900"
+                className="h-8 px-4 text-sm rounded-full gap-2 text-stone-600 hover:bg-amber-100/40 hover:text-amber-900 shadow-none"
                 title="Search"
               >
                 <Search className="w-4 h-4" />
@@ -261,7 +359,7 @@ export default function Home() {
             </div>
           </TabsContent>
 
-          <TabsContent value="photos" className="outline-none pt-20">
+          <TabsContent value="photos" className="outline-none pt-4 sm:pt-20">
             <div className="space-y-6">
               <div className="text-center space-y-3 mb-12">
                 <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">Memories</span>
@@ -272,16 +370,16 @@ export default function Home() {
                   Capturing the timeless moments of our journey together
                 </p>
               </div>
-              {/* Only pass global searchQuery if we are NOT in search specific tab (this is photos tab) - actually here we can just pass '' or handle search globally. 
+              {/* Only pass global searchQuery if we are NOT in search specific tab (this is photos tab) - actually here we can just pass '' or handle search globally.
                   But user wants dedicated page. So 'Photos' tab should probably show ALL photos unless filtered?
-                  Actually, usually 'Photos' tab has its own search or uses global. 
+                  Actually, usually 'Photos' tab has its own search or uses global.
                   Let's keep Photos tab showing ALL (searchQuery='') to differentiate.
               */}
               <PhotoGallery lockedType="photo" searchQuery="" />
             </div>
           </TabsContent>
 
-          <TabsContent value="videos" className="outline-none pt-20">
+          <TabsContent value="videos" className="outline-none pt-4 sm:pt-20">
             <div className="space-y-6">
               <div className="text-center space-y-3 mb-12">
                 <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">Motion</span>
@@ -296,7 +394,7 @@ export default function Home() {
             </div>
           </TabsContent>
 
-          <TabsContent value="contacts" className="outline-none pt-20">
+          <TabsContent value="contacts" className="outline-none pt-4 sm:pt-20">
             <div className="space-y-6">
               <div className="text-center space-y-3 mb-12">
                 <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">Directory</span>
@@ -338,7 +436,7 @@ export default function Home() {
           </TabsContent>
 
           {/* NEW SEARCH RESULTS TAB */}
-          <TabsContent value="search" className="outline-none pt-20">
+          <TabsContent value="search" className="outline-none pt-4 sm:pt-20">
             <div className="space-y-12">
               <div className="text-center space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Search Results</h2>
@@ -368,7 +466,7 @@ export default function Home() {
             </div>
           </TabsContent>
 
-          <TabsContent value="author" className="outline-none pt-20">
+          <TabsContent value="author" className="outline-none pt-0 sm:pt-20">
             <AuthorTab />
           </TabsContent>
         </main>
@@ -377,7 +475,7 @@ export default function Home() {
 
         {/* Floating Mobile Bottom Navigation Dock */}
         <div
-          className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 sm:hidden max-w-md flex justify-center 
+          className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 sm:hidden max-w-md flex justify-center
             ${isScrollingDown
               ? 'bottom-0 w-full rounded-none'
               : 'bottom-6 w-[90%] rounded-[18px]'
@@ -393,58 +491,148 @@ export default function Home() {
             <TabsList className="bg-transparent h-auto p-0 flex-1 flex w-full justify-start overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <TabsTrigger
                 value="home"
-                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                onClick={() => setIsMediaExpanded(false)}
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none hover:bg-transparent transition-all"
+                asChild
               >
-                <HomeIcon className="w-5 h-5" />
-                <span className="text-[10px] font-medium">Home</span>
+                <motion.button
+                  key="mobile-home"
+                  layout
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40 transition-all"
+                >
+                  <HomeIcon className="w-5 h-5" />
+                  <span className="text-[10px] font-medium">Home</span>
+                </motion.button>
               </TabsTrigger>
-              <TabsTrigger
-                value="photos"
-                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
-              >
-                <Images className="w-5 h-5" />
-                <span className="text-[10px] font-medium">Photos</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="videos"
-                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
-              >
-                <Video className="w-5 h-5" />
-                <span className="text-[10px] font-medium">Videos</span>
-              </TabsTrigger>
+
+              {/* Dynamic Media Group */}
+              <AnimatePresence mode='popLayout' initial={false}>
+                {!isMediaExpanded ? (
+                  <motion.button
+                    key="media-collapsed"
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    onClick={() => setIsMediaExpanded(true)}
+                    className="flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] hover:bg-amber-100/40 transition-colors text-foreground"
+                  >
+                    <motion.div layout className="flex flex-col items-center gap-1">
+                      <Grid className="w-5 h-5" />
+                      <span className="text-[10px] font-medium">Media</span>
+                    </motion.div>
+                  </motion.button>
+                ) : (
+                  <motion.div
+                    key="media-expanded"
+                    layout
+                    className="flex gap-2"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  >
+                    <TabsTrigger
+                      value="photos"
+                      className="rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none py-2 px-3 h-auto"
+                      asChild
+                    >
+                      <motion.button
+                        key="mobile-photos"
+                        layout
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        className="flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 text-foreground hover:bg-amber-100/40 transition-colors"
+                      >
+                        <Images className="w-5 h-5" />
+                        <span className="text-[10px] font-medium">Photos</span>
+                      </motion.button>
+                    </TabsTrigger>
+
+                    <TabsTrigger
+                      value="videos"
+                      className="rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none py-2 px-3 h-auto"
+                      asChild
+                    >
+                      <motion.button
+                        key="mobile-videos"
+                        layout
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        className="flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 text-foreground hover:bg-amber-100/40 transition-colors"
+                      >
+                        <Video className="w-5 h-5" />
+                        <span className="text-[10px] font-medium">Videos</span>
+                      </motion.button>
+                    </TabsTrigger>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <TabsTrigger
                 value="contacts"
-                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                onClick={() => setIsMediaExpanded(false)}
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none hover:bg-transparent transition-all"
+                asChild
               >
-                <Users className="w-5 h-5" />
-                <span className="text-[10px] font-medium">Contacts</span>
+                <motion.button
+                  key="mobile-contacts"
+                  layout
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40 transition-all"
+                >
+                  <Users className="w-5 h-5" />
+                  <span className="text-[10px] font-medium">Contacts</span>
+                </motion.button>
               </TabsTrigger>
-              {/* If active tab is search, show it as selected, otherwise Author. Or just keep Author. 
-                  Maybe replace Author with Search if Search is active? 
+              {/* If active tab is search, show it as selected, otherwise Author. Or just keep Author.
+                  Maybe replace Author with Search if Search is active?
                   For now let's keep Author and access Search via the floating button. */}
               <TabsTrigger
                 value="author"
-                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                onClick={() => setIsMediaExpanded(false)}
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none hover:bg-transparent transition-all"
+                asChild
               >
-                <PenTool className="w-5 h-5" />
-                <span className="text-[10px] font-medium">Author</span>
+                <motion.button
+                  key="mobile-author"
+                  layout
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40 transition-all"
+                >
+                  <PenTool className="w-5 h-5" />
+                  <span className="text-[10px] font-medium">Author</span>
+                </motion.button>
               </TabsTrigger>
             </TabsList>
 
-            <div className="w-px h-8 bg-border/50 mx-1" />
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                setTempSearchQuery('');
-                setIsSearchOpen(true);
-              }}
-              className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl hover:bg-muted text-muted-foreground w-auto"
-            >
-              <Search className="w-5 h-5" />
-              <span className="text-[10px] font-medium">Search</span>
-            </Button>
+            <AnimatePresence>
+              {isScrollingDown && (
+                <motion.div
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: "auto" }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center overflow-hidden"
+                >
+                  <div className="w-px h-8 bg-border/50 mx-1" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      setTempSearchQuery('');
+                      setIsSearchOpen(true);
+                    }}
+                    className="flex-col gap-1 h-auto py-2 px-3 rounded-[14px] hover:bg-amber-100/40 text-foreground transition-colors w-auto shrink-0"
+                  >
+                    <motion.div layout className="flex flex-col items-center gap-1">
+                      <Search className="w-5 h-5" />
+                      <span className="text-[10px] font-medium">Search</span>
+                    </motion.div>
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </Tabs>

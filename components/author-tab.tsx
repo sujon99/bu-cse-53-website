@@ -33,7 +33,7 @@ const AUTHOR_INFO = {
 
 export function AuthorTab() {
     return (
-        <div className="relative min-h-[85vh] w-full overflow-hidden flex flex-col items-center py-16 px-4 sm:px-6">
+        <div className="relative min-h-[85vh] w-full overflow-hidden flex flex-col items-center py-16 pt-0 px-4 sm:px-6">
 
             {/* --- BACKGROUND FROM HERO SECTION --- */}
             {/* Warm overlay gradient */}
