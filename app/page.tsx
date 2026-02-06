@@ -103,9 +103,26 @@ export default function Home() {
       contact.email.toLowerCase().includes(query) ||
       contact.phone.includes(query) ||
       (contact.whatsapp && contact.whatsapp.includes(query)) ||
-      (contact.bloodGroup && contact.bloodGroup.toLowerCase().includes(query))
+      (contact.bloodGroup && contact.bloodGroup.toLowerCase().includes(query)) ||
+      (contact.city && contact.city.toLowerCase().includes(query)) ||
+      (contact.designation && contact.designation.toLowerCase().includes(query)) ||
+      (contact.company && contact.company.toLowerCase().includes(query))
     );
   });
+
+  const [tempSearchQuery, setTempSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    setSearchQuery(tempSearchQuery);
+    setActiveTab('search');
+    setIsSearchOpen(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -119,19 +136,23 @@ export default function Home() {
             <div className="flex items-center space-x-2">
               <div className="grid flex-1 gap-2">
                 <Input
-                  placeholder="Search memories..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by Name, City, Blood Group..."
+                  value={tempSearchQuery}
+                  onChange={(e) => setTempSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   className="col-span-3"
                   autoFocus
                 />
               </div>
+              <Button onClick={handleSearch} size="icon">
+                <Search className="h-4 w-4" />
+              </Button>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
               <span className="text-xs text-muted-foreground mr-1">Search by:</span>
-              {['Name', 'Email', 'Phone', 'C_Whatsapp', 'Blood Group'].map((tag) => (
+              {['Name', 'Email', 'Phone', 'Whatsapp', 'Blood Group', 'City', 'Designation', 'Company'].map((tag) => (
                 <span key={tag} className="px-2 py-0.5 bg-muted text-muted-foreground text-[10px] rounded-full border border-border">
-                  {tag.replace('C_Whatsapp', 'Whatsapp')} {/* Hack to allow display text but keeping key clean if needed */}
+                  {tag}
                 </span>
               ))}
             </div>
@@ -142,7 +163,7 @@ export default function Home() {
 
         <main className="mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
           {/* Mobile-hidden top tabs - Always fixed and glass effect */}
-          <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center mb-8 hidden sm:flex">
+          <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center mb-8 hidden sm:flex transition-transform duration-300 ${isScrollingDown ? '-translate-y-24' : 'translate-y-0'}`}>
             <div className="inline-flex h-10 items-center justify-center rounded-full p-1 gap-1 transition-all bg-white/60 backdrop-blur-xl text-neutral-900 border border-white/40 shadow-xl shadow-black/10">
               <TabsList className="bg-transparent p-0 h-auto">
                 <TabsTrigger value="home" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
@@ -165,6 +186,8 @@ export default function Home() {
                   <PenTool className="w-4 h-4" />
                   Author
                 </TabsTrigger>
+                {/* Hidden Search Tab Trigger for state management */}
+                <TabsTrigger value="search" className="hidden">Search</TabsTrigger>
               </TabsList>
 
               <div className="w-px h-5 mx-1 bg-neutral-300" />
@@ -172,7 +195,10 @@ export default function Home() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setIsSearchOpen(true)}
+                onClick={() => {
+                  setTempSearchQuery(''); // Clear input for fresh search
+                  setIsSearchOpen(true);
+                }}
                 className="h-8 px-3 text-sm rounded-full gap-2 text-neutral-700 hover:bg-neutral-900/10 hover:text-neutral-900"
                 title="Search"
               >
@@ -246,7 +272,12 @@ export default function Home() {
                   Capturing the timeless moments of our journey together
                 </p>
               </div>
-              <PhotoGallery lockedType="photo" searchQuery={searchQuery} />
+              {/* Only pass global searchQuery if we are NOT in search specific tab (this is photos tab) - actually here we can just pass '' or handle search globally. 
+                  But user wants dedicated page. So 'Photos' tab should probably show ALL photos unless filtered?
+                  Actually, usually 'Photos' tab has its own search or uses global. 
+                  Let's keep Photos tab showing ALL (searchQuery='') to differentiate.
+              */}
+              <PhotoGallery lockedType="photo" searchQuery="" />
             </div>
           </TabsContent>
 
@@ -261,15 +292,20 @@ export default function Home() {
                   Watch memorable moments and events unfold
                 </p>
               </div>
-              <PhotoGallery lockedType="video" searchQuery={searchQuery} />
+              <PhotoGallery lockedType="video" searchQuery="" />
             </div>
           </TabsContent>
 
           <TabsContent value="contacts" className="outline-none pt-20">
             <div className="space-y-6">
-              <div className="text-center space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight">Friend Directory</h2>
-                <p className="text-muted-foreground">Stay connected with your university batchmates</p>
+              <div className="text-center space-y-3 mb-12">
+                <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">Directory</span>
+                <h2 className="text-4xl md:text-5xl font-serif font-normal tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70 italic">
+                  Faces of Our Journey
+                </h2>
+                <p className="text-muted-foreground/80 font-light text-lg tracking-wide mx-auto leading-relaxed">
+                  The friends who turned moments into memories and strangers into family
+                </p>
               </div>
 
               {/* Loading State */}
@@ -294,10 +330,41 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Contacts List */}
+              {/* Contacts List - Show ALL here, search is separate now */}
               {!isLoadingContacts && !contactsError && (
-                <ContactDirectory contacts={filteredContacts} />
+                <ContactDirectory contacts={displayedContacts} />
               )}
+            </div>
+          </TabsContent>
+
+          {/* NEW SEARCH RESULTS TAB */}
+          <TabsContent value="search" className="outline-none pt-20">
+            <div className="space-y-12">
+              <div className="text-center space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Search Results</h2>
+                <p className="text-muted-foreground">
+                  found matching "{searchQuery}"
+                </p>
+              </div>
+
+              {/* 1. Contact Results */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium border-b pb-2">Friends ({filteredContacts.length})</h3>
+                {!isLoadingContacts && (
+                  <ContactDirectory
+                    key={searchQuery} // Force remount on search change to ensure UI updates
+                    contacts={filteredContacts}
+                    showCount={false}
+                  />
+                )}
+              </div>
+
+              {/* 2. Media Results */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium border-b pb-2">Photos & Videos</h3>
+                {/* Pass the global searchQuery here to filter the PhotoGallery */}
+                <PhotoGallery searchQuery={searchQuery} />
+              </div>
             </div>
           </TabsContent>
 
@@ -323,38 +390,41 @@ export default function Home() {
                 : 'rounded-[18px]'
               }`}
           >
-            <TabsList className="bg-transparent h-auto p-0 flex-1 flex justify-around gap-1">
+            <TabsList className="bg-transparent h-auto p-0 flex-1 flex w-full justify-start overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <TabsTrigger
                 value="home"
-                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
               >
                 <HomeIcon className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Home</span>
               </TabsTrigger>
               <TabsTrigger
                 value="photos"
-                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
               >
                 <Images className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Photos</span>
               </TabsTrigger>
               <TabsTrigger
                 value="videos"
-                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
               >
                 <Video className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Videos</span>
               </TabsTrigger>
               <TabsTrigger
                 value="contacts"
-                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
               >
                 <Users className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Contacts</span>
               </TabsTrigger>
+              {/* If active tab is search, show it as selected, otherwise Author. Or just keep Author. 
+                  Maybe replace Author with Search if Search is active? 
+                  For now let's keep Author and access Search via the floating button. */}
               <TabsTrigger
                 value="author"
-                className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] rounded-2xl data-[state=active]:bg-primary/10 data-[state=active]:text-primary hover:bg-muted transition-all"
               >
                 <PenTool className="w-5 h-5" />
                 <span className="text-[10px] font-medium">Author</span>
@@ -366,7 +436,10 @@ export default function Home() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsSearchOpen(true)}
+              onClick={() => {
+                setTempSearchQuery('');
+                setIsSearchOpen(true);
+              }}
               className="flex-col gap-1 h-auto py-2 px-3 rounded-2xl hover:bg-muted text-muted-foreground w-auto"
             >
               <Search className="w-5 h-5" />

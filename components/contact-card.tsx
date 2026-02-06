@@ -13,6 +13,7 @@ interface ContactCardProps {
 }
 
 // Custom WhatsApp Icon to match Lucide style
+// Custom icons for the card
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +23,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function ContactCard({ contact }: ContactCardProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = contact.imageUrls && contact.imageUrls.length > 0 ? contact.imageUrls : [contact.imageUrl];
 
@@ -57,7 +58,6 @@ export function ContactCard({ contact }: ContactCardProps) {
   }, [emblaApi]);
 
   const handleCall = () => window.location.href = `tel:${contact.phone}`;
-  const handleEmail = () => window.location.href = `mailto:${contact.email}`;
 
   const handleSocial = (url?: string) => {
     if (url) window.open(url, '_blank', 'noopener,noreferrer');
@@ -70,166 +70,191 @@ export function ContactCard({ contact }: ContactCardProps) {
     }
   };
 
+  // Determine special styling based on role
+  const isAuthor = contact.role === 'author';
+  const isCr = contact.role === 'cr';
+
+  // Base Styles
+  let containerStyle = "group relative overflow-hidden rounded-2xl border backdrop-blur-md transition-all duration-500 flex flex-col sm:flex-row h-full max-w-2xl mx-auto w-full hover:shadow-2xl";
+  let borderClass = "border-border/40 hover:border-border/80";
+  let bgClass = "bg-card/30 supports-[backdrop-filter]:bg-background/60"; // Glass-like
+  let roleBadge = null;
+
+  if (isAuthor) {
+    // Author: Premium Gold/Amber Aesthetic - Subtle & Sophisticated
+    borderClass = "border-amber-500/20 group-hover:border-amber-500/40";
+    bgClass = "bg-gradient-to-br from-amber-500/5 via-background/80 to-background/40";
+    roleBadge = (
+      <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+        <span className="w-1 h-1 rounded-full bg-amber-500 animate-pulse" />
+        Author
+      </span>
+    );
+  } else if (isCr) {
+    // CR: Premium Slate/Sky Aesthetic - Clean & Trustworthy
+    borderClass = "border-sky-500/20 group-hover:border-sky-500/40";
+    bgClass = "bg-gradient-to-br from-sky-500/5 via-background/80 to-background/40";
+    roleBadge = (
+      <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-[10px] font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400">
+        <span className="w-1 h-1 rounded-full bg-sky-500" />
+        CR
+      </span>
+    );
+  }
+
   return (
-    <Card className="overflow-hidden hover:shadow-2xl hover:bg-muted/50 transition-all duration-300 group border-white/10 backdrop-blur-sm bg-card/80">
-      <CardContent className="!p-0 h-full">
-        <div className="flex flex-col sm:flex-row h-full">
+    <div className={`${containerStyle} ${borderClass} ${bgClass}`}>
 
-          {/* Profile Image Section with Slider */}
-          <div className="relative w-full sm:w-60 aspect-square sm:aspect-auto sm:h-full shrink-0 overflow-hidden bg-muted group/slider">
-            <div className="w-full h-full" ref={emblaRef}>
-              <div className="flex w-full h-full">
-                {images.length > 0 ? (
-                  images.map((imgSrc, idx) => (
-                    <div className="flex-[0_0_100%] min-w-0 relative w-full h-full" key={idx}>
-                      <Image
-                        src={imgSrc || "/placeholder.svg"}
-                        alt={`${contact.name} - ${idx + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, 240px"
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <div className="flex-[0_0_100%] min-w-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
-                    <span className="text-4xl font-bold text-primary/30 select-none">
-                      {contact.name.charAt(0)}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
+      {/* Decorative Gradient Background - Positioned at bottom on mobile (behind text) and top-right on desktop */}
+      {isAuthor && <div className="absolute bottom-0 right-0 sm:top-0 sm:right-0 w-64 h-64 bg-amber-500/10 blur-[80px] -z-10 rounded-full pointer-events-none" />}
+      {isCr && <div className="absolute bottom-0 right-0 sm:top-0 sm:right-0 w-64 h-64 bg-sky-500/10 blur-[80px] -z-10 rounded-full pointer-events-none" />}
 
-            {/* Slider Controls (Only if multiple images) */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={handleNextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-                {/* Dots Indicator */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-                  {images.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        scrollTo(idx);
-                      }}
-                      className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-white' : 'bg-white/40'}`}
-                      aria-label={`Go to image ${idx + 1}`}
-                    />
-                  ))}
+      {/* --- LEFT SIDE: IMAGE CAROUSEL (40%) --- */}
+      <div className="relative w-full sm:w-[40%] aspect-[4/5] sm:aspect-auto sm:h-auto shrink-0 overflow-hidden bg-black/40 group/slider">
+        <div className="w-full h-full overflow-hidden" ref={emblaRef}>
+          <div className="flex w-full h-full">
+            {images.length > 0 ? (
+              images.map((imgSrc, idx) => (
+                <div className="flex-[0_0_100%] min-w-0 relative w-full h-full mr-2" key={idx}>
+                  <Image
+                    src={imgSrc || "/placeholder.svg"}
+                    alt={`${contact.name} - ${idx + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 300px"
+                  />
                 </div>
-              </>
+              ))
+            ) : (
+              <div className="flex-[0_0_100%] min-w-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900">
+                <span className="text-4xl font-bold text-white/20 select-none">
+                  {contact.name.charAt(0)}
+                </span>
+              </div>
             )}
+          </div>
+        </div>
 
-            {/* Gradient Overlay for Name (Mobile only) */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent sm:hidden pointer-events-none z-0" />
-            <div className="absolute bottom-3 left-3 sm:hidden text-white font-bold text-xl drop-shadow-md z-10">
-              {contact.name}
+        {/* Slider Controls */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={handlePrevImage}
+              className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/40 text-white/80 hover:bg-black/60 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleNextImage}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/40 text-white/80 hover:bg-black/60 hover:text-white transition-all opacity-0 group-hover/slider:opacity-100"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+              {images.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`w-1.5 h-1.5 rounded-full shadow-sm transition-all ${idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/40'}`}
+                />
+              ))}
             </div>
+          </>
+        )}
+      </div>
+
+      {/* --- RIGHT SIDE: DETAILS (60%) --- */}
+      <div className="flex-1 flex flex-col p-4 sm:p-5 relative">
+
+        {/* Name & Role */}
+        <div className="mb-4">
+          <h3 className="text-xl font-bold text-foreground leading-tight flex flex-wrap items-center gap-1">
+            {contact.name}
+            {roleBadge}
+          </h3>
+        </div>
+
+        {/* Info Grid with Divider */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-5 text-sm">
+          {/* Col 1: Contact Info */}
+          <div className="flex-1 space-y-2.5 min-w-0">
+            <div className="flex items-center gap-2.5 text-muted-foreground hover:text-foreground transition-colors group/item">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors">
+                <Mail className="w-4 h-4" />
+              </div>
+              <span className="truncate text-xs sm:text-sm">{contact.email}</span>
+            </div>
+
+            <div className="flex items-center gap-2.5 text-muted-foreground hover:text-foreground transition-colors group/item">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors">
+                <Phone className="w-4 h-4" />
+              </div>
+              <span className="truncate text-xs sm:text-sm">{contact.phone}</span>
+            </div>
+
+            {contact.bloodGroup && (
+              <div className="flex items-center gap-2.5 text-muted-foreground">
+                <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
+                </div>
+                <span className="font-semibold text-red-400 text-xs sm:text-sm">Blood Group: {contact.bloodGroup}</span>
+              </div>
+            )}
           </div>
 
-          {/* Contact Details Section */}
-          <div className="flex-1 p-5 flex flex-col justify-center">
-            <h3 className="text-xl font-bold text-foreground mb-1 hidden sm:block">
-              {contact.name}
-            </h3>
+          {/* Conditionally render dividers if there is additional info */}
+          {(contact.designation || contact.company || contact.city) && (
+            <>
+              {/* Vertical Divider (Hidden on mobile) */}
+              <div className="hidden sm:block w-px bg-gradient-to-b from-transparent via-border to-transparent" />
 
-            <div className="space-y-2 mb-4 mt-2">
-              {/* Email */}
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors w-fit"
-              >
-                <Mail className="w-4 h-4" />
-                <span className="truncate">{contact.email}</span>
-              </a>
+              {/* Horizontal Divider (Visible on mobile) */}
+              <div className="block sm:hidden h-px bg-gradient-to-r from-transparent via-border to-transparent w-full" />
+            </>
+          )}
 
-              {/* Phone */}
-              <a
-                href={`tel:${contact.phone}`}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors w-fit"
-              >
-                <Phone className="w-4 h-4" />
-                <span>{contact.phone}</span>
-              </a>
+          {/* Col 2: Additional Info (Mocked if missing in interface, but trying to be realistic) */}
+          <div className="flex-1 space-y-3 min-w-0">
+            {/* Using static or generic info since interface might not have everything, 
+                 but checking what's available or showing placeholder like design */}
+            <div className="flex flex-col gap-1">
+              {(contact.designation || contact.company) && (
+                <div>
+                  <span className="text-xs text-muted-foreground/60 uppercase tracking-widest font-semibold block mb-0.5">Profession</span>
+                  <p className="text-sm font-medium leading-tight">{contact.designation}</p>
+                  <p className="text-xs text-muted-foreground">{contact.company}</p>
+                </div>
+              )}
 
-              {/* Blood Group */}
-              {contact.bloodGroup && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <div className="w-4 h-4 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                  </div>
-                  <span className="font-medium text-red-500/80">Blood Group: {contact.bloodGroup}</span>
+              {contact.city && (
+                <div className="mt-2">
+                  <span className="text-xs text-muted-foreground/60 uppercase tracking-widest font-semibold block mb-0.5">Current City</span>
+                  <span className="text-sm font-medium">{contact.city}</span>
                 </div>
               )}
             </div>
-
-            {/* Action Buttons Grid (4 Buttons) */}
-            <div className="grid grid-cols-2 gap-2 mt-auto">
-              {/* Call */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 hover:bg-foreground hover:text-background border-primary/20"
-                onClick={handleCall}
-              >
-                <Phone className="w-4 h-4" />
-                Call
-              </Button>
-
-              {/* LinkedIn */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 hover:bg-[#0077b5]/10 hover:text-[#0077b5] border-[#0077b5]/20"
-                onClick={() => handleSocial(contact.linkedin)}
-                disabled={!contact.linkedin}
-              >
-                <Linkedin className="w-4 h-4" />
-                LinkedIn
-              </Button>
-
-              {/* Facebook */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 hover:bg-[#1877F2]/10 hover:text-[#1877F2] border-[#1877F2]/20"
-                onClick={() => handleSocial(contact.facebook)}
-                disabled={!contact.facebook}
-              >
-                <Facebook className="w-4 h-4" />
-                Facebook
-              </Button>
-
-              {/* WhatsApp */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 hover:bg-green-500/10 hover:text-green-600 border-green-500/20"
-                onClick={handleWhatsApp}
-                disabled={!contact.whatsapp}
-              >
-                <WhatsAppIcon className="w-4 h-4" />
-                WhatsApp
-              </Button>
-            </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Action Buttons - 2x2 Grid */}
+        <div className="grid grid-cols-2 gap-2.5 mt-auto">
+          <Button variant="outline" size="sm" onClick={handleCall} className="w-full text-xs h-9 bg-transparent border-foreground/10 hover:bg-foreground hover:text-background hover:border-transparent transition-all">
+            <Phone className="w-3.5 h-3.5 mr-2" /> Call
+          </Button>
+
+          <Button variant="outline" size="sm" onClick={() => handleSocial(contact.linkedin)} disabled={!contact.linkedin} className="w-full text-xs h-9 bg-transparent border-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white hover:border-transparent transition-all">
+            <Linkedin className="w-3.5 h-3.5 mr-2" /> LinkedIn
+          </Button>
+
+          <Button variant="outline" size="sm" onClick={() => handleSocial(contact.facebook)} disabled={!contact.facebook} className="w-full text-xs h-9 bg-transparent border-blue-600/20 text-blue-500 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all">
+            <Facebook className="w-3.5 h-3.5 mr-2" /> Facebook
+          </Button>
+
+          <Button variant="outline" size="sm" onClick={handleWhatsApp} disabled={!contact.whatsapp} className="w-full text-xs h-9 bg-transparent border-green-500/20 text-green-500 hover:bg-green-500 hover:text-white hover:border-transparent transition-all">
+            <WhatsAppIcon className="w-3.5 h-3.5 mr-2" /> WhatsApp
+          </Button>
+        </div>
+
+      </div>
+    </div>
   );
 }

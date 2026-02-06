@@ -59,8 +59,14 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
   }, [lockedType]);
 
   useEffect(() => {
+    if (!lockedType && searchQuery) {
+      setActiveTab('all');
+    }
+  }, [searchQuery, lockedType]);
+
+  useEffect(() => {
     filterMediaByTabAndSearch(activeTab, searchQuery);
-  }, [searchQuery, photos]);
+  }, [searchQuery, photos, activeTab]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -183,11 +189,39 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
     setHasMore(filtered.length > PHOTOS_PER_PAGE);
   };
 
-  // Split photos into 4 columns for stable masonry layout
-  const columns = [[], [], [], []] as { item: Photo; index: number }[][];
-  displayedPhotos.forEach((item, index) => {
-    columns[index % 4].push({ item, index });
-  });
+  // Responsive Masonry Layout
+  const [columnsCount, setColumnsCount] = useState(1);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const updateColumns = () => {
+      const width = window.innerWidth;
+      if (width < 640) setColumnsCount(1); // Mobile
+      else if (width < 1024) setColumnsCount(2); // Tablet
+      else setColumnsCount(3); // Desktop & Large Screens (Max 3 for better video visibility)
+    };
+
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
+  // Split photos into columns for stable masonry layout
+  const columns = Array.from({ length: columnsCount }, () => [] as { item: Photo; index: number }[]);
+
+  if (isClient) {
+    displayedPhotos.forEach((item, index) => {
+      columns[index % columnsCount].push({ item, index });
+    });
+  } else {
+    // Server-side/Initial render: simple list or just 1 col to avoid hydration mismatch
+    // But we need to show something. Let's show in 1 col or 4 cols?
+    // Using 1 col is safest for hydration match if we default state to 1
+    displayedPhotos.forEach((item, index) => {
+      columns[0].push({ item, index });
+    });
+  }
 
   if (error) {
     return (
@@ -199,6 +233,12 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
       </div>
     );
   }
+
+  // Map column count to tailwind class
+  const gridClass = `grid gap-3 md:gap-6 mx-auto ${columnsCount === 1 ? 'grid-cols-1' :
+    columnsCount === 2 ? 'grid-cols-2' :
+      'grid-cols-3'
+    }`;
 
   return (
     <div className="w-full">
@@ -243,7 +283,7 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
           No items found. Try a different search.
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mx-auto">
+        <div className={gridClass}>
           {columns.map((col, colIndex) => (
             <div key={colIndex} className="flex flex-col gap-3 md:gap-6">
               {col.map(({ item, index }) => {

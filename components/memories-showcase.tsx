@@ -227,7 +227,7 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                             // Filter checks:
                             // 1. Must be high quality (width >= 1920)
                             // 2. Must be landscape orientation (width > height)
-                            return width >= 1920 && width > height;
+                            return width >= 1080 && width > height;
                         }
                     );
 
