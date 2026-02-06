@@ -113,6 +113,46 @@ export function FullscreenVideoViewer({
     };
   }, []);
 
+  // Calculate responsive video dimensions
+  const [videoDimensions, setVideoDimensions] = useState<{ width: string | number; height: string | number }>({ width: '100%', height: 'auto' });
+
+  useEffect(() => {
+    const calculateDimensions = () => {
+      if (!currentVideo?.width || !currentVideo.height) return;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Safe area for video (subtracting padding/UI)
+      const maxWidth = Math.min(vw - 32, 1152); // 32px padding, max-6xl (1152px)
+      const maxHeight = vh * 0.85; // 85vh max height
+
+      const videoRatio = currentVideo.width / currentVideo.height;
+      const screenRatio = maxWidth / maxHeight;
+
+      let finalWidth, finalHeight;
+
+      if (videoRatio > screenRatio) {
+        // Video is wider than the available space -> constrain by Width
+        finalWidth = maxWidth;
+        finalHeight = maxWidth / videoRatio;
+      } else {
+        // Video is taller/narrower -> constrain by Height
+        finalHeight = maxHeight;
+        finalWidth = maxHeight * videoRatio;
+      }
+
+      setVideoDimensions({
+        width: finalWidth,
+        height: finalHeight
+      });
+    };
+
+    calculateDimensions();
+    window.addEventListener('resize', calculateDimensions);
+    return () => window.removeEventListener('resize', calculateDimensions);
+  }, [currentVideo]); // Recalculate on video change
+
   return (
     <div
       className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-2xl flex flex-col"
@@ -129,15 +169,14 @@ export function FullscreenVideoViewer({
         <X className="w-6 h-6" />
       </button>
 
-      {/* Video Container - Respects Original Aspect Ratio */}
+      {/* Video Container - Responsive JS Calculator */}
       <div className="flex-1 flex items-center justify-center overflow-hidden p-4">
         {currentVideo && (
           <div
-            className="w-full max-w-6xl relative rounded-lg overflow-hidden shadow-2xl bg-black border border-white/10 max-h-full"
+            className="relative rounded-lg overflow-hidden shadow-2xl bg-black border border-white/10 flex items-center justify-center transition-[width,height] duration-300 ease-out"
             style={{
-              aspectRatio: currentVideo.width && currentVideo.height
-                ? `${currentVideo.width} / ${currentVideo.height}`
-                : '16 / 9'
+              width: videoDimensions.width,
+              height: videoDimensions.height
             }}
           >
             {/* Click Blocker for Google Drive Pop-out Button */}
@@ -145,10 +184,9 @@ export function FullscreenVideoViewer({
 
             <iframe
               key={currentVideo.id}
-              src={currentVideo.webContentLink}
+              src={`https://drive.google.com/file/d/${currentVideo.id}/preview`}
               className="absolute inset-0 w-full h-full"
-              allow="autoplay"
-              allowFullScreen
+              allow="autoplay; fullscreen"
               title={currentVideo.name}
             />
           </div>
