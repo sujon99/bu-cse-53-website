@@ -20,7 +20,7 @@ export function FloatingDecorations() {
     const [items, setItems] = useState<FloatingItem[]>([]);
 
     // Mix of university/memory themed emojis - 8 distinct icons for 8 items
-    const ICONS = ['🎓', '📜', '📚', '📷', '🍂', '✨'];
+    const ICONS = ['🎓', '📜', '📚', '📷', '🍂', '✨', '🍁'];
 
     // Generate items on client-side only to avoid hydration mismatch
     useEffect(() => {
