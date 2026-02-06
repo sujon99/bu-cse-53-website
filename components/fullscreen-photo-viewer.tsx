@@ -181,6 +181,11 @@ export function FullscreenPhotoViewer({
         <div className="flex h-full touch-pan-y">
           {photos.map((photo, index) => {
             const isActive = index === currentIndex;
+            // Use high-res thumbnail (s0 = original size) as reliable source
+            const highResSource = photo.thumbnailLink
+              ? photo.thumbnailLink.replace(/=s\d+/, '=s0')
+              : (photo.webContentLink || "/placeholder.svg");
+
             return (
               <div
                 key={photo.id}
@@ -235,7 +240,7 @@ export function FullscreenPhotoViewer({
                         >
                           <div className="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center">
                             <Image
-                              src={photo.webContentLink || "/placeholder.svg"}
+                              src={highResSource}
                               alt={photo.name}
                               fill
                               className="object-contain"
@@ -265,7 +270,7 @@ export function FullscreenPhotoViewer({
                   // Inactive Slides: Transition Effect
                   <div className={`relative w-full h-full max-w-7xl mx-auto flex items-center justify-center transition-all duration-500 ease-out scale-90 opacity-40 blur-sm`}>
                     <Image
-                      src={photo.webContentLink || "/placeholder.svg"}
+                      src={highResSource}
                       alt={photo.name}
                       fill
                       className="object-contain select-none pointer-events-none"

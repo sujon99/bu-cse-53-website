@@ -138,87 +138,42 @@ export default function Home() {
           </DialogContent>
         </Dialog>
 
-        {/* Header - transparent on home, solid on other tabs */}
-        <header className={`sticky top-0 z-40 transition-all duration-300 ${isScrollingDown ? '-translate-y-full' : 'translate-y-0'
-          } ${activeTab === 'home'
-            ? 'bg-transparent border-none'
-            : 'border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
-          }`}>
-          {/* Only show title section on non-home tabs */}
-          {activeTab !== 'home' && (
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="flex-1 text-center sm:text-center">
-                  <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-1 text-balance">
-                    Bangladesh University Memories
-                  </h1>
-                  <p className="text-sm sm:text-base text-muted-foreground">
-                    Cherished moments and connections with friends
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </header>
+
 
         <main className="mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
-          {/* Mobile-hidden top tabs - glass effect on home, normal on other tabs */}
-          <div className={`flex items-center justify-center mb-8 hidden sm:flex ${activeTab === 'home'
-            ? 'fixed top-4 left-1/2 -translate-x-1/2 z-50'
-            : ''
-            }`}>
-            <div className={`inline-flex h-10 items-center justify-center rounded-full p-1 gap-1 transition-all ${activeTab === 'home'
-              ? 'bg-white/60 backdrop-blur-xl text-neutral-900 border border-white/40 shadow-xl shadow-black/10'
-              : 'rounded-lg bg-muted text-muted-foreground'
-              }`}>
+          {/* Mobile-hidden top tabs - Always fixed and glass effect */}
+          <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center mb-8 hidden sm:flex">
+            <div className="inline-flex h-10 items-center justify-center rounded-full p-1 gap-1 transition-all bg-white/60 backdrop-blur-xl text-neutral-900 border border-white/40 shadow-xl shadow-black/10">
               <TabsList className="bg-transparent p-0 h-auto">
-                <TabsTrigger value="home" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
-                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
-                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
-                  }`}>
+                <TabsTrigger value="home" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
                   <HomeIcon className="w-4 h-4" />
                   Home
                 </TabsTrigger>
-                <TabsTrigger value="photos" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
-                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
-                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
-                  }`}>
+                <TabsTrigger value="photos" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
                   <Images className="w-4 h-4" />
                   Photos
                 </TabsTrigger>
-                <TabsTrigger value="videos" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
-                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
-                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
-                  }`}>
+                <TabsTrigger value="videos" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
                   <Video className="w-4 h-4" />
                   Videos
                 </TabsTrigger>
-                <TabsTrigger value="contacts" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
-                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
-                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
-                  }`}>
+                <TabsTrigger value="contacts" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
                   <Users className="w-4 h-4" />
                   Contacts
                 </TabsTrigger>
-                <TabsTrigger value="author" className={`flex items-center gap-2 px-4 rounded-full shadow-none transition-all ${activeTab === 'home'
-                  ? 'text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm'
-                  : 'data-[state=active]:shadow-sm data-[state=active]:bg-background'
-                  }`}>
+                <TabsTrigger value="author" className="flex items-center gap-2 px-4 rounded-full shadow-none transition-all text-neutral-700 data-[state=active]:bg-neutral-900/10 data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm">
                   <PenTool className="w-4 h-4" />
                   Author
                 </TabsTrigger>
               </TabsList>
 
-              <div className={`w-px h-5 mx-1 ${activeTab === 'home' ? 'bg-neutral-300' : 'bg-border/20'}`} />
+              <div className="w-px h-5 mx-1 bg-neutral-300" />
 
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsSearchOpen(true)}
-                className={`h-8 px-3 text-sm rounded-full gap-2 ${activeTab === 'home'
-                  ? 'text-neutral-700 hover:bg-neutral-900/10 hover:text-neutral-900'
-                  : 'hover:bg-background/50 hover:text-foreground'
-                  }`}
+                className="h-8 px-3 text-sm rounded-full gap-2 text-neutral-700 hover:bg-neutral-900/10 hover:text-neutral-900"
                 title="Search"
               >
                 <Search className="w-4 h-4" />
@@ -280,27 +235,37 @@ export default function Home() {
             </div>
           </TabsContent>
 
-          <TabsContent value="photos" className="outline-none">
+          <TabsContent value="photos" className="outline-none pt-20">
             <div className="space-y-6">
-              <div className="text-center space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight">Photo Gallery</h2>
-                <p className="text-muted-foreground">Browse our collection of cherished memories with university friends</p>
+              <div className="text-center space-y-3 mb-12">
+                <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">Memories</span>
+                <h2 className="text-4xl md:text-5xl font-serif font-normal tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70 italic">
+                  Photo Gallery
+                </h2>
+                <p className="text-muted-foreground/80 font-light text-lg tracking-wide mx-auto leading-relaxed">
+                  Capturing the timeless moments of our journey together
+                </p>
               </div>
               <PhotoGallery lockedType="photo" searchQuery={searchQuery} />
             </div>
           </TabsContent>
 
-          <TabsContent value="videos" className="outline-none">
+          <TabsContent value="videos" className="outline-none pt-20">
             <div className="space-y-6">
-              <div className="text-center space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight">Video Gallery</h2>
-                <p className="text-muted-foreground">Watch memorable moments and events</p>
+              <div className="text-center space-y-3 mb-12">
+                <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">Motion</span>
+                <h2 className="text-4xl md:text-5xl font-serif font-normal tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70 italic">
+                  Video Gallery
+                </h2>
+                <p className="text-muted-foreground/80 font-light text-lg tracking-wide max-w-md mx-auto leading-relaxed">
+                  Watch memorable moments and events unfold
+                </p>
               </div>
               <PhotoGallery lockedType="video" searchQuery={searchQuery} />
             </div>
           </TabsContent>
 
-          <TabsContent value="contacts" className="outline-none">
+          <TabsContent value="contacts" className="outline-none pt-20">
             <div className="space-y-6">
               <div className="text-center space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Friend Directory</h2>
@@ -336,7 +301,7 @@ export default function Home() {
             </div>
           </TabsContent>
 
-          <TabsContent value="author" className="outline-none">
+          <TabsContent value="author" className="outline-none pt-20">
             <AuthorTab />
           </TabsContent>
         </main>
