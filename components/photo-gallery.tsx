@@ -11,6 +11,7 @@ import { Search } from 'lucide-react';
 import { FullscreenPhotoViewer } from './fullscreen-photo-viewer';
 import { FullscreenVideoViewer } from './fullscreen-video-viewer';
 import { Preloader } from '@/components/ui/preloader';
+import { motion } from 'framer-motion';
 
 interface Photo {
   id: string;
@@ -34,8 +35,7 @@ interface PhotoGalleryProps {
 export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [filteredPhotos, setFilteredPhotos] = useState<Photo[]>([]);
-  const [displayedPhotos, setDisplayedPhotos] = useState<Photo[]>([]); // Pagination state
-  // const [searchQuery, setSearchQuery] = useState(''); // Removed internal state
+  const [displayedPhotos, setDisplayedPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'all' | 'photos' | 'videos'>('all');
@@ -52,19 +52,22 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
     fetchPhotosFromGoogleDrive();
   }, []);
 
-  // Update active tab and filter when lockedType changes
   useEffect(() => {
     if (lockedType) {
       setActiveTab(`${lockedType}s` as 'photos' | 'videos');
     }
   }, [lockedType]);
 
-  // Update filters when searchQuery changes
+  useEffect(() => {
+    if (!lockedType && searchQuery) {
+      setActiveTab('all');
+    }
+  }, [searchQuery, lockedType]);
+
   useEffect(() => {
     filterMediaByTabAndSearch(activeTab, searchQuery);
-  }, [searchQuery, photos]); // Add searchQuery to dependency array logic
+  }, [searchQuery, photos, activeTab]);
 
-  // Infinite Scroll Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -86,7 +89,7 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
         observer.unobserve(currentLoader);
       }
     };
-  }, [hasMore, filteredPhotos, page]); // Re-run when dependencies change
+  }, [hasMore, filteredPhotos, page]);
 
   const loadMorePhotos = () => {
     const nextBatch = filteredPhotos.slice(0, (page + 1) * PHOTOS_PER_PAGE);
@@ -103,33 +106,27 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
       setIsLoading(true);
       setError(null);
 
-      console.log('[v0] Fetching photos from API route');
       const response = await fetch('/api/photos');
 
       if (!response.ok) {
         let errorMsg = 'Failed to load photos';
         try {
           const errorData = await response.json();
-          console.error('[v0] API error JSON:', errorData);
           errorMsg = errorData.error || `API Error: ${response.status} ${response.statusText}`;
         } catch (e) {
-          console.error('[v0] API error (non-JSON):', response.status, response.statusText);
           errorMsg = `API Error: ${response.status} ${response.statusText}`;
         }
-
         setError(`❌ ${errorMsg}`);
         return;
       }
 
       const data = await response.json();
-      console.log('[v0] Successfully loaded', data.files?.length || 0, 'photos');
 
       if (!data.files || data.files.length === 0) {
-        setError('❌ No images found in the shared folder. Make sure the folder contains image files and they are not in subfolders.');
+        setError('❌ No images found in the shared folder.');
         return;
       }
 
-      // Shuffle logic (Fisher-Yates) to randomize images on refresh
       const shuffledFiles = [...data.files];
       for (let i = shuffledFiles.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -138,7 +135,6 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
 
       setPhotos(shuffledFiles);
 
-      // Apply initial filter based on lockedType
       let filtered = shuffledFiles;
       if (lockedType) {
         if (lockedType === 'photo') {
@@ -153,8 +149,7 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
       setPage(1);
       setHasMore(filtered.length > PHOTOS_PER_PAGE);
     } catch (err) {
-      console.error('[v0] Error fetching photos:', err);
-      setError(`Failed to load photos from Google Drive: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      setError(`Failed to load photos: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setIsLoading(false);
     }
@@ -168,7 +163,6 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
   const filterMediaByTabAndSearch = (tab: 'all' | 'photos' | 'videos', query: string) => {
     let filtered = photos;
 
-    // Filter by type (force lockedType if present)
     if (lockedType) {
       if (lockedType === 'photo') {
         filtered = filtered.filter((item) => item.type === 'photo');
@@ -176,7 +170,6 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
         filtered = filtered.filter((item) => item.type === 'video');
       }
     } else {
-      // Normal tab filtering
       if (tab === 'photos') {
         filtered = filtered.filter((item) => item.type === 'photo');
       } else if (tab === 'videos') {
@@ -184,7 +177,6 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
       }
     }
 
-    // Filter by search query
     if (query) {
       filtered = filtered.filter((item) =>
         item.name.toLowerCase().includes(query.toLowerCase())
@@ -197,6 +189,40 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
     setHasMore(filtered.length > PHOTOS_PER_PAGE);
   };
 
+  // Responsive Masonry Layout
+  const [columnsCount, setColumnsCount] = useState(1);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const updateColumns = () => {
+      const width = window.innerWidth;
+      if (width < 640) setColumnsCount(1); // Mobile
+      else if (width < 1024) setColumnsCount(2); // Tablet
+      else setColumnsCount(3); // Desktop & Large Screens (Max 3 for better video visibility)
+    };
+
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
+  // Split photos into columns for stable masonry layout
+  const columns = Array.from({ length: columnsCount }, () => [] as { item: Photo; index: number }[]);
+
+  if (isClient) {
+    displayedPhotos.forEach((item, index) => {
+      columns[index % columnsCount].push({ item, index });
+    });
+  } else {
+    // Server-side/Initial render: simple list or just 1 col to avoid hydration mismatch
+    // But we need to show something. Let's show in 1 col or 4 cols?
+    // Using 1 col is safest for hydration match if we default state to 1
+    displayedPhotos.forEach((item, index) => {
+      columns[0].push({ item, index });
+    });
+  }
+
   if (error) {
     return (
       <div className="w-full py-12 text-center space-y-4">
@@ -208,9 +234,14 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
     );
   }
 
+  // Map column count to tailwind class
+  const gridClass = `grid gap-3 md:gap-6 mx-auto ${columnsCount === 1 ? 'grid-cols-1' :
+    columnsCount === 2 ? 'grid-cols-2' :
+      'grid-cols-3'
+    }`;
+
   return (
     <div className="w-full">
-      {/* Tab Navigation - Only show if not locked to a specific type */}
       {!lockedType && (
         <div className="mb-8 border-b border-border">
           <div className="flex gap-2 -mb-px">
@@ -235,7 +266,6 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
         </div>
       )}
 
-      {/* Gallery Stats */}
       <div className="mb-6 text-sm text-muted-foreground">
         {!isLoading && (
           <>
@@ -244,67 +274,92 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
         )}
       </div>
 
-      {/* Masonry Grid */}
-      <div className={`${isLoading ? 'flex justify-center items-center h-64' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'}`}>
-        {isLoading ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
           <Preloader />
-        ) : filteredPhotos.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-muted-foreground">
-            No items found. Try a different search.
-          </div>
-        ) : (
-          <>
-            {displayedPhotos.map((item, index) => {
-              const itemIndex = photos.findIndex((p) => p.id === item.id);
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (item.type === 'photo') {
-                      setFullscreenPhotoIndex(itemIndex);
-                    } else {
-                      setFullscreenVideoIndex(itemIndex);
-                    }
-                  }}
-                  className="cursor-pointer group w-full relative"
-                >
-                  <div className="relative overflow-hidden rounded-lg aspect-square bg-muted">
-                    <Image
-                      src={item.thumbnailLink || item.webContentLink}
-                      alt={item.name}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                    {item.type === 'video' && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors">
-                        <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center">
-                          <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                          </svg>
-                        </div>
+        </div>
+      ) : filteredPhotos.length === 0 ? (
+        <div className="col-span-full text-center py-12 text-muted-foreground">
+          No items found. Try a different search.
+        </div>
+      ) : (
+        <div className={gridClass}>
+          {columns.map((col, colIndex) => (
+            <div key={colIndex} className="flex flex-col gap-3 md:gap-6">
+              {col.map(({ item, index }) => {
+                const globalIndex = index; // The original index in displayedPhotos
+                const itemIndex = photos.findIndex((p) => p.id === item.id);
+
+                // First 12 items must appear immediately, bypassing viewport check
+                const isPriority = globalIndex < 12;
+
+                return (
+                  <motion.button
+                    key={item.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isPriority ? { opacity: 1, y: 0 } : undefined}
+                    whileInView={isPriority ? undefined : { opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "0px" }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeOut",
+                      delay: isPriority ? 0 : 0.1 // No delay for priority items to fix 'first image appearing with delay'
+                    }}
+                    onClick={() => {
+                      if (item.type === 'photo') {
+                        setFullscreenPhotoIndex(itemIndex);
+                      } else {
+                        setFullscreenVideoIndex(itemIndex);
+                      }
+                    }}
+                    className="cursor-pointer group relative w-full block focus:outline-none"
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-muted shadow-sm hover:shadow-xl transition-all duration-500 ease-out border border-white/20 dark:border-white/5 min-h-[100px]">
+                      <Image
+                        src={item.thumbnailLink || item.webContentLink}
+                        alt={item.name}
+                        width={0}
+                        height={0}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        className="w-full h-auto object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-0"
+                        priority={isPriority}
+                        onLoad={(e) => {
+                          e.currentTarget.classList.remove('opacity-0');
+                        }}
+                      />
+
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
                       </div>
-                    )}
-                  </div>
-                </button>
-              );
-            })}
 
-            {/* Sentinel for Infinite Scroll */}
-            {hasMore && (
-              <div
-                ref={loaderRef}
-                className="col-span-full py-8 text-center text-muted-foreground flex justify-center w-full"
-              >
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+                      {/* Video Icon */}
+                      {item.type === 'video' && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                          <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                            <svg className="w-6 h-6 text-white fill-current ml-1" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Fullscreen Photo Viewer */}
+      {hasMore && (
+        <div
+          ref={loaderRef}
+          className="py-8 text-center text-muted-foreground flex justify-center w-full"
+        >
+          <Preloader />
+        </div>
+      )}
+
       {fullscreenPhotoIndex !== null && (
         <FullscreenPhotoViewer
           photos={photos.filter((p) => p.type === 'photo')}
@@ -315,7 +370,6 @@ export function PhotoGallery({ lockedType, searchQuery = '' }: PhotoGalleryProps
         />
       )}
 
-      {/* Fullscreen Video Viewer */}
       {fullscreenVideoIndex !== null && (
         <FullscreenVideoViewer
           videos={photos.filter((p) => p.type === 'video')}

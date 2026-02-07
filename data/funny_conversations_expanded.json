@@ -1,0 +1,2084 @@
+[
+    {
+        "category": "funny",
+        "summary": "Pranta suggests applying a condition to Rakibul's emotion to prevent an infinite loop.",
+        "messages": [
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:29:36",
+                "content": "Aicca"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-25 22:30:03",
+                "content": "Hmm.. vorti hoilam kalke ajke tk chai"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:34:29",
+                "content": "😰😰😥😥"
+            },
+            {
+                "sender": "Pranta Deb",
+                "timestamp": "2019-02-25 22:42:55",
+                "content": "rakibul tumi eto kando ken"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:43:19",
+                "content": "Vai ami emotional manos...emotion dia vora"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:43:25",
+                "content": "😶😶😶"
+            },
+            {
+                "sender": "Pranta Deb",
+                "timestamp": "2019-02-25 22:43:56",
+                "content": "emotion e condition  apply koro taile loop hoibo na 😂"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-25 22:43:58",
+                "content": "কান্না করলে মন ভালো হয়"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:45:36",
+                "content": "😂😂😂😂"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-25 22:46:55",
+                "content": "বেশি বেশি খুদা লাগে তাই পেট ও শরির ভালো হয়"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:47:11",
+                "content": "Orre logic re"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:47:18",
+                "content": "😂😂😂"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-25 22:47:39",
+                "content": "Hmm... c program"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Rakibul shares C code describing his family details.",
+        "messages": [
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2019-02-25 02:36:19",
+                "content": "💪"
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2019-02-25 08:04:20",
+                "content": ""
+            },
+            {
+                "sender": "Mosharaf Hossain",
+                "timestamp": "2019-02-25 08:06:24",
+                "content": "amader to mone hoi taka joma complete tai na"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 20:26:34",
+                "content": "#include<stdio.h>\nint main(){\n\tchar ch1;\n\tint one,two;\n\tprintf(\".........................(Code of Family).........................\\n\\n\");\n\tprintf(\"This is a program about Rakibul Hassan's family-\\n\");\n\tprintf(\"If you are interested to know about his family press 'y' if not press 'n':\");\n\tscanf(\"%c\", &ch1); \n\tif(ch1=='y'){\n\t\tprintf(\"Weclome!!!\");\n\t\tprintf(\"\\nFor know about his grandfather press 1:\");\n\t\tprintf(\"\\nFor know about his father press 2:\");\n\t\tprintf(\"\\nFor know about his Brother press 3:\");\n\t\tprintf(\"\\nFor know about him press 4:\");\n\t\t\n\t\tscanf(\"%d\", &one);\n\t\tif(one==1){\n\t\t\tprintf(\"\\n\\nGrandfather's info:\\n\");\n\t\t\tprintf(\"Name:Abdur Rashid Shakh\");\n\t\t\tprintf(\"\\t\\tBirth Place:Baraikhali\");\n\t\t\tprintf(\"\\nNo of child: 11\");\n\t\t\tprintf(\"\\t\\t\\tPlace of Death:Baraikhali\");\n\t\t}\n\t\telse{\n\t\t\tif(one==2){\n\t\t\tprintf(\"\\n\\nFather's info:\\n\");\n\t\t\tprintf(\"Name:Shakh Sayed\");\n\t\t\tprintf(\"\\t\\tBirth Place:Baraikhali\");\n\t\t\tprintf(\"\\nOccupation:Businessman\");\n\t\t\tprintf(\"\\t\\tNo of Child:3\");\n\t\t\t}\n\t\t\telse{\n\t\t\t\tif(one==3){\n\t\t        \tprintf(\"\\n\\nBrother's info:\\n\");\n\t\t         \tprintf(\"He have two brother..For no1 press 1 for no2 press 2:\");\n\t\t        \tscanf(\"%d\",&two);\n\t\t        \tif(two==1){\n\t\t        \t    printf(\"\\n\\n1st Brother's info:\\n\");\n\t\t            \tprintf(\"Name:Sharukh\");\n\t\t            \tprintf(\"\\t\\tBirth Place:Baraikhali\");\n\t\t            \tprintf(\"\\nHe was died cause of blood cancer at the age of 6.\");\n\t\t            \n\t\t\t}\n\t\t\telse{\n\t\t\t\tif(two==2){\n\t\t\t\t\t\tprintf(\"\\n\\n2nd Brother's info:\\n\");\n\t\t\t            printf(\"Name:Ahnaf Hassan\");\n\t\t               \tprintf(\"\\t\\tBirth Place:Tongi\");\n\t\t\t            printf(\"\\nAge:6.5 Year\");\n\t\t             \tprintf(\"\\t\\t\\tOccupation:Student\");\n\t\t\t\t}\n\t\t\t\telse{\n\t\t\t\t\tprintf(\"You have press Wrong Number!!!\");\n\t\t\t\t}\n\t\t\t}\n\t\t\t\n\t\t\t\t}\n\t\t\t\telse{\n\t\t\t\t\tif(one==4){\n\t\t\t\t\t    printf(\"\\n\\nRakibul Hassan's info:\\n\");\n\t\t\t            printf(\"Name:Rakibul Hassan\");\n\t\t               \tprintf(\"\\t\\t\\tBirth Place:Bikrompur\");\n\t\t\t            printf(\"\\nBrith Date:28/04/1998\");\n\t\t             \tprintf(\"\\t\\t\\tOccupation:Student\");\n\t\t             \tprintf(\"\\nUniversity:Bangladesh University\");\n\t\t             \tprintf(\"\\tDep:Computer Science and Engineering\");\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\telse{\n\t\tprintf(\"Thank you For Visit here!!\");\n\t}\n\t\n\t\n\treturn 0; \n}"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-02-25 22:28:00",
+                "content": ""
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:28:13",
+                "content": "😭😭😭"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:28:21",
+                "content": "Semester jani koto"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:28:24",
+                "content": "🙁🙁"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-25 22:28:35",
+                "content": "15"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-25 22:29:36",
+                "content": "Aicca"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Mosharaf teases Pranta about his 'dead' or slow reply speed.",
+        "messages": [
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-10 00:10:18",
+                "content": "Kal ki class hobe?"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-02-10 05:14:47",
+                "content": "Hobena amon kono notice paini"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-02-10 08:36:36",
+                "content": "Acca"
+            },
+            {
+                "sender": "Mosharaf Hossain",
+                "timestamp": "2019-02-12 11:54:55",
+                "content": "@Pranta Deb baicha acho"
+            },
+            {
+                "sender": "Pranta Deb",
+                "timestamp": "2019-02-12 11:55:18",
+                "content": "achi"
+            },
+            {
+                "sender": "Mosharaf Hossain",
+                "timestamp": "2019-02-12 11:55:37",
+                "content": "Tmr na ki jeno korar kotha"
+            },
+            {
+                "sender": "Pranta Deb",
+                "timestamp": "2019-02-12 12:04:51",
+                "content": "ki korar kotha 😱"
+            },
+            {
+                "sender": "Mosharaf Hossain",
+                "timestamp": "2019-02-12 12:05:25",
+                "content": "Tui asolei Mora,ato late reply dite tor net slow naki re"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2019-02-13 10:10:20",
+                "content": ""
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-02-13 11:36:18",
+                "content": ""
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-02-14 06:40:29",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim suggests hiding under a cloth to avoid exam questions flying over the head.",
+        "messages": [
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-03-05 18:02:12",
+                "content": "Pdf e just universal gate ta nei"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-03-06 01:00:07",
+                "content": ""
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 01:24:30",
+                "content": ""
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-03-06 03:01:15",
+                "content": "সময় থাকতে পড়ি নাই এখন সব মাথার উপর দিয়ে যাইতাসে 😪"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 03:01:59",
+                "content": "somosha nai mathar opre akta  kapor taniya nen"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 03:02:24",
+                "content": "jate opr diye jaoyar time a bari khai r mathai pore"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-03-06 03:03:00",
+                "content": "কাপড় এর বদলে বাশ দেখতাসি মাথার উপর"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 03:03:14",
+                "content": "bas a hobe na"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-03-06 10:30:39",
+                "content": "MD. named the group BU CSE-53 Batch (D)."
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim wishes he had the question paper earlier to solve it before the exam ends.",
+        "messages": [
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 13:01:36",
+                "content": ""
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 13:02:24",
+                "content": ""
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-03-06 13:03:43",
+                "content": ""
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 13:04:27",
+                "content": "সব শেষ?? এখন যদি প্রশ্ন টা পেতাম খুব ভালো হতো আগেই সল্ভ করে নিতে পারতাম 🤣🤣🤣"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-03-06 13:32:13",
+                "content": "এক্সাম হলে সবাই সবাইরে ভুল এন্সার হইলেও দেখায়েন ভাই ভাইতো আমরা।\nখাতা ভরা দিয়ে হচ্ছে কথা 🐸"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-03-06 13:32:38",
+                "content": "😂😂😂"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 13:37:01",
+                "content": "ভাই এক কাজ করেন যেহেতু খাতা ভরা দিয়েই কথা ।। তাহলে আমরা সবাই খাতায় প্রশ্ন তুলে দিয়ে আসবো আর স্যার তো আজাইরাই থাকে উনি কিছু লিখে নাম্বার দিয়ে দিলো। আমরা খামা খা কেন কষ্ট করমু। স্যার এর খাতা দেখতেও সুবিধা হইলো"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 13:37:12",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Mainul types random gibberish and Abu Saleh 'explains' it with more gibberish.",
+        "messages": [
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 23:01:57",
+                "content": "english book lagbe kar kar"
+            },
+            {
+                "sender": "Zakir Hossain",
+                "timestamp": "2019-03-06 23:01:59",
+                "content": "Ki google search korbo"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-03-06 23:02:12",
+                "content": "free"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-03-06 23:11:09",
+                "content": "জতজডপচজডজতকসপশহডনরকডজতমটেরজতজকসকশহহচওরকর\n\nব্যাখ্যা কর....পরিক্ষার দায়িত্ব আমার"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-03-06 23:13:36",
+                "content": "Eta ki"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-03-06 23:14:19",
+                "content": "উত্তর দিব কেন?"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-06 23:22:21",
+                "content": "ami bekkha korte parbo"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-03-06 23:22:48",
+                "content": "হাহাহা"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-06 23:22:52",
+                "content": "জগক্কদুজভজফহুস্ক্লজএরিসজ্জাহধসদাদাঝশফদ"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-06 23:23:00",
+                "content": "naw bekkha kore dilam"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-06 23:23:07",
+                "content": "ebar nijera bujhe naw"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Arnob jokes about giving a program into Rakibul's 'posterior' for his birthday.",
+        "messages": [
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-04-28 09:47:38",
+                "content": "শুভ জন্মদিন প্রিয় বন্ধু রাকিবুল 🍸🍷"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-04-28 09:49:49",
+                "content": "\"\"\" Happy birthday \"\"\" @Rakibul Hassan Durjoy"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-04-28 10:28:56",
+                "content": "😍😍😍😍Thank you All"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-04-28 10:30:45",
+                "content": "@Rakibul Hassan Durjoy \"\"\" treat niye asio......."
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2019-04-28 10:31:26",
+                "content": "😁😁😁😁"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2019-04-28 10:32:27",
+                "content": "Treat to tomader deoya ucit karon celetar jibon theke 1 ti bocor cole jacce"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-04-28 10:34:51",
+                "content": "@Rakibul Hassan Durjoy \nSala tmr ponggar moddhe program deya lage... amadr tmr boro program lage naki! Ei program polapan mukhostoi krbe bt keu bujhbe na"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-04-28 10:34:56",
+                "content": "😡😡😡"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Banter about semester results and treating.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2019-06-20 16:07:49",
+                "content": "Tushar valoi Paicoc"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-06-20 16:08:03",
+                "content": "valo r kothai?.."
+            },
+            {
+                "sender": "Zeba Sabiha",
+                "timestamp": "2019-06-20 16:08:12",
+                "content": "3:89"
+            },
+            {
+                "sender": "শেখ শাওন",
+                "timestamp": "2019-06-20 16:08:20",
+                "content": "mara to khabo ei semester"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2019-06-20 16:08:21",
+                "content": "3.48 ki Kharap?"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-06-20 16:08:21",
+                "content": "programming e A- paise.."
+            },
+            {
+                "sender": "Zeba Sabiha",
+                "timestamp": "2019-06-20 16:08:35",
+                "content": "Hmm"
+            },
+            {
+                "sender": "শেখ শাওন",
+                "timestamp": "2019-06-20 16:08:45",
+                "content": "kalk xm kisui pari na kisui pori nai"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Banter about a friend getting married without inviting others.",
+        "messages": [
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-12-24 12:42:32",
+                "content": ""
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2019-12-24 12:42:49",
+                "content": "Kar Biye?"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-12-24 12:42:56",
+                "content": "Bashay problem aj exam falailo"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-12-24 12:43:02",
+                "content": "Amar dst"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-12-24 12:43:10",
+                "content": "☺"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-12-24 12:43:34",
+                "content": "hmm"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2019-12-24 12:43:44",
+                "content": "Ki koss re.......Mofiz,  tui aka aka biye kore falo re amader chara"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-12-24 12:43:46",
+                "content": "amar o to problem hoice.."
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-12-24 12:44:04",
+                "content": "22 tarik bal ses hoy jeto taile valo hoto"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim jokes about charging money for photos.",
+        "messages": [
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-03-11 15:21:07",
+                "content": "🤨🤨🤨🤨"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2020-03-11 15:24:07",
+                "content": "এই টা হলে হবে"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2020-03-11 15:24:11",
+                "content": "আমি রাজি"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-03-11 15:25:41",
+                "content": "Ok... Vai sob agami 13 tarikh roj kibar janina.... Oi din sobay 2 tk vangti niya asbe baddhota moluk.. Onno thay camerar samne line lagaben na.. 🧐🧐"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2020-03-11 15:26:02",
+                "content": "ক্যামেরা ম্যান ১ টাকা নিবে আর আমি ১ টাকা"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-03-11 15:26:17",
+                "content": "Dhakka dhakki thela theli korle 5 tk par picc"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-03-11 15:27:10",
+                "content": "Tile 3 tk amar 2 tha maliker"
+            },
+            {
+                "sender": "Zakir Hossain",
+                "timestamp": "2020-03-11 15:33:22",
+                "content": "program koy ta theke"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Farjana complains about not being able to take photos and enjoy at the same time.",
+        "messages": [
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-28 22:36:45",
+                "content": "2 jon er e loss"
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2026-01-28 22:36:45",
+                "content": "You pinned a message."
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2026-01-28 22:36:55",
+                "content": "তাহলে এইবারের সমাবর্তন অনুষ্ঠান বয়কট করলাম। আমাদের সমাবর্তন অনুষ্ঠানে আরেক বার করা হোক শুধুমাত্র ৫০০ টাকার জন্য ☺️😝"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-28 22:37:42",
+                "content": "আবার হোক\nএকবারে ছবি তোলা আর এনজয় করা ২ টা ঠিকমতো করা যায় না!"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-28 22:37:45",
+                "content": "🤣🤣🤣"
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2026-01-28 22:37:48",
+                "content": "BTW, website er kaj ami kortesi, ekhoni dekhate chai na, complete kore dekhabo, next week lagbe hoyto.."
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-28 22:38:07",
+                "content": "Farjana reacted 😮 to your message "
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2026-01-28 22:38:20",
+                "content": "এটা কি রেকর্ডিং দিয়ে করতেছো নাকি"
+            }
+        ]
+    },
+    {
+        "category": "emotional",
+        "summary": "Students panic about sudden semester fees and deadline.",
+        "messages": [
+            {
+                "sender": "Rukaiya Pakhi",
+                "timestamp": "2019-02-27 21:03:40",
+                "content": "Ami vabsilm admission er smy Kew bokeya rakhse oitar date diche😰"
+            },
+            {
+                "sender": "Mosharaf Hossain",
+                "timestamp": "2019-02-27 21:03:57",
+                "content": "Allah amio same vabsi"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-27 21:04:16",
+                "content": ":O aita bangladesh"
+            },
+            {
+                "sender": "Mosharaf Hossain",
+                "timestamp": "2019-02-27 21:04:22",
+                "content": "Basai bolsi ei semester e taka lagbe na,Allah akhn ki hoibo"
+            },
+            {
+                "sender": "Pranta Deb",
+                "timestamp": "2019-02-27 21:04:40",
+                "content": "taka manage koro ar ki korba"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2019-02-27 21:04:44",
+                "content": "koba dita hoba"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-27 21:04:47",
+                "content": "tai mony is not funny .."
+            },
+            {
+                "sender": "Rukaiya Pakhi",
+                "timestamp": "2019-02-27 21:04:49",
+                "content": "Tw ki hoise \nAmraw Bangladesh er students🐸"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2019-02-27 21:05:26",
+                "content": "ai jonnoi to vule gele hobe na .. FELO KORI MAKHO TELL .. :p"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Abu Saleh claims 'Amrai oborodh korbo' so there won't be class.",
+        "messages": [
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-17 10:59:26",
+                "content": "Cls offf🤐🤐😷😷"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-03-17 10:59:29",
+                "content": "Kmne"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-03-17 10:59:42",
+                "content": "K korbe oborodh"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-17 10:59:43",
+                "content": "Amrai oborodh korbo"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-03-17 10:59:57",
+                "content": "Tai"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-03-17 11:00:19",
+                "content": "Ajj class ase"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-17 11:00:20",
+                "content": ""
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-03-17 11:00:32",
+                "content": "Oborodh korle khrp hobe na vloy hobe..."
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-03-17 11:00:38",
+                "content": "This poll is no longer available."
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-03-17 11:01:24",
+                "content": "This poll is no longer available."
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Tanmay shares a personal photo and Rahul scolds him jokingly.",
+        "messages": [
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-03-04 15:32:09",
+                "content": ""
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-03-04 15:32:10",
+                "content": ""
+            },
+            {
+                "sender": "Rahul Rema",
+                "timestamp": "2019-03-04 15:33:18",
+                "content": "Pagol, eta karo bektigoto chobi share korar group nah."
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-03-04 15:33:54",
+                "content": "Vaiya ata pic ta man campas ar pic"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2019-03-04 15:34:03",
+                "content": "Thanks Mr. @Rahul Rakasi  vai"
+            },
+            {
+                "sender": "",
+                "timestamp": "2019-03-04 15:34:25",
+                "content": "A contact added Khaleda Ferdaus to the group."
+            },
+            {
+                "sender": "",
+                "timestamp": "2019-03-04 15:34:47",
+                "content": "A contact left the group."
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-03-04 15:35:08",
+                "content": "@Rahul Rakasi..  Na dekhe kotha bola tik na bujla"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-03-04 15:36:12",
+                "content": "Bangladesh University r pic"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Result tension: Sir is not giving result because tension will increase.",
+        "messages": [
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-05-15 19:34:25",
+                "content": "Jader eccha jabe nah"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-05-15 19:34:43",
+                "content": "Your wish😁"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2019-05-15 19:34:49",
+                "content": "হুম....😐😐"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-05-15 19:36:09",
+                "content": "Sadiq sir result kn dey na"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2019-05-15 19:39:44",
+                "content": "result dile to tension bere jabe tai dei na"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-05-15 19:40:28",
+                "content": "Omg tension kn barbe... 😳😳😳"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2019-05-15 19:42:03",
+                "content": "Allah tomi jano na"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-05-15 19:43:14",
+                "content": "Na to..."
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2019-05-15 19:43:34",
+                "content": "F asbe tai"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-05-15 19:43:54",
+                "content": "Omg koi ki...."
+            }
+        ]
+    },
+    {
+        "category": "emotional",
+        "summary": "Confusion and worry about exam routine and sudden fees.",
+        "messages": [
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-06-09 13:02:29",
+                "content": "Cr tumi jaino"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-06-09 13:03:18",
+                "content": "To kobe taka dite hobe"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-06-09 13:03:20",
+                "content": "?"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-06-09 13:04:11",
+                "content": "Allah age to class korte hobe 2 1 ta then to tk naki"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-06-09 13:04:33",
+                "content": "R cls...19 tarik theke toh exm e"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-06-09 13:04:36",
+                "content": "😂😂😂"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-06-09 13:04:39",
+                "content": "R tk exam er ager din ba exam er din o dewa jai"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-06-09 13:05:10",
+                "content": "Hmmm 1 2 ta to class hobe exam er age"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2019-06-09 13:05:30",
+                "content": "Ei first time amr class chara exm debo"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Banter about passing/failing: 'Pass diya ki korbi?'",
+        "messages": [
+            {
+                "sender": "Rasel Sabrin",
+                "timestamp": "2019-06-22 23:59:58",
+                "content": ""
+            },
+            {
+                "sender": "Rasel Sabrin",
+                "timestamp": "2019-06-23 00:00:00",
+                "content": ""
+            },
+            {
+                "sender": "Rasel Sabrin",
+                "timestamp": "2019-06-23 00:00:02",
+                "content": ""
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-06-23 00:00:04",
+                "content": "Exam de... Pass diya ki korbi.?"
+            },
+            {
+                "sender": "Rasel Sabrin",
+                "timestamp": "2019-06-23 00:00:16",
+                "content": "Right"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2019-06-23 00:00:26",
+                "content": "Bal pas na korle exam diya ki korbo"
+            },
+            {
+                "sender": "Rasel Sabrin",
+                "timestamp": "2019-06-23 00:00:39",
+                "content": "Bal falaba"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-06-23 00:00:45",
+                "content": "Pass koto te sheita sir e bujhbo"
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2019-06-23 00:00:52",
+                "content": "Tor kaj exam dewa"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Mocking the seriousness of a group quarrel, saying it's funny.",
+        "messages": [
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-09-09 00:08:04",
+                "content": "Ami ki kao k gali diyachi"
+            },
+            {
+                "sender": "Habib Riyan",
+                "timestamp": "2019-09-09 00:08:10",
+                "content": "Allah hafez"
+            },
+            {
+                "sender": "Habib Riyan",
+                "timestamp": "2019-09-09 00:08:33",
+                "content": "Habib Riyan left the group."
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-09-09 00:08:54",
+                "content": "Bidik polapan"
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2019-09-09 00:09:02",
+                "content": "bha sai moja hoitase"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-09-09 00:09:12",
+                "content": "aita kisu hoilo"
+            },
+            {
+                "sender": "Zakir Hossain",
+                "timestamp": "2019-09-09 00:09:17",
+                "content": ""
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2019-09-09 00:09:25",
+                "content": "Rag dakhankr ki holo."
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-09-09 00:09:45",
+                "content": "fun o jodi na buje taile kamne  ki hoibo owr"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Tushar dreaming about going to class while sleeping.",
+        "messages": [
+            {
+                "sender": "Foysal Ahmad",
+                "timestamp": "2019-09-20 09:26:10",
+                "content": "Campus ar samna"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-09-20 09:49:57",
+                "content": "Class koi hosce"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-09-20 09:50:14",
+                "content": "Kew ki asce varsity te"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-09-20 09:55:18",
+                "content": "ami ghumer moddhe sopne classe gesi."
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2019-09-20 09:55:38",
+                "content": "ha ha"
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2019-09-20 09:55:43",
+                "content": "moja pailam dst"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2019-09-20 09:56:00",
+                "content": "Duru chole gelam"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-09-20 09:56:07",
+                "content": "dekhi ami sara kew nai.. classe.."
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-09-20 09:57:03",
+                "content": "ghum valobashi re ami ghum valobashi re. ghumaile ami sopne classe jai re.."
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Students joking about hacking the university website to change poor results.",
+        "messages": [
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2019-12-24 23:36:26",
+                "content": "Ami o B-"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-12-24 23:37:02",
+                "content": "eibar 3 up hobe kina sondeho ase.."
+            },
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2019-12-24 23:37:45",
+                "content": "Hmm, setay dekci"
+            },
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2019-12-24 23:38:38",
+                "content": "Sir der wap site hack kore sob kisu change korte hobe dekc"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-12-24 23:39:04",
+                "content": "eibar bas dibo sobay k sir ra.. result er j obostha.."
+            },
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2019-12-24 23:39:31",
+                "content": "Wap sit ta security nay"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2019-12-24 23:39:41",
+                "content": "kos ki?"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2019-12-24 23:39:44",
+                "content": "hack koira fala bal"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2019-12-24 23:40:16",
+                "content": "Data Structure Lab Exam A o bash Dice"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Abu Sayed offers 'a bucket of sympathy' for everyone's bad results.",
+        "messages": [
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2020-01-02 22:58:53",
+                "content": "😁😁😂😂😂"
+            },
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2020-01-02 22:59:06",
+                "content": "Ami o jogonno paysi"
+            },
+            {
+                "sender": "Zubair Limon",
+                "timestamp": "2020-01-02 23:05:23",
+                "content": "Joghonno result"
+            },
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2020-01-02 23:07:22",
+                "content": "Sobar jonno ak balti somo-bedona taklo"
+            },
+            {
+                "sender": "Zubair Limon",
+                "timestamp": "2020-01-03 17:57:50",
+                "content": "Class kobe thaika?"
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2020-01-05 01:28:28",
+                "content": "Ku aso"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2020-01-05 01:51:11",
+                "content": "programming result ki dicy?"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2020-01-05 01:51:46",
+                "content": "dekh"
+            }
+        ]
+    },
+    {
+        "category": "emotional",
+        "summary": "Mainul shares news of his accident.",
+        "messages": [
+            {
+                "sender": "Shohag Hossain",
+                "timestamp": "2020-02-08 02:01:52",
+                "content": "Ki hoise"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2020-02-08 02:01:54",
+                "content": "kamne ki"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2020-02-08 02:02:07",
+                "content": "Allah vorsha\\"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2020-02-08 02:02:29",
+                "content": "আজ রাত আটটার সময় হেমায়েতপুর থেকে আসার পথে বাইকে এক্সিডেন্ট করেছি, পঙ্গু হাসপাতাল থেকে ব্যান্ডেজ করে বাসায় এসেছি। আমার ডান পা ভেঙে গেছে, সকলে দোয়া করো।"
+            },
+            {
+                "sender": "Tariqul Islam",
+                "timestamp": "2020-02-08 02:03:12",
+                "content": "Fiamanillah"
+            },
+            {
+                "sender": "Shohag Hossain",
+                "timestamp": "2020-02-08 02:03:28",
+                "content": "Allah vorsa"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2020-02-08 08:17:42",
+                "content": "Amin"
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2020-02-08 08:18:31",
+                "content": "Allah tmk taratari susto kore dik..amin"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Abu Saleh scolds others for showing interest in a class that the teacher already cancelled.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-01-28 21:37:38",
+                "content": "Java Result dite Feb 1 Week somoy lagbe"
+            },
+            {
+                "sender": "Tushar Imran",
+                "timestamp": "2020-01-29 12:31:35",
+                "content": "This poll is no longer available."
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2020-01-29 12:40:29",
+                "content": ""
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-01-30 20:08:18",
+                "content": "আচ্ছা,  আগামীকাল শুক্রবার বিকেলে কারা কারা ক্লাস করতে আগ্রহী....??  \nহাত তুলেন  ✋✋✋"
+            },
+            {
+                "sender": "Shohag Hossain",
+                "timestamp": "2020-01-30 20:08:57",
+                "content": "Ami"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2020-01-30 20:09:04",
+                "content": ""
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2020-01-30 20:09:25",
+                "content": ""
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2020-01-30 20:12:12",
+                "content": "Sir e to bollo cls hobe na,  to agroho diya ki hobe.?"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-01-30 20:13:16",
+                "content": "Sir bolce class hobe na...\n\n\nTarpor o  Jodi polapain interested thake tahole sir ke phone korbo"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Students complain about having exams on Valentine's Day (14th Feb).",
+        "messages": [
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-02-10 17:53:44",
+                "content": "Sir jest prostuti mulok exam niba"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-02-10 17:53:47",
+                "content": "Ar aiki"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-02-10 17:54:01",
+                "content": "oo"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-02-10 17:54:09",
+                "content": "Vai 14 tarik j exam da falailo"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-02-10 17:54:24",
+                "content": "Ata kono kam"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-02-10 17:56:30",
+                "content": "Ki r korar,  management decision"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-02-10 18:00:19",
+                "content": "ato dim bose abar exam bal"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-02-10 18:01:17",
+                "content": "Tor jonno Aro 1 month pore exam dileo tao hobe na....😀😁☺😀😀"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-02-10 18:01:55",
+                "content": "bal 14 tarik theke 28 tarik"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim dramatically pays the semester fee to end the 'drama'.",
+        "messages": [
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-05-12 20:44:07",
+                "content": ""
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2020-05-12 20:45:22",
+                "content": "Sob tk dite hobe kmne somvhob"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-05-12 20:46:06",
+                "content": "no sorry change paici"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-05-12 20:52:50",
+                "content": "Full clear kore dilam... 8000 tk... Aibar santi to 🙄 sir???"
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2020-05-12 21:37:09",
+                "content": "procur taka poysa thakle jeta hoy r ki, bondu tmi toh 1 semester upore uthe gela, junior hoye gelam."
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-05-12 21:38:26",
+                "content": "Amio tumar team a amio junior"
+            },
+            {
+                "sender": "MD Sabbir Khan",
+                "timestamp": "2020-05-12 21:38:37",
+                "content": "Muio...re bai"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-05-12 21:39:05",
+                "content": "vaire na khiya tk diya dilam .. ato natok r moja lage na"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-05-12 21:39:34",
+                "content": "tai natok ta ses kore dilam akhon ami dorsok hoiya dekhi  sir ra ki kore"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Banter about exams being easy or hard and the pressure.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-05-17 21:26:13",
+                "content": "Microprocessor o Hobe Wait, Sir er sathe kotha bole janabo...."
+            },
+            {
+                "sender": "Abu Saleh",
+                "timestamp": "2020-05-17 21:26:31",
+                "content": "Gd"
+            },
+            {
+                "sender": "Foysal Ahmad",
+                "timestamp": "2020-05-17 21:27:56",
+                "content": "19 tarikh naya jai kina daikho tahole para ta valo vaba daya hoba."
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-05-17 21:29:29",
+                "content": "বাঁশ খেলে একটানা খাবো 😀😉😀"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2020-05-17 21:41:12",
+                "content": "😂😂🤣"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-05-17 22:07:58",
+                "content": "Algoridm ar ta kau aktu dao .. link ta"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-05-17 22:09:51",
+                "content": "Konta korte hobe kau aktu dao plz"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-05-17 22:13:43",
+                "content": "Post Group e Rakib e post korce....aktu check kor #Bhai"
+            }
+        ]
+    },
+    {
+        "category": "emotional",
+        "summary": "Trying to confirm assignment details at the last minute.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-05-18 18:59:53",
+                "content": "https://classroom.google.com/u/0/h"
+            },
+            {
+                "sender": "Facebook user",
+                "timestamp": "2020-05-18 21:29:11",
+                "content": ""
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-05-18 21:34:44",
+                "content": "taka joma akho. dile hobe"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-05-18 23:05:13",
+                "content": "Theory of Computation er Assignment joma daower r matro 1 Hour baki ache, \n\nAjker pore ai subject kew joma dile sir accept korbe na bolce....\n\n(Source Tarique latif Sir)"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-05-18 23:05:37",
+                "content": "Amar"
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2020-05-18 23:05:40",
+                "content": ""
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-05-19 10:48:09",
+                "content": "সবার দৃষ্টি আকর্ষণ :- \n\n\nযারা এখনো Theory of Computation এর Assignment জমা দাওনি তারা অতি সত্তর আজকের মধ্যে জমা দাও। \n\nমোট ১৬০ জনে Theory Assignment জমা দিছে। যারা জমা দাওনি তাদের জন্য এটাই শেষ সুযোগ...."
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2020-05-19 13:48:56",
+                "content": "Algo ki 3 ta Assignment 1 document e dibo?"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim and Arafat console each other about their lack of web design skills.",
+        "messages": [
+            {
+                "sender": "Raqib Al Hasan",
+                "timestamp": "2020-07-22 21:55:22",
+                "content": "https://drive.google.com/file/d/1qitGCSNxy7t6NSH0MD9y70uafLRHSKRh/view?usp=sharing"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2020-07-22 21:55:56",
+                "content": "eitay ki pabo?"
+            },
+            {
+                "sender": "Raqib Al Hasan",
+                "timestamp": "2020-07-22 21:56:17",
+                "content": "hmm"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 02:09:17",
+                "content": "aj web design pari na bole keo akto help kore na re :("
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2020-07-23 02:09:55",
+                "content": "Buke ay bhai"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 02:10:18",
+                "content": "kon boke"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 02:11:59",
+                "content": "dan pase na bam pase ... boker ba pase"
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2020-07-23 12:10:16",
+                "content": "Amader ki midterm exam ses?"
+            },
+            {
+                "sender": "Abu Sayed",
+                "timestamp": "2020-07-23 15:01:30",
+                "content": "R kono subject baki nay???"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim jokes about being 'poor' because their names are missing from the group list.",
+        "messages": [
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 20:20:40",
+                "content": "amder to kono din name cilo na kothao aamra nam cara manus akhon"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-07-23 20:22:21",
+                "content": "রোল কত?"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 20:22:23",
+                "content": "A kemon bichar? 060 R 051 er nam kn nai kno kno  😭😭"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-07-23 20:25:16",
+                "content": "তোমরা অবাগা, তোমাদের কোনো গ্রুপে দেয়নি"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-07-23 20:26:12",
+                "content": "Amar nam o nai"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 20:26:15",
+                "content": "hm..amra gorib bole amader name aj list a nai ..aikhane o charmen membar dukce chowl chorer moto amago name churio korce :("
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2020-07-23 20:42:27",
+                "content": "nam nai list e"
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2020-07-23 20:42:35",
+                "content": "id: 115"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim suggests cooling down the annoyed CR with RC Cola.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-07-23 20:49:58",
+                "content": "Na, thako..."
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-07-23 20:50:50",
+                "content": "Jader kono group e name ney tader bedare discuss korbo..."
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-07-23 20:51:59",
+                "content": "Tomra wait koro...tara hura amk biroktto korio na, tomader befare dekhi ki kora jay"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2020-07-23 20:52:44",
+                "content": "সি আর বিরিক্ত হলে চলবে না"
+            },
+            {
+                "sender": "ইঞ্জিনিয়ার মোহাম্মদ মাছউদ হোসেন",
+                "timestamp": "2020-07-23 20:52:56",
+                "content": "আমরা কার কাছে যাবো"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2020-07-23 20:53:49",
+                "content": "CR birok to hole tumra sobai line dore RC kine ano thandda kore deo take sitol kore deo . ;)"
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2020-07-23 21:12:50",
+                "content": "J pera te rakho tmra CR k , er Jonno 50k salary deya dorkar."
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-07-23 21:15:40",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Tanmay submits his assignment to every group because he doesn't know which one is his.",
+        "messages": [
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2020-07-25 23:04:31",
+                "content": "amioo sm"
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2020-07-25 23:05:03",
+                "content": "Ami to submit option a dese..."
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2020-07-25 23:05:24",
+                "content": "Taile post korte hobe"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-07-25 23:05:25",
+                "content": "Dos ki amar bal.. kon gurup a aci setai bujte partecina..tai sob gurup a dici ja hoy bal"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-07-25 23:06:35",
+                "content": "Akhon bol pas kormu to"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-07-25 23:06:41",
+                "content": "Hobe"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2020-07-25 23:06:51",
+                "content": "Exam to akta dinai pothom ta"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-07-25 23:24:20",
+                "content": "Ami kon group a"
+            },
+            {
+                "sender": "MD Sujon",
+                "timestamp": "2020-07-25 23:24:26",
+                "content": "Kmna bujum"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Shariful forgets about the class he was supposed to announce.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 13:35:50",
+                "content": "ajk 8:30 pm riaz sir er data system & 9:30pm zakir sir er data communication  class suru hobe r agamikal edc sakil sir uner makeup class ta niben ok"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 13:36:07",
+                "content": ""
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 19:23:08",
+                "content": "Dear friends ajk 8:30 pm zakir sir er data communication & 9:30pm riaz sir er data system class suru hobe r agamikal 9:30 pm edc sakil sir uner makeup class ta niben ok"
+            },
+            {
+                "sender": "Rukaiya Pakhi",
+                "timestamp": "2020-08-19 20:35:39",
+                "content": "Class kkhn start hobe @Md Shariful Islam"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 21:03:25",
+                "content": "Sorry!"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 21:03:34",
+                "content": "Ami class er kotha vule gachi...."
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 21:05:33",
+                "content": "https://us04web.zoom.us/j/79694642193?pwd=ODRhaVVEaHYwcmYyYkdCTE9wb3E3UT09"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2020-08-19 21:07:06",
+                "content": "Sir asce sobay class e join koro...."
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Tanmay struggling with the ridiculous number of pages required for the assignment.",
+        "messages": [
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2021-04-20 16:40:12",
+                "content": "ami to confused"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2021-04-20 19:36:44",
+                "content": "Final decision : \n\nTariqul sir er sathe ei matro kotha bollam unar exam ajk theke suru kore hate likhe pdf akare submit korte hobe deadline 28/4/21 raat 12ta etai final exam proshno google classroom e diye disen ok....."
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2021-04-20 19:39:06",
+                "content": "tahole akhon abar oi pdf korbo"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2021-04-20 19:50:53",
+                "content": "5 page kore ak akta mane 5*5=25 page ato lekha ki kore likbo akta exam bal"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2021-04-20 19:53:05",
+                "content": "Aitai tw question lam  ar naki"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2021-04-20 19:53:44",
+                "content": "Aita ki joma dibo 28tarik naki?"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2021-04-20 19:53:54",
+                "content": "Lab"
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2021-04-20 19:54:36",
+                "content": "bal vai ato lekha dey sar ki pagol naki"
+            },
+            {
+                "sender": "Ohidul Islam Patwari",
+                "timestamp": "2021-04-20 19:54:46",
+                "content": "Naki 27tarik aita joma dibo?"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Changing group name to 'BU CSE 53-D'.",
+        "messages": [
+            {
+                "sender": "Saiful Islam Shovon",
+                "timestamp": "2021-05-01 11:06:11",
+                "content": ""
+            },
+            {
+                "sender": "Tanmay Pagol",
+                "timestamp": "2021-05-01 11:29:20",
+                "content": "jiggas korle kosto hoy keni"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2021-05-01 14:19:14",
+                "content": "Pattern Reionization  Assignment keo ki korco ?"
+            },
+            {
+                "sender": "Saiful Islam Shovon",
+                "timestamp": "2021-05-01 14:21:28",
+                "content": "CR 2 (Shovon) named the group BU CSE 53-D."
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2021-05-01 14:21:42",
+                "content": "Na"
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2021-05-01 14:22:06",
+                "content": "@Saiful Islam Shovon Amra ki abr Group D te?"
+            },
+            {
+                "sender": "Arafat Imon",
+                "timestamp": "2021-05-01 14:22:10",
+                "content": ""
+            },
+            {
+                "sender": "Saiful Islam Shovon",
+                "timestamp": "2021-05-01 14:23:40",
+                "content": "আবার মানে কি!! ডি তেই তো আছি"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim jokes that even if 14 generations search Google, they won't find the answers.",
+        "messages": [
+            {
+                "sender": "Facebook user",
+                "timestamp": "2021-05-02 16:17:29",
+                "content": "🤣"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2021-05-02 16:17:48",
+                "content": "Bhai re ai gula ak akta Asset sorkar ader k jodi mullo dito taile desher unnoti hoito"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2021-05-02 16:18:02",
+                "content": "Aita tho r epurope america na"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2021-05-02 16:19:26",
+                "content": "ki kore mullo dibe vai ek assignment kortei amgo 14 purush soho google a lege pori tao sothik ans paina ... amago jodi mullayon kore to sorkarer 14 purus  google a namiya caira dimu  search kore o tago paibo na ;p"
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2021-05-02 16:20:47",
+                "content": "Sobai tho r Google search mare na"
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2021-05-03 16:51:13",
+                "content": "https://www.prothomalo.com/bangladesh/%E0%A6%88%E0%A6%A6%E0%A7%87%E0%A6%B0-%E0%A6%A4%E0%A6%BF%E0%A6%A8-%E0%A6%A6%E0%A6%BF%E0%A6%A8-%E0%A6%9B%E0%A7%81%E0%A6%9F%E0%A6%BF%E0%A6%B0-%E0%A6%AA%E0%A6%B0-%E0%A6%86%E0%A6%B0-%E0%A6%AC%E0%A6%BE%E0%A7%9C%E0%A6%A4%E0%A6%BF-%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7-%E0%A6%A8%E0%A7%9F?utm_source=push-engage&utm_medium=push-notification"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2021-05-03 19:52:04",
+                "content": "কেউ কি প্যার্টানের ম্যাথ গুলো করছো....??   \nকেউ ম্যাথ লিখছো..."
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Sujon jokes about someone demanding a Burka (actually Apron) earlier.",
+        "messages": [
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-06-01 17:45:24",
+                "content": "Hm.  Amar payment problem.  But spring er payment clear silo tai amar ta show korse"
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2022-06-02 15:22:40",
+                "content": "amather portal ki r kholbe na???"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2022-06-03 10:11:08",
+                "content": ""
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2022-06-03 10:13:18",
+                "content": "কারা যেন বোরকা দাবি করতেছিলো...."
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2022-06-03 10:39:02",
+                "content": "Rakibul reacted 😆 to your message "
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2022-06-03 10:39:29",
+                "content": "conviction hobe na maybe"
+            },
+            {
+                "sender": "Arnob Mitra",
+                "timestamp": "2022-06-03 10:55:04",
+                "content": "Arnob reacted 😆 to your message "
+            },
+            {
+                "sender": "Bahalul Haque",
+                "timestamp": "2022-06-03 10:55:19",
+                "content": "5k tk"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Shariful sarcastically calls a student a 'genius' based on a photo.",
+        "messages": [
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2022-09-08 16:56:04",
+                "content": "gorib er portal..."
+            },
+            {
+                "sender": "Tariqul Islam",
+                "timestamp": "2022-09-08 16:56:37",
+                "content": ""
+            },
+            {
+                "sender": "Tariqul Islam",
+                "timestamp": "2022-09-08 16:56:49",
+                "content": "Sobar phn diye duke na re"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2022-09-08 16:57:36",
+                "content": "ai dekh pola jenious..."
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-09-08 17:00:15",
+                "content": "🤕🤕🤕"
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-09-08 17:00:16",
+                "content": ""
+            },
+            {
+                "sender": "Cse Sajib Saha",
+                "timestamp": "2022-09-08 18:08:33",
+                "content": "kon browsers"
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-09-08 18:28:16",
+                "content": ""
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Defining life situations using CSE terminology (404 Error, Ping Loss).",
+        "messages": [
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2022-07-09 11:54:56",
+                "content": "ami msg tai delete kore disi 😄"
+            },
+            {
+                "sender": "Shohag Hossain",
+                "timestamp": "2022-07-09 13:51:19",
+                "content": "ami paisi"
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-07-25 08:53:43",
+                "content": ""
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-07-25 08:54:15",
+                "content": "Cse এর ভাষায় কি হবে😄?"
+            },
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2022-07-25 08:57:28",
+                "content": "ওয়েবের ভাষায়: 404 Error\nনেটওয়ার্কিংয়ে: Ping loss"
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-07-25 08:57:38",
+                "content": "Md reacted 😆 to your message "
+            },
+            {
+                "sender": "Md Mehedi Hasan",
+                "timestamp": "2022-07-25 08:59:35",
+                "content": "আমি একটা গ্রুপ এ কমেন্ট করছি ঃ  Session Destroy"
+            },
+            {
+                "sender": "MH Mahdi",
+                "timestamp": "2022-07-25 12:01:05",
+                "content": "MH reacted 😆 to your message "
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim jokes about needing a Burka for convocation.",
+        "messages": [
+            {
+                "sender": "Sujon Sarder",
+                "timestamp": "2022-07-04 11:30:01",
+                "content": "হঠাৎ আমাদের দেখতে মন কেমন কেমন করে স্যারের 🙂"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2022-07-04 11:34:41",
+                "content": "CR 1 (Sharif) reacted 😆 to your message "
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2022-07-04 11:34:58",
+                "content": "atto valobasha rakhbo koi 😃❤️"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2022-07-04 16:46:52",
+                "content": "Sir ja iccha koruk amago kala borka dilei hobe vai"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2022-07-04 16:47:11",
+                "content": "oidin sir k dorbo sobai j amader burka lagbe somaborto kora lagbe sir"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2022-07-04 16:48:03",
+                "content": "Koi jug par hobe oi asa mone rakhle..."
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2022-07-04 16:48:15",
+                "content": "ki bolo sobai ? tk to kom nei nai  aro lage 5k nilo"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2022-07-04 16:49:35",
+                "content": "Convocation er jonno 8000 kore nibe"
+            },
+            {
+                "sender": "Tania Sarkar",
+                "timestamp": "2022-07-04 16:50:00",
+                "content": "Certificate er jonno 5000 nibe"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Shariful confirms no return money for convocation fee.",
+        "messages": [
+            {
+                "sender": "Anik Khan",
+                "timestamp": "2025-08-19 13:00:17",
+                "content": "na"
+            },
+            {
+                "sender": "Anik Khan",
+                "timestamp": "2025-08-19 13:00:45",
+                "content": "aita kno kotha...??😓"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2025-08-19 13:01:08",
+                "content": "অনুষ্ঠানে অংশগ্রহণ করতে ৫০৫০ টাকা লাগবে"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2025-08-19 13:03:43",
+                "content": "এই টাকা অনুষ্ঠান শেষে আবার ফেরত দেওয়া হবে ২০০০ বছর পর"
+            },
+            {
+                "sender": "Shariful Islam",
+                "timestamp": "2025-08-19 13:12:20",
+                "content": ""
+            },
+            {
+                "sender": "MD Sabbir Khan",
+                "timestamp": "2025-08-19 13:14:53",
+                "content": "Ami matto tader help desk a kotha bollam... Age certificate tulta hoba iqbal road theke..apron Apply korta hobe karon certificate photo attach korta hobe registration korar somoy.."
+            },
+            {
+                "sender": "MD Sabbir Khan",
+                "timestamp": "2025-08-19 13:16:33",
+                "content": "NID+Ssc + diploma certificate ar photocopy+ Photo and 5000/- joma dila tara 7 days er modda kora diba..  Ata e bollo.."
+            },
+            {
+                "sender": "Md Saifur Rahman",
+                "timestamp": "2025-08-19 13:19:36",
+                "content": "অংশগ্রহণ না করলে কি সমস্যা"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Farjana suggests renting out gowns to cover the cost.",
+        "messages": [
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2026-01-13 16:34:11",
+                "content": "Nah oita puran notice"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2026-01-13 16:34:38",
+                "content": "Pore students der kothay change korche"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2026-01-13 16:35:22",
+                "content": "যাক তাইলে তো ভালো একবারে নিয়ে চলে আসমু। ফেরত দেওয়ার ঝামেলা নাই।"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-13 16:37:29",
+                "content": "তাহলে এইবার যারা কনভেকশনে যাবে না তাদের কাছে গাউন ভাড়াও দেয়া যাবে, ১ ঘন্টা গাউন পড়ে ঘুড়াঘুড়িতে ৫০০ টাকা!"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-13 16:37:58",
+                "content": "@Rakibul Hassan Durjoy  গাউন নেয়ার ডেট ঠিক করো, সবাই একসাথে ক্যাম্পাস থেকে গাউন পড়ে ছবিও তুলে আসবো। 😁"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2026-01-13 16:38:48",
+                "content": "Ami insha-Allah friday te jabo"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2026-01-13 16:38:51",
+                "content": "আমি তো চিন্তা করতেছি এই গাউন পইরা হাইকোর্টের সামনে একটা করে গুনা দিমু। দুই একটা ক্লাইন্ট যোগাড় কইরা নিজেরে উকিল উকিল একটা ফিল দিমু ☺️"
+            }
+        ]
+    },
+    {
+        "category": "funny",
+        "summary": "Ibrahim plans to wear the gown to High Court to act like a lawyer.",
+        "messages": [
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-13 16:37:29",
+                "content": "তাহলে এইবার যারা কনভেকশনে যাবে না তাদের কাছে গাউন ভাড়াও দেয়া যাবে, ১ ঘন্টা গাউন পড়ে ঘুড়াঘুড়িতে ৫০০ টাকা!"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-13 16:37:58",
+                "content": "@Rakibul Hassan Durjoy  গাউন নেয়ার ডেট ঠিক করো, সবাই একসাথে ক্যাম্পাস থেকে গাউন পড়ে ছবিও তুলে আসবো। 😁"
+            },
+            {
+                "sender": "Rakibul Hassan Durjoy",
+                "timestamp": "2026-01-13 16:38:48",
+                "content": "Ami insha-Allah friday te jabo"
+            },
+            {
+                "sender": "Ibrahim Khan Zibon",
+                "timestamp": "2026-01-13 16:38:51",
+                "content": "আমি তো চিন্তা করতেছি এই গাউন পইরা হাইকোর্টের সামনে একটা করে গুনা দিমু। দুই একটা ক্লাইন্ট যোগাড় কইরা নিজেরে উকিল উকিল একটা ফিল দিমু ☺️"
+            },
+            {
+                "sender": "MD.  Mainul Haque",
+                "timestamp": "2026-01-13 16:43:36",
+                "content": "আমি শনিবার যাওয়ার চিন্তা করছি"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-13 16:47:43",
+                "content": "শুক্রবার কখন?"
+            },
+            {
+                "sender": "Farjana Setu",
+                "timestamp": "2026-01-13 16:48:07",
+                "content": "শুক্রবারেই ভালো হবে"
+            }
+        ]
+    }
+]

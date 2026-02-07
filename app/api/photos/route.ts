@@ -5,8 +5,11 @@ export async function GET() {
         const API_KEY = process.env.GOOGLE_API_KEY;
         const FOLDER_ID = process.env.NEXT_PUBLIC_GOOGLE_DRIVE_FOLDER_ID || process.env.GOOGLE_DRIVE_FOLDER_ID;
 
+        const maskedKey = API_KEY ? `${API_KEY.substring(0, 5)}...` : 'MISSING';
+        console.log(`[API] Configuration - Key: ${maskedKey}, Folder: ${FOLDER_ID}`);
+
         if (!API_KEY || !FOLDER_ID) {
-            console.error('Missing Google Drive configuration');
+            console.error('[API] Error: Missing Google Drive credentials');
             return NextResponse.json(
                 { error: 'Server configuration error: Missing Google Drive credentials' },
                 { status: 500 }
@@ -16,7 +19,9 @@ export async function GET() {
         // Prepare fields to fetch
         const fields = 'nextPageToken, files(id, name, mimeType, webContentLink, webViewLink, thumbnailLink, appProperties, createdTime, size, imageMediaMetadata, videoMediaMetadata)';
         const query = `'${FOLDER_ID}' in parents and trashed = false`;
-        const baseUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&key=${API_KEY}&pageSize=100&orderBy=createdTime desc`;
+
+        // Added supportsAllDrives & includeItemsFromAllDrives just in case it's a shared/team drive
+        const baseUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&key=${API_KEY}&pageSize=100&orderBy=createdTime desc&supportsAllDrives=true&includeItemsFromAllDrives=true`;
 
         console.log(`[API] Fetching photos from Drive folder: ${FOLDER_ID}`);
 
@@ -25,26 +30,35 @@ export async function GET() {
 
         do {
             const url = `${baseUrl}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+
             const response = await fetch(url, { next: { revalidate: 3600 } }); // Cache for 1 hour
 
             if (!response.ok) {
-                const errorData = await response.json();
-                console.error('[API] Google Drive API Error:', errorData);
+                const errorText = await response.text();
+                console.error(`[API] Google Drive API Error (${response.status}):`, errorText);
                 return NextResponse.json(
-                    { error: `Google Drive API Error: ${errorData.error?.message || response.statusText}` },
+                    { error: `Google Drive API Error: ${response.status} ${response.statusText}` },
                     { status: response.status }
                 );
             }
 
             const data = await response.json();
+            if (data.error) {
+                console.error('[API] JSON Data Error:', data.error);
+                throw new Error(data.error.message);
+            }
+
             if (data.files) {
+                console.log(`[API] Page fetched. Found ${data.files.length} files.`);
                 allFiles = [...allFiles, ...data.files];
+            } else {
+                console.log('[API] No files found in this page response.');
             }
 
             pageToken = data.nextPageToken || '';
         } while (pageToken);
 
-        console.log(`[API] Total files fetched: ${allFiles.length}`);
+        console.log(`[API] Total files fetched successfully: ${allFiles.length}`);
 
         if (allFiles.length === 0) {
             return NextResponse.json({ files: [] });

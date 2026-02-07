@@ -79,8 +79,8 @@ export async function fetchPhotosFromDrive(): Promise<{ files: Photo[], error?: 
                     mimeType: file.mimeType,
                     createdTime: file.createdTime,
                     size: file.size ? parseInt(file.size) : 0,
-                    width: isVideo ? file.videoMediaMetadata?.width : file.imageMediaMetadata?.width,
-                    height: isVideo ? file.videoMediaMetadata?.height : file.imageMediaMetadata?.height,
+                    width: isVideo ? (file.videoMediaMetadata?.width ? parseInt(file.videoMediaMetadata.width) : undefined) : (file.imageMediaMetadata?.width ? parseInt(file.imageMediaMetadata.width) : undefined),
+                    height: isVideo ? (file.videoMediaMetadata?.height ? parseInt(file.videoMediaMetadata.height) : undefined) : (file.imageMediaMetadata?.height ? parseInt(file.imageMediaMetadata.height) : undefined),
                     videoDuration: file.videoMediaMetadata?.durationMillis
                         ? `${Math.round(parseInt(file.videoMediaMetadata.durationMillis) / 1000)}s`
                         : undefined

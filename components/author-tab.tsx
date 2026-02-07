@@ -33,7 +33,7 @@ const AUTHOR_INFO = {
 
 export function AuthorTab() {
     return (
-        <div className="relative min-h-[85vh] w-full overflow-hidden flex flex-col items-center py-16 px-4 sm:px-6">
+        <div className="relative min-h-[85vh] w-full overflow-hidden flex flex-col items-center py-16 pt-0 px-4 sm:px-6">
 
             {/* --- BACKGROUND FROM HERO SECTION --- */}
             {/* Warm overlay gradient */}
@@ -141,25 +141,8 @@ export function AuthorTab() {
                                 </div>
                             </div>
                         </SectionCard>
-                    </div>
 
-                    {/* Right Column: This Project & Skills */}
-                    <div className="space-y-8">
-
-                        {/* About This Project */}
-                        <SectionCard title="About This Project" icon={<Sparkles className="w-5 h-5 text-amber-400" />}>
-                            <p className="text-stone-600 dark:text-stone-300 text-sm mb-4">
-                                <strong>University Friend Photos</strong> is a digital sanctuary for our batch's memories. Built with modern web technologies to ensure these moments last forever.
-                            </p>
-                            <div className="grid grid-cols-2 gap-3">
-                                <TechBadge name="Next.js 14" type="Framework" />
-                                <TechBadge name="Tailwind CSS" type="Styling" />
-                                <TechBadge name="Framer Motion" type="Animation" />
-                                <TechBadge name="Cloud Storage" type="Backend" />
-                            </div>
-                        </SectionCard>
-
-                        {/* Technical Expertise */}
+                        {/* Technical Expertise - Moved to Left */}
                         <SectionCard title="Technical Arsenal" icon={<Layers className="w-5 h-5 text-indigo-400" />}>
                             <div className="space-y-4">
                                 <SkillGroup label="Cloud Platforms" skills={AUTHOR_INFO.skills.cloud} />
@@ -167,6 +150,57 @@ export function AuthorTab() {
                                 <SkillGroup label="CI / CD" skills={AUTHOR_INFO.skills.cicd} />
                             </div>
                         </SectionCard>
+                    </div>
+
+                    {/* Right Column: This Project & Skills */}
+                    <div className="space-y-8">
+
+                        {/* About This Project */}
+                        <SectionCard
+                            title="About This Project"
+                            icon={<Sparkles className="w-5 h-5 text-amber-400" />}
+                            className="bg-gradient-to-br from-amber-500/10 via-purple-500/5 to-rose-500/10 border-amber-500/30 hover:border-amber-500/50 hover:shadow-amber-500/10 hover:scale-[1.02]"
+                        >
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-2">The Vision</h4>
+                                    <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">
+                                        More than just a gallery, this platform acts as a <strong>digital time capsule</strong>. It was crafted with the singular purpose of immortalizing the bond we share, ensuring that every smile, every trip, and every classroom moment remains vivid and accessible for decades to come.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-2">Key Features</h4>
+                                    <ul className="text-sm text-stone-600 dark:text-stone-300 space-y-1.5 list-disc list-inside marker:text-amber-500">
+                                        <li><strong>Automated Sync:</strong> Memories updates in real-time from our secure cloud storage.</li>
+                                        <li><strong>Smart Caching:</strong> Engineered for lightning-fast performance and instant loads.</li>
+                                        <li><strong>Immersive UI:</strong> Features custom "Polaroid" style interactions and fluid animations.</li>
+                                        <li><strong>Always Fresh:</strong> The gallery stays up-to-date with our latest shared moments.</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-3">Powered By</h4>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <TechBadge name="Next.js 14" type="Framework" />
+                                        <TechBadge name="Tailwind CSS" type="Styling" />
+                                        <TechBadge name="Framer Motion" type="Animation" />
+                                        <TechBadge name="TypeScript" type="Language" />
+                                        <TechBadge name="Radix UI, Lucide React" type="UI Components" />
+                                        <TechBadge name="Cloud API" type="CMS / Storage" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-2">A Lasting Tribute</h4>
+                                    <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">
+                                        We may have left the campus, but the campus never left us. This archive serves as a permanent tribute to our shared laughter, the late-night study sessions, and the unspoken bonds that defined our university life. It stands as a promise that no matter where life takes us, these moments will remain untouched by time.
+                                    </p>
+                                </div>
+                            </div>
+                        </SectionCard>
+
+
 
                     </div>
                 </div>
@@ -195,9 +229,9 @@ export function AuthorTab() {
 
 // --- Sub Components ---
 
-function SectionCard({ title, icon, children }: { title: string, icon: React.ReactNode, children: React.ReactNode }) {
+function SectionCard({ title, icon, children, className = "" }: { title: string, icon: React.ReactNode, children: React.ReactNode, className?: string }) {
     return (
-        <div className="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/60 dark:border-stone-800/40 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-200/50 transition-all relative overflow-hidden group">
+        <div className={`bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/60 dark:border-stone-800/40 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-200/50 transition-all relative overflow-hidden group ${className}`}>
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none transform group-hover:scale-110 duration-500">
                 {icon}
             </div>

@@ -77,7 +77,9 @@ function parseSheetData(data: GoogleSheetsResponse): Contact[] {
         const facebook = getValue(5);
         const linkedin = getValue(6);
         const whatsapp = getValue(7);
-        const city = getValue(8);
+        const designation = getValue(8);
+        const company = getValue(9);
+        const city = getValue(10);
 
         // Skip rows without a name (likely empty or header row)
         if (!name) return;
@@ -90,14 +92,16 @@ function parseSheetData(data: GoogleSheetsResponse): Contact[] {
         const contact: Contact = {
             id: `contact-${index + 1}`,
             name,
-            email: email || '',
             phone: phone || '',
+            email: email || '',
             imageUrl: imageUrls[0] || undefined,
             imageUrls: imageUrls.length > 0 ? imageUrls : undefined,
             bloodGroup: bloodGroup || undefined,
             facebook: facebook || undefined,
             linkedin: linkedin || undefined,
             whatsapp: whatsapp || undefined,
+            designation: designation || undefined,
+            company: company || undefined,
             city: city || undefined,
         };
 

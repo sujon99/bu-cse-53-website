@@ -28,3 +28,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python
+__pycache__/
+*.py
+
+# data
+friends_conversations/
+chat_export.txt
+highlighted_conversations.txt
+search_results.txt
+search_results_utf8.txt
+*.log
