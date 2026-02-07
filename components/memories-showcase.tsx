@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Photo {
     id: string;
@@ -169,36 +170,15 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
     const sectionRef = useRef<HTMLElement>(null);
     const carouselRef = useRef<HTMLDivElement>(null);
 
-    // Touch swipe state
-    const [touchStart, setTouchStart] = useState<number | null>(null);
-    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+    // Touch swipe handling with Framer Motion
+    const onDragEnd = (event: any, info: any) => {
+        const offset = info.offset.x;
+        const velocity = info.velocity.x;
 
-    // Minimum swipe distance (in px)
-    const minSwipeDistance = 50;
-
-    const onTouchStart = (e: React.TouchEvent) => {
-        setTouchEnd(null);
-        setTouchStart(e.targetTouches[0].clientX);
-    };
-
-    const onTouchMove = (e: React.TouchEvent) => {
-        setTouchEnd(e.targetTouches[0].clientX);
-    };
-
-    const onTouchEnd = () => {
-        if (!touchStart || !touchEnd) return;
-
-        const distance = touchStart - touchEnd;
-        const isLeftSwipe = distance > minSwipeDistance;
-        const isRightSwipe = distance < -minSwipeDistance;
-
-        if (isLeftSwipe && photos.length > 1) {
-            // Swipe left = next photo
-            setCurrentIndex((prev) => (prev + 1) % photos.length);
-        }
-        if (isRightSwipe && photos.length > 1) {
-            // Swipe right = previous photo
-            setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+        if (offset < -50 || velocity < -500) {
+            goToNext();
+        } else if (offset > 50 || velocity > 500) {
+            goToPrevious();
         }
     };
 
@@ -321,13 +301,16 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                     {/* Main image container - dynamic style */}
                     <div
                         ref={carouselRef}
-                        onTouchStart={onTouchStart}
-                        onTouchMove={onTouchMove}
-                        onTouchEnd={onTouchEnd}
                         className={`relative aspect-[4/3] max-w-4xl mx-auto overflow-hidden transition-all duration-500 ${GALLERY_STYLES[selectedStyle].frameClass}`}
                     >
                         {/* Photo area */}
-                        <div className={`relative w-full h-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 transition-all duration-500 ${GALLERY_STYLES[selectedStyle].imageClass}`}>
+                        <motion.div
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={0.1}
+                            onDragEnd={onDragEnd}
+                            className={`relative w-full h-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 transition-all duration-500 cursor-grab active:cursor-grabbing ${GALLERY_STYLES[selectedStyle].imageClass}`}
+                        >
                             {isLoading ? (
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="w-12 h-12 border-4 border-amber-200 border-t-amber-500 rounded-full animate-spin" />
@@ -337,7 +320,7 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                                     {photos.map((photo, index) => (
                                         <div
                                             key={photo.id}
-                                            className={`absolute inset-0 transition-all duration-700 ${index === currentIndex
+                                            className={`absolute inset-0 transition-all duration-700 select-none ${index === currentIndex
                                                 ? GALLERY_STYLES[selectedStyle].transitions[index % GALLERY_STYLES[selectedStyle].transitions.length].active
                                                 : GALLERY_STYLES[selectedStyle].transitions[index % GALLERY_STYLES[selectedStyle].transitions.length].inactive
                                                 }`}
@@ -346,7 +329,7 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                                                 src={photo.thumbnailLink || photo.webContentLink}
                                                 alt={photo.name}
                                                 fill
-                                                className={`object-cover object-center transition-all duration-500 ${GALLERY_STYLES[selectedStyle].imageClass}`}
+                                                className={`object-cover object-center transition-all duration-500 pointer-events-none ${GALLERY_STYLES[selectedStyle].imageClass}`}
                                                 sizes="(max-width: 768px) 100vw, 80vw"
                                                 priority={index === 0}
                                             />
@@ -363,22 +346,22 @@ export function MemoriesShowcase({ onViewAllClick }: MemoriesShowcaseProps) {
                             {photos.length > 1 && (
                                 <>
                                     <button
-                                        onClick={goToPrevious}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center text-neutral-700 dark:text-white transition-all shadow-lg opacity-20 group-hover:opacity-80 hover:!opacity-100"
+                                        onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white/80 hover:bg-black/60 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                                         aria-label="Previous photo"
                                     >
-                                        <ChevronLeft className="w-5 h-5" />
+                                        <ChevronLeft className="w-6 h-6" />
                                     </button>
                                     <button
-                                        onClick={goToNext}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center text-neutral-700 dark:text-white transition-all shadow-lg opacity-20 group-hover:opacity-80 hover:!opacity-100"
+                                        onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white/80 hover:bg-black/60 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                                         aria-label="Next photo"
                                     >
-                                        <ChevronRight className="w-5 h-5" />
+                                        <ChevronRight className="w-6 h-6" />
                                     </button>
                                 </>
                             )}
-                        </div>
+                        </motion.div>
 
                         {/* Dynamic caption area */}
                         <div className={`absolute bottom-0 left-0 right-0 h-16 flex items-center justify-center px-4 ${GALLERY_STYLES[selectedStyle].captionClass}`}>
