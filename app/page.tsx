@@ -9,7 +9,7 @@ import { MemoriesShowcase } from '@/components/memories-showcase';
 import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool, Clapperboard, PlaySquare, Film, Settings2, Grid, MessageSquare } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool, Clapperboard, PlaySquare, Film, Settings2, Grid, MessageSquare, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Dialog,
@@ -210,7 +210,7 @@ export default function Home() {
                       className="flex items-center gap-2 px-4 h-8 rounded-full text-sm font-medium text-stone-600 hover:bg-amber-100/40 transition-colors"
                     >
                       <motion.div layout className="flex items-center gap-2">
-                        <Grid className="w-4 h-4" />
+                        <Sparkles className="w-4 h-4" />
                         Memories
                       </motion.div>
                     </motion.button>
@@ -553,7 +553,7 @@ export default function Home() {
                     className="flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] hover:bg-amber-100/40 transition-colors text-foreground"
                   >
                     <motion.div layout className="flex flex-col items-center gap-1">
-                      <Grid className="w-5 h-5" />
+                      <Sparkles className="w-5 h-5" />
                       <span className="text-[10px] font-medium">Memories</span>
                     </motion.div>
                   </motion.button>

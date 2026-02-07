@@ -44,7 +44,7 @@ const EVENTS: TimelineEvent[] = [
         rotation: 'rotate-1'
     },
     {
-        year: '2022',
+        year: '2021',
         title: 'A Decade of Semesters',
         description: 'Ten semesters of grueling exams, late-night projects, and endless coffee runs. We conquered the academic rigors together, transforming from eager freshmen into seasoned scholars.',
         icon: BookOpen,
