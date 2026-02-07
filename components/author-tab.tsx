@@ -185,6 +185,8 @@ export function AuthorTab() {
                                         <TechBadge name="Next.js 14" type="Framework" />
                                         <TechBadge name="Tailwind CSS" type="Styling" />
                                         <TechBadge name="Framer Motion" type="Animation" />
+                                        <TechBadge name="TypeScript" type="Language" />
+                                        <TechBadge name="Radix UI, Lucide React" type="UI Components" />
                                         <TechBadge name="Cloud API" type="CMS / Storage" />
                                     </div>
                                 </div>

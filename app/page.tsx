@@ -27,7 +27,7 @@ import { BatchStatsFooter } from '@/components/batch-stats-footer';
 import { ScrollAnimation } from '@/components/scroll-animation';
 import { AuthorTab } from '@/components/author-tab';
 import { ConversationViewer } from '@/components/conversations/conversation-viewer';
-import conversationData from '@/data/funny_conversations.json';
+import conversationData from '@/data/funny_conversations.json'; // Data source for funny conversations
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -44,7 +44,7 @@ export default function Home() {
   // Auto-expand media menu if on photos/videos tab
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-    if (activeTab === 'photos' || activeTab === 'videos') {
+    if (activeTab === 'photos' || activeTab === 'videos' || activeTab === 'conversations') {
       setIsMediaExpanded(true);
     } else {
       setIsMediaExpanded(false);
@@ -211,7 +211,7 @@ export default function Home() {
                     >
                       <motion.div layout className="flex items-center gap-2">
                         <Grid className="w-4 h-4" />
-                        Media
+                        Memories
                       </motion.div>
                     </motion.button>
                   ) : (
@@ -252,6 +252,20 @@ export default function Home() {
                           Videos
                         </motion.button>
                       </TabsTrigger>
+                      <TabsTrigger
+                        value="conversations"
+                        className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                        asChild
+                      >
+                        <motion.button
+                          layout
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          Chats
+                        </motion.button>
+                      </TabsTrigger>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -271,21 +285,7 @@ export default function Home() {
                     Contacts
                   </motion.button>
                 </TabsTrigger>
-                <TabsTrigger
-                  value="conversations"
-                  onClick={() => setIsMediaExpanded(false)}
-                  className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
-                  asChild
-                >
-                  <motion.button
-                    layout
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
-                  >
-                    <MessageSquare className="w-4 h-4" />
-                    Chats
-                  </motion.button>
-                </TabsTrigger>
+
                 <TabsTrigger
                   value="author"
                   onClick={() => setIsMediaExpanded(false)}
@@ -554,7 +554,7 @@ export default function Home() {
                   >
                     <motion.div layout className="flex flex-col items-center gap-1">
                       <Grid className="w-5 h-5" />
-                      <span className="text-[10px] font-medium">Media</span>
+                      <span className="text-[10px] font-medium">Memories</span>
                     </motion.div>
                   </motion.button>
                 ) : (
@@ -598,6 +598,22 @@ export default function Home() {
                         <span className="text-[10px] font-medium">Videos</span>
                       </motion.button>
                     </TabsTrigger>
+
+                    <TabsTrigger
+                      value="conversations"
+                      className="rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none py-2 px-3 h-auto"
+                      asChild
+                    >
+                      <motion.button
+                        key="mobile-conversations"
+                        layout
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        className="flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 text-foreground hover:bg-amber-100/40 transition-colors"
+                      >
+                        <MessageSquare className="w-5 h-5" />
+                        <span className="text-[10px] font-medium">Chats</span>
+                      </motion.button>
+                    </TabsTrigger>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -621,22 +637,7 @@ export default function Home() {
               {/* If active tab is search, show it as selected, otherwise Author. Or just keep Author.
                   Maybe replace Author with Search if Search is active?
                   For now let's keep Author and access Search via the floating button. */}
-              <TabsTrigger
-                value="conversations"
-                onClick={() => setIsMediaExpanded(false)}
-                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none hover:bg-transparent transition-all"
-                asChild
-              >
-                <motion.button
-                  key="mobile-conversations"
-                  layout
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40 transition-all"
-                >
-                  <MessageSquare className="w-5 h-5" />
-                  <span className="text-[10px] font-medium">Chats</span>
-                </motion.button>
-              </TabsTrigger>
+
               <TabsTrigger
                 value="author"
                 onClick={() => setIsMediaExpanded(false)}

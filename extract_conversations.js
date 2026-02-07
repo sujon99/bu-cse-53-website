@@ -95,10 +95,19 @@ try {
     // If I change structure, I must update the generic type in the component.
     // Let's make it an object with 'pages' or just an array of items where each item is a moment (array of msgs).
 
-    const outputData = funnyMoments.slice(0, 50); // Limit to top 50 funny moments to avoid huge file
+    // Format data to match ConversationViewer expectations
+    const formattedOutput = funnyMoments.slice(0, 50).map(moment => ({
+        category: 'funny',
+        summary: "Funny moment detected", // Placeholder or generate based on content
+        messages: moment.map(m => ({
+            sender: m.name,
+            timestamp: new Date(m.timestamp).toLocaleString(), // Convert to string
+            content: m.text
+        }))
+    }));
 
-    fs.writeFileSync(outputFile, JSON.stringify(outputData, null, 2));
-    console.log(`Successfully extracted ${outputData.length} funny moments to ${outputFile}`);
+    fs.writeFileSync(outputFile, JSON.stringify(formattedOutput, null, 2));
+    console.log(`Successfully extracted ${formattedOutput.length} funny moments to ${outputFile}`);
 
 } catch (error) {
     console.error('Error processing messages:', error);
