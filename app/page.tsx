@@ -9,7 +9,7 @@ import { MemoriesShowcase } from '@/components/memories-showcase';
 import { FriendQuotes } from '@/components/friend-quotes';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool, Clapperboard, PlaySquare, Film, Settings2, Grid } from 'lucide-react';
+import { Images, Users, Search, X, Video, Loader2, Home as HomeIcon, PenTool, Clapperboard, PlaySquare, Film, Settings2, Grid, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Dialog,
@@ -26,6 +26,8 @@ import { MemoryTimeline } from '@/components/memory-timeline';
 import { BatchStatsFooter } from '@/components/batch-stats-footer';
 import { ScrollAnimation } from '@/components/scroll-animation';
 import { AuthorTab } from '@/components/author-tab';
+import { ConversationViewer } from '@/components/conversations/conversation-viewer';
+import conversationData from '@/data/funny_conversations.json';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -270,6 +272,21 @@ export default function Home() {
                   </motion.button>
                 </TabsTrigger>
                 <TabsTrigger
+                  value="conversations"
+                  onClick={() => setIsMediaExpanded(false)}
+                  className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
+                  asChild
+                >
+                  <motion.button
+                    layout
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className="flex items-center gap-2 px-4 h-8 rounded-full shadow-none transition-colors text-stone-600 data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Chats
+                  </motion.button>
+                </TabsTrigger>
+                <TabsTrigger
                   value="author"
                   onClick={() => setIsMediaExpanded(false)}
                   className="rounded-full bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none focus:ring-0 focus:outline-none px-4 h-8"
@@ -466,6 +483,22 @@ export default function Home() {
             </div>
           </TabsContent>
 
+          <TabsContent value="conversations" className="outline-none pt-0 pb-12 sm:pt-20">
+            <div className="space-y-6">
+              <div className="text-center space-y-3 mb-2">
+                <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">MOMENTS</span>
+                <h2 className="text-4xl md:text-5xl font-serif font-normal tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70 italic">
+                  Conversation Moments
+                </h2>
+                <p className="text-muted-foreground/80 font-light text-lg tracking-wide mx-auto leading-relaxed">
+                  Inside jokes and hilarious conversations from our group chat
+                </p>
+              </div>
+              {/* Only conversation viewer, nicely centered */}
+              <ConversationViewer messages={conversationData} />
+            </div>
+          </TabsContent>
+
           <TabsContent value="author" className="outline-none pt-0 sm:pt-20">
             <AuthorTab />
           </TabsContent>
@@ -588,6 +621,22 @@ export default function Home() {
               {/* If active tab is search, show it as selected, otherwise Author. Or just keep Author.
                   Maybe replace Author with Search if Search is active?
                   For now let's keep Author and access Search via the floating button. */}
+              <TabsTrigger
+                value="conversations"
+                onClick={() => setIsMediaExpanded(false)}
+                className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] bg-transparent data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 data-[state=active]:shadow-none hover:bg-transparent transition-all"
+                asChild
+              >
+                <motion.button
+                  key="mobile-conversations"
+                  layout
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  className="flex-col gap-1 h-auto py-2 px-3 min-w-[60px] flex-shrink-0 rounded-[14px] data-[state=active]:bg-amber-200/60 data-[state=active]:text-amber-900 hover:bg-amber-100/40 transition-all"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  <span className="text-[10px] font-medium">Chats</span>
+                </motion.button>
+              </TabsTrigger>
               <TabsTrigger
                 value="author"
                 onClick={() => setIsMediaExpanded(false)}
